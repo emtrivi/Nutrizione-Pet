@@ -1,0 +1,878 @@
+{
+  "titolo": "FEDIAF 2025 — riferimenti per cane adulto, minimi e massimi",
+  "tipo": "riferimenti_nutrizionali_non_catalogo_alimenti",
+  "specie": "canis_lupus_familiaris",
+  "fase_vita": "adult_maintenance",
+  "edizione": "FEDIAF Nutritional Guidelines, settembre 2025",
+  "fonte_file": "FEDIAF-Nutritional-Guidelines_2025-ONLINE.pdf",
+  "tabelle_origine": [
+    "III-3a (p.15, per 100 g di sostanza secca)",
+    "III-3b (p.16, per 1000 kcal ME)"
+  ],
+  "istruzioni": {
+    "unita_riferimento_minimi": "per 1000 kcal ME o per 100g sostanza secca",
+    "colonne_adulto": "95 e 110 kcal ME/kg peso metabolico^0.75 sono due riferimenti alternativi; la selezione dipende dal caso e NON è automatizzata da questo JSON",
+    "massimi_nutrizionali": "N: limiti nutrizionali per il prodotto completo, con fase di vita specificata",
+    "massimi_legali": "L: applicabili quando il nutriente è aggiunto come additivo; controllare il totale inclusi alimenti e integratori, su sostanza secca",
+    "null": "trattino nella fonte, non dichiarato, o non applicabile — mai zero",
+    "sconosciuti": "Se la composizione degli ingredienti è sconosciuta, non dichiarare un massimo verificato",
+    "ambito": "Le tabelle FEDIAF sono per alimenti completi commerciali per animali sani; applicazione alle razioni casalinghe richiede giudizio professionale."
+  },
+  "riferimenti": [
+    {
+      "id": "protein",
+      "nome_it": "Proteine",
+      "unita": "g",
+      "minimo_raccomandato_per_1000_kcal_ME": {
+        "adulto_MER_95": 52.1,
+        "adulto_MER_110": 45.0
+      },
+      "minimo_raccomandato_per_100g_sostanza_secca": {
+        "adulto_MER_95": 21,
+        "adulto_MER_110": 18
+      },
+      "massimo_nutrizionale_adulto_per_1000_kcal_ME": null,
+      "massimo_legale_per_100g_sostanza_secca": null,
+      "tipo_massimo": null,
+      "fonte_minimi": "FEDIAF 2025, tabella III-3b p.16; III-3a p.15",
+      "fonte_massimi": "FEDIAF 2025, tabelle III-3a p.15 e III-3b p.16"
+    },
+    {
+      "id": "arginine",
+      "nome_it": "Arginina",
+      "unita": "g",
+      "minimo_raccomandato_per_1000_kcal_ME": {
+        "adulto_MER_95": 1.51,
+        "adulto_MER_110": 1.3
+      },
+      "minimo_raccomandato_per_100g_sostanza_secca": {
+        "adulto_MER_95": 0.6,
+        "adulto_MER_110": 0.52
+      },
+      "massimo_nutrizionale_adulto_per_1000_kcal_ME": null,
+      "massimo_legale_per_100g_sostanza_secca": null,
+      "tipo_massimo": null,
+      "fonte_minimi": "FEDIAF 2025, tabella III-3b p.16; III-3a p.15",
+      "fonte_massimi": "FEDIAF 2025, tabelle III-3a p.15 e III-3b p.16"
+    },
+    {
+      "id": "histidine",
+      "nome_it": "Istidina",
+      "unita": "g",
+      "minimo_raccomandato_per_1000_kcal_ME": {
+        "adulto_MER_95": 0.67,
+        "adulto_MER_110": 0.58
+      },
+      "minimo_raccomandato_per_100g_sostanza_secca": {
+        "adulto_MER_95": 0.27,
+        "adulto_MER_110": 0.23
+      },
+      "massimo_nutrizionale_adulto_per_1000_kcal_ME": null,
+      "massimo_legale_per_100g_sostanza_secca": null,
+      "tipo_massimo": null,
+      "fonte_minimi": "FEDIAF 2025, tabella III-3b p.16; III-3a p.15",
+      "fonte_massimi": "FEDIAF 2025, tabelle III-3a p.15 e III-3b p.16"
+    },
+    {
+      "id": "isoleucine",
+      "nome_it": "Isoleucina",
+      "unita": "g",
+      "minimo_raccomandato_per_1000_kcal_ME": {
+        "adulto_MER_95": 1.33,
+        "adulto_MER_110": 1.15
+      },
+      "minimo_raccomandato_per_100g_sostanza_secca": {
+        "adulto_MER_95": 0.53,
+        "adulto_MER_110": 0.46
+      },
+      "massimo_nutrizionale_adulto_per_1000_kcal_ME": null,
+      "massimo_legale_per_100g_sostanza_secca": null,
+      "tipo_massimo": null,
+      "fonte_minimi": "FEDIAF 2025, tabella III-3b p.16; III-3a p.15",
+      "fonte_massimi": "FEDIAF 2025, tabelle III-3a p.15 e III-3b p.16"
+    },
+    {
+      "id": "leucine",
+      "nome_it": "Leucina",
+      "unita": "g",
+      "minimo_raccomandato_per_1000_kcal_ME": {
+        "adulto_MER_95": 2.37,
+        "adulto_MER_110": 2.05
+      },
+      "minimo_raccomandato_per_100g_sostanza_secca": {
+        "adulto_MER_95": 0.95,
+        "adulto_MER_110": 0.82
+      },
+      "massimo_nutrizionale_adulto_per_1000_kcal_ME": null,
+      "massimo_legale_per_100g_sostanza_secca": null,
+      "tipo_massimo": null,
+      "fonte_minimi": "FEDIAF 2025, tabella III-3b p.16; III-3a p.15",
+      "fonte_massimi": "FEDIAF 2025, tabelle III-3a p.15 e III-3b p.16"
+    },
+    {
+      "id": "lysine",
+      "nome_it": "Lisina",
+      "unita": "g",
+      "minimo_raccomandato_per_1000_kcal_ME": {
+        "adulto_MER_95": 1.22,
+        "adulto_MER_110": 1.05
+      },
+      "minimo_raccomandato_per_100g_sostanza_secca": {
+        "adulto_MER_95": 0.46,
+        "adulto_MER_110": 0.42
+      },
+      "massimo_nutrizionale_adulto_per_1000_kcal_ME": null,
+      "massimo_legale_per_100g_sostanza_secca": null,
+      "tipo_massimo": null,
+      "fonte_minimi": "FEDIAF 2025, tabella III-3b p.16; III-3a p.15",
+      "fonte_massimi": "FEDIAF 2025, tabelle III-3a p.15 e III-3b p.16"
+    },
+    {
+      "id": "methionine",
+      "nome_it": "Metionina",
+      "unita": "g",
+      "minimo_raccomandato_per_1000_kcal_ME": {
+        "adulto_MER_95": 1.16,
+        "adulto_MER_110": 1.0
+      },
+      "minimo_raccomandato_per_100g_sostanza_secca": {
+        "adulto_MER_95": 0.46,
+        "adulto_MER_110": 0.4
+      },
+      "massimo_nutrizionale_adulto_per_1000_kcal_ME": null,
+      "massimo_legale_per_100g_sostanza_secca": null,
+      "tipo_massimo": null,
+      "fonte_minimi": "FEDIAF 2025, tabella III-3b p.16; III-3a p.15",
+      "fonte_massimi": "FEDIAF 2025, tabelle III-3a p.15 e III-3b p.16"
+    },
+    {
+      "id": "methionine_cystine",
+      "nome_it": "Metionina + cistina",
+      "unita": "g",
+      "minimo_raccomandato_per_1000_kcal_ME": {
+        "adulto_MER_95": 2.21,
+        "adulto_MER_110": 1.91
+      },
+      "minimo_raccomandato_per_100g_sostanza_secca": {
+        "adulto_MER_95": 0.88,
+        "adulto_MER_110": 0.76
+      },
+      "massimo_nutrizionale_adulto_per_1000_kcal_ME": null,
+      "massimo_legale_per_100g_sostanza_secca": null,
+      "tipo_massimo": null,
+      "fonte_minimi": "FEDIAF 2025, tabella III-3b p.16; III-3a p.15",
+      "fonte_massimi": "FEDIAF 2025, tabelle III-3a p.15 e III-3b p.16"
+    },
+    {
+      "id": "phenylalanine",
+      "nome_it": "Fenilalanina",
+      "unita": "g",
+      "minimo_raccomandato_per_1000_kcal_ME": {
+        "adulto_MER_95": 1.56,
+        "adulto_MER_110": 1.35
+      },
+      "minimo_raccomandato_per_100g_sostanza_secca": {
+        "adulto_MER_95": 0.63,
+        "adulto_MER_110": 0.54
+      },
+      "massimo_nutrizionale_adulto_per_1000_kcal_ME": null,
+      "massimo_legale_per_100g_sostanza_secca": null,
+      "tipo_massimo": null,
+      "fonte_minimi": "FEDIAF 2025, tabella III-3b p.16; III-3a p.15",
+      "fonte_massimi": "FEDIAF 2025, tabelle III-3a p.15 e III-3b p.16"
+    },
+    {
+      "id": "phenylalanine_tyrosine",
+      "nome_it": "Fenilalanina + tirosina",
+      "unita": "g",
+      "minimo_raccomandato_per_1000_kcal_ME": {
+        "adulto_MER_95": 2.58,
+        "adulto_MER_110": 2.23
+      },
+      "minimo_raccomandato_per_100g_sostanza_secca": {
+        "adulto_MER_95": 1.03,
+        "adulto_MER_110": 0.89
+      },
+      "massimo_nutrizionale_adulto_per_1000_kcal_ME": null,
+      "massimo_legale_per_100g_sostanza_secca": null,
+      "tipo_massimo": null,
+      "fonte_minimi": "FEDIAF 2025, tabella III-3b p.16; III-3a p.15",
+      "fonte_massimi": "FEDIAF 2025, tabelle III-3a p.15 e III-3b p.16"
+    },
+    {
+      "id": "threonine",
+      "nome_it": "Treonina",
+      "unita": "g",
+      "minimo_raccomandato_per_1000_kcal_ME": {
+        "adulto_MER_95": 1.51,
+        "adulto_MER_110": 1.3
+      },
+      "minimo_raccomandato_per_100g_sostanza_secca": {
+        "adulto_MER_95": 0.6,
+        "adulto_MER_110": 0.52
+      },
+      "massimo_nutrizionale_adulto_per_1000_kcal_ME": null,
+      "massimo_legale_per_100g_sostanza_secca": null,
+      "tipo_massimo": null,
+      "fonte_minimi": "FEDIAF 2025, tabella III-3b p.16; III-3a p.15",
+      "fonte_massimi": "FEDIAF 2025, tabelle III-3a p.15 e III-3b p.16"
+    },
+    {
+      "id": "tryptophan",
+      "nome_it": "Triptofano",
+      "unita": "g",
+      "minimo_raccomandato_per_1000_kcal_ME": {
+        "adulto_MER_95": 0.49,
+        "adulto_MER_110": 0.43
+      },
+      "minimo_raccomandato_per_100g_sostanza_secca": {
+        "adulto_MER_95": 0.2,
+        "adulto_MER_110": 0.17
+      },
+      "massimo_nutrizionale_adulto_per_1000_kcal_ME": null,
+      "massimo_legale_per_100g_sostanza_secca": null,
+      "tipo_massimo": null,
+      "fonte_minimi": "FEDIAF 2025, tabella III-3b p.16; III-3a p.15",
+      "fonte_massimi": "FEDIAF 2025, tabelle III-3a p.15 e III-3b p.16"
+    },
+    {
+      "id": "valine",
+      "nome_it": "Valina",
+      "unita": "g",
+      "minimo_raccomandato_per_1000_kcal_ME": {
+        "adulto_MER_95": 1.71,
+        "adulto_MER_110": 1.48
+      },
+      "minimo_raccomandato_per_100g_sostanza_secca": {
+        "adulto_MER_95": 0.68,
+        "adulto_MER_110": 0.59
+      },
+      "massimo_nutrizionale_adulto_per_1000_kcal_ME": null,
+      "massimo_legale_per_100g_sostanza_secca": null,
+      "tipo_massimo": null,
+      "fonte_minimi": "FEDIAF 2025, tabella III-3b p.16; III-3a p.15",
+      "fonte_massimi": "FEDIAF 2025, tabelle III-3a p.15 e III-3b p.16"
+    },
+    {
+      "id": "fat",
+      "nome_it": "Grassi",
+      "unita": "g",
+      "minimo_raccomandato_per_1000_kcal_ME": {
+        "adulto_MER_95": 13.75,
+        "adulto_MER_110": 13.75
+      },
+      "minimo_raccomandato_per_100g_sostanza_secca": {
+        "adulto_MER_95": 5.5,
+        "adulto_MER_110": 5.5
+      },
+      "massimo_nutrizionale_adulto_per_1000_kcal_ME": null,
+      "massimo_legale_per_100g_sostanza_secca": null,
+      "tipo_massimo": null,
+      "fonte_minimi": "FEDIAF 2025, tabella III-3b p.16; III-3a p.15",
+      "fonte_massimi": "FEDIAF 2025, tabelle III-3a p.15 e III-3b p.16"
+    },
+    {
+      "id": "linoleic_acid",
+      "nome_it": "Acido linoleico omega-6",
+      "unita": "g",
+      "minimo_raccomandato_per_1000_kcal_ME": {
+        "adulto_MER_95": 3.82,
+        "adulto_MER_110": 3.27
+      },
+      "minimo_raccomandato_per_100g_sostanza_secca": {
+        "adulto_MER_95": 1.53,
+        "adulto_MER_110": 1.32
+      },
+      "massimo_nutrizionale_adulto_per_1000_kcal_ME": null,
+      "massimo_legale_per_100g_sostanza_secca": null,
+      "tipo_massimo": null,
+      "fonte_minimi": "FEDIAF 2025, tabella III-3b p.16; III-3a p.15",
+      "fonte_massimi": "FEDIAF 2025, tabelle III-3a p.15 e III-3b p.16"
+    },
+    {
+      "id": "arachidonic_acid",
+      "nome_it": "Acido arachidonico omega-6",
+      "unita": "mg",
+      "minimo_raccomandato_per_1000_kcal_ME": {
+        "adulto_MER_95": null,
+        "adulto_MER_110": null
+      },
+      "minimo_raccomandato_per_100g_sostanza_secca": {
+        "adulto_MER_95": null,
+        "adulto_MER_110": null
+      },
+      "massimo_nutrizionale_adulto_per_1000_kcal_ME": null,
+      "massimo_legale_per_100g_sostanza_secca": null,
+      "tipo_massimo": null,
+      "fonte_minimi": "FEDIAF 2025, tabella III-3b p.16; III-3a p.15",
+      "fonte_massimi": "FEDIAF 2025, tabelle III-3a p.15 e III-3b p.16",
+      "nota": "Nessun minimo numerico FEDIAF per mantenimento del cane adulto; eventuale target nell’app è esterno a FEDIAF."
+    },
+    {
+      "id": "alpha_linolenic_acid",
+      "nome_it": "Acido alfa-linolenico omega-3",
+      "unita": "g",
+      "minimo_raccomandato_per_1000_kcal_ME": {
+        "adulto_MER_95": null,
+        "adulto_MER_110": null
+      },
+      "minimo_raccomandato_per_100g_sostanza_secca": {
+        "adulto_MER_95": null,
+        "adulto_MER_110": null
+      },
+      "massimo_nutrizionale_adulto_per_1000_kcal_ME": null,
+      "massimo_legale_per_100g_sostanza_secca": null,
+      "tipo_massimo": null,
+      "fonte_minimi": "FEDIAF 2025, tabella III-3b p.16; III-3a p.15",
+      "fonte_massimi": "FEDIAF 2025, tabelle III-3a p.15 e III-3b p.16",
+      "nota": "Nessun minimo numerico FEDIAF per mantenimento del cane adulto; eventuale target nell’app è esterno a FEDIAF."
+    },
+    {
+      "id": "epa_dha",
+      "nome_it": "EPA + DHA omega-3",
+      "unita": "g",
+      "minimo_raccomandato_per_1000_kcal_ME": {
+        "adulto_MER_95": null,
+        "adulto_MER_110": null
+      },
+      "minimo_raccomandato_per_100g_sostanza_secca": {
+        "adulto_MER_95": null,
+        "adulto_MER_110": null
+      },
+      "massimo_nutrizionale_adulto_per_1000_kcal_ME": null,
+      "massimo_legale_per_100g_sostanza_secca": null,
+      "tipo_massimo": null,
+      "fonte_minimi": "FEDIAF 2025, tabella III-3b p.16; III-3a p.15",
+      "fonte_massimi": "FEDIAF 2025, tabelle III-3a p.15 e III-3b p.16",
+      "nota": "Nessun minimo numerico FEDIAF per mantenimento del cane adulto; eventuale target nell’app è esterno a FEDIAF."
+    },
+    {
+      "id": "calcium",
+      "nome_it": "Calcio",
+      "unita": "g",
+      "minimo_raccomandato_per_1000_kcal_ME": {
+        "adulto_MER_95": 1.45,
+        "adulto_MER_110": 1.25
+      },
+      "minimo_raccomandato_per_100g_sostanza_secca": {
+        "adulto_MER_95": 0.58,
+        "adulto_MER_110": 0.5
+      },
+      "massimo_nutrizionale_adulto_per_1000_kcal_ME": 6.25,
+      "massimo_legale_per_100g_sostanza_secca": null,
+      "tipo_massimo": "N",
+      "fonte_minimi": "FEDIAF 2025, tabella III-3b p.16; III-3a p.15",
+      "fonte_massimi": "FEDIAF 2025, tabelle III-3a p.15 e III-3b p.16"
+    },
+    {
+      "id": "phosphorus",
+      "nome_it": "Fosforo",
+      "unita": "g",
+      "minimo_raccomandato_per_1000_kcal_ME": {
+        "adulto_MER_95": 1.16,
+        "adulto_MER_110": 1.0
+      },
+      "minimo_raccomandato_per_100g_sostanza_secca": {
+        "adulto_MER_95": 0.46,
+        "adulto_MER_110": 0.4
+      },
+      "massimo_nutrizionale_adulto_per_1000_kcal_ME": 4.0,
+      "massimo_legale_per_100g_sostanza_secca": null,
+      "tipo_massimo": "N",
+      "fonte_minimi": "FEDIAF 2025, tabella III-3b p.16; III-3a p.15",
+      "fonte_massimi": "FEDIAF 2025, tabelle III-3a p.15 e III-3b p.16"
+    },
+    {
+      "id": "potassium",
+      "nome_it": "Potassio",
+      "unita": "g",
+      "minimo_raccomandato_per_1000_kcal_ME": {
+        "adulto_MER_95": 1.45,
+        "adulto_MER_110": 1.25
+      },
+      "minimo_raccomandato_per_100g_sostanza_secca": {
+        "adulto_MER_95": 0.58,
+        "adulto_MER_110": 0.5
+      },
+      "massimo_nutrizionale_adulto_per_1000_kcal_ME": null,
+      "massimo_legale_per_100g_sostanza_secca": null,
+      "tipo_massimo": null,
+      "fonte_minimi": "FEDIAF 2025, tabella III-3b p.16; III-3a p.15",
+      "fonte_massimi": "FEDIAF 2025, tabelle III-3a p.15 e III-3b p.16"
+    },
+    {
+      "id": "sodium",
+      "nome_it": "Sodio",
+      "unita": "g",
+      "minimo_raccomandato_per_1000_kcal_ME": {
+        "adulto_MER_95": 0.29,
+        "adulto_MER_110": 0.25
+      },
+      "minimo_raccomandato_per_100g_sostanza_secca": {
+        "adulto_MER_95": 0.12,
+        "adulto_MER_110": 0.1
+      },
+      "massimo_nutrizionale_adulto_per_1000_kcal_ME": null,
+      "massimo_legale_per_100g_sostanza_secca": null,
+      "tipo_massimo": null,
+      "fonte_minimi": "FEDIAF 2025, tabella III-3b p.16; III-3a p.15",
+      "fonte_massimi": "FEDIAF 2025, tabelle III-3a p.15 e III-3b p.16"
+    },
+    {
+      "id": "chloride",
+      "nome_it": "Cloruro",
+      "unita": "g",
+      "minimo_raccomandato_per_1000_kcal_ME": {
+        "adulto_MER_95": 0.43,
+        "adulto_MER_110": 0.38
+      },
+      "minimo_raccomandato_per_100g_sostanza_secca": {
+        "adulto_MER_95": 0.17,
+        "adulto_MER_110": 0.15
+      },
+      "massimo_nutrizionale_adulto_per_1000_kcal_ME": null,
+      "massimo_legale_per_100g_sostanza_secca": null,
+      "tipo_massimo": null,
+      "fonte_minimi": "FEDIAF 2025, tabella III-3b p.16; III-3a p.15",
+      "fonte_massimi": "FEDIAF 2025, tabelle III-3a p.15 e III-3b p.16"
+    },
+    {
+      "id": "magnesium",
+      "nome_it": "Magnesio",
+      "unita": "g",
+      "minimo_raccomandato_per_1000_kcal_ME": {
+        "adulto_MER_95": 0.2,
+        "adulto_MER_110": 0.18
+      },
+      "minimo_raccomandato_per_100g_sostanza_secca": {
+        "adulto_MER_95": 0.08,
+        "adulto_MER_110": 0.07
+      },
+      "massimo_nutrizionale_adulto_per_1000_kcal_ME": null,
+      "massimo_legale_per_100g_sostanza_secca": null,
+      "tipo_massimo": null,
+      "fonte_minimi": "FEDIAF 2025, tabella III-3b p.16; III-3a p.15",
+      "fonte_massimi": "FEDIAF 2025, tabelle III-3a p.15 e III-3b p.16"
+    },
+    {
+      "id": "copper",
+      "nome_it": "Rame",
+      "unita": "mg",
+      "minimo_raccomandato_per_1000_kcal_ME": {
+        "adulto_MER_95": 2.08,
+        "adulto_MER_110": 1.8
+      },
+      "minimo_raccomandato_per_100g_sostanza_secca": {
+        "adulto_MER_95": 0.83,
+        "adulto_MER_110": 0.72
+      },
+      "massimo_nutrizionale_adulto_per_1000_kcal_ME": null,
+      "massimo_legale_per_100g_sostanza_secca": 2.8,
+      "tipo_massimo": "L",
+      "fonte_minimi": "FEDIAF 2025, tabella III-3b p.16; III-3a p.15",
+      "fonte_massimi": "FEDIAF 2025, tabelle III-3a p.15 e III-3b p.16",
+      "nota": "Limite L condizionato all’aggiunta del nutriente come additivo; riguarda il contenuto totale della razione, e si valuta sulla sostanza secca."
+    },
+    {
+      "id": "iodine",
+      "nome_it": "Iodio",
+      "unita": "mg",
+      "minimo_raccomandato_per_1000_kcal_ME": {
+        "adulto_MER_95": 0.3,
+        "adulto_MER_110": 0.26
+      },
+      "minimo_raccomandato_per_100g_sostanza_secca": {
+        "adulto_MER_95": 0.12,
+        "adulto_MER_110": 0.11
+      },
+      "massimo_nutrizionale_adulto_per_1000_kcal_ME": null,
+      "massimo_legale_per_100g_sostanza_secca": 1.1,
+      "tipo_massimo": "L",
+      "fonte_minimi": "FEDIAF 2025, tabella III-3b p.16; III-3a p.15",
+      "fonte_massimi": "FEDIAF 2025, tabelle III-3a p.15 e III-3b p.16",
+      "nota": "Limite L condizionato all’aggiunta del nutriente come additivo; riguarda il contenuto totale della razione, e si valuta sulla sostanza secca."
+    },
+    {
+      "id": "iron",
+      "nome_it": "Ferro",
+      "unita": "mg",
+      "minimo_raccomandato_per_1000_kcal_ME": {
+        "adulto_MER_95": 10.4,
+        "adulto_MER_110": 9.0
+      },
+      "minimo_raccomandato_per_100g_sostanza_secca": {
+        "adulto_MER_95": 4.17,
+        "adulto_MER_110": 3.6
+      },
+      "massimo_nutrizionale_adulto_per_1000_kcal_ME": null,
+      "massimo_legale_per_100g_sostanza_secca": 68.18,
+      "tipo_massimo": "L",
+      "fonte_minimi": "FEDIAF 2025, tabella III-3b p.16; III-3a p.15",
+      "fonte_massimi": "FEDIAF 2025, tabelle III-3a p.15 e III-3b p.16",
+      "nota": "Limite L condizionato all’aggiunta del nutriente come additivo; riguarda il contenuto totale della razione, e si valuta sulla sostanza secca."
+    },
+    {
+      "id": "manganese",
+      "nome_it": "Manganese",
+      "unita": "mg",
+      "minimo_raccomandato_per_1000_kcal_ME": {
+        "adulto_MER_95": 1.67,
+        "adulto_MER_110": 1.44
+      },
+      "minimo_raccomandato_per_100g_sostanza_secca": {
+        "adulto_MER_95": 0.67,
+        "adulto_MER_110": 0.58
+      },
+      "massimo_nutrizionale_adulto_per_1000_kcal_ME": null,
+      "massimo_legale_per_100g_sostanza_secca": 17.0,
+      "tipo_massimo": "L",
+      "fonte_minimi": "FEDIAF 2025, tabella III-3b p.16; III-3a p.15",
+      "fonte_massimi": "FEDIAF 2025, tabelle III-3a p.15 e III-3b p.16",
+      "nota": "Limite L condizionato all’aggiunta del nutriente come additivo; riguarda il contenuto totale della razione, e si valuta sulla sostanza secca."
+    },
+    {
+      "id": "selenium_wet",
+      "nome_it": "Selenio (diete umide)",
+      "unita": "µg",
+      "minimo_raccomandato_per_1000_kcal_ME": {
+        "adulto_MER_95": 67.5,
+        "adulto_MER_110": 57.5
+      },
+      "minimo_raccomandato_per_100g_sostanza_secca": {
+        "adulto_MER_95": 27,
+        "adulto_MER_110": 23
+      },
+      "massimo_nutrizionale_adulto_per_1000_kcal_ME": null,
+      "massimo_legale_per_100g_sostanza_secca": 56.8,
+      "tipo_massimo": "L",
+      "fonte_minimi": "FEDIAF 2025, tabella III-3b p.16; III-3a p.15",
+      "fonte_massimi": "FEDIAF 2025, tabelle III-3a p.15 e III-3b p.16",
+      "nota": "Scegliere wet/dry in funzione della classe di dieta; non sommare entrambe le righe. Limite L condizionato all’aggiunta del nutriente come additivo; riguarda il contenuto totale della razione, e si valuta sulla sostanza secca."
+    },
+    {
+      "id": "selenium_dry",
+      "nome_it": "Selenio (diete secche)",
+      "unita": "µg",
+      "minimo_raccomandato_per_1000_kcal_ME": {
+        "adulto_MER_95": 55.0,
+        "adulto_MER_110": 45.0
+      },
+      "minimo_raccomandato_per_100g_sostanza_secca": {
+        "adulto_MER_95": 22,
+        "adulto_MER_110": 18
+      },
+      "massimo_nutrizionale_adulto_per_1000_kcal_ME": null,
+      "massimo_legale_per_100g_sostanza_secca": 56.8,
+      "tipo_massimo": "L",
+      "fonte_minimi": "FEDIAF 2025, tabella III-3b p.16; III-3a p.15",
+      "fonte_massimi": "FEDIAF 2025, tabelle III-3a p.15 e III-3b p.16",
+      "nota": "Scegliere wet/dry in funzione della classe di dieta; non sommare entrambe le righe. Limite L condizionato all’aggiunta del nutriente come additivo; riguarda il contenuto totale della razione, e si valuta sulla sostanza secca."
+    },
+    {
+      "id": "zinc",
+      "nome_it": "Zinco",
+      "unita": "mg",
+      "minimo_raccomandato_per_1000_kcal_ME": {
+        "adulto_MER_95": 20.8,
+        "adulto_MER_110": 18.0
+      },
+      "minimo_raccomandato_per_100g_sostanza_secca": {
+        "adulto_MER_95": 8.34,
+        "adulto_MER_110": 7.2
+      },
+      "massimo_nutrizionale_adulto_per_1000_kcal_ME": null,
+      "massimo_legale_per_100g_sostanza_secca": 22.7,
+      "tipo_massimo": "L",
+      "fonte_minimi": "FEDIAF 2025, tabella III-3b p.16; III-3a p.15",
+      "fonte_massimi": "FEDIAF 2025, tabelle III-3a p.15 e III-3b p.16",
+      "nota": "Limite L condizionato all’aggiunta del nutriente come additivo; riguarda il contenuto totale della razione, e si valuta sulla sostanza secca."
+    },
+    {
+      "id": "vitamin_a",
+      "nome_it": "Vitamina A",
+      "unita": "IU",
+      "minimo_raccomandato_per_1000_kcal_ME": {
+        "adulto_MER_95": 1754,
+        "adulto_MER_110": 1515
+      },
+      "minimo_raccomandato_per_100g_sostanza_secca": {
+        "adulto_MER_95": 702,
+        "adulto_MER_110": 606
+      },
+      "massimo_nutrizionale_adulto_per_1000_kcal_ME": 100000,
+      "massimo_legale_per_100g_sostanza_secca": null,
+      "tipo_massimo": "N",
+      "fonte_minimi": "FEDIAF 2025, tabella III-3b p.16; III-3a p.15",
+      "fonte_massimi": "FEDIAF 2025, tabelle III-3a p.15 e III-3b p.16"
+    },
+    {
+      "id": "vitamin_d",
+      "nome_it": "Vitamina D",
+      "unita": "IU",
+      "minimo_raccomandato_per_1000_kcal_ME": {
+        "adulto_MER_95": 159,
+        "adulto_MER_110": 138
+      },
+      "minimo_raccomandato_per_100g_sostanza_secca": {
+        "adulto_MER_95": 63.9,
+        "adulto_MER_110": 55.2
+      },
+      "massimo_nutrizionale_adulto_per_1000_kcal_ME": 800,
+      "massimo_legale_per_100g_sostanza_secca": 227.0,
+      "tipo_massimo": "N_e_L",
+      "fonte_minimi": "FEDIAF 2025, tabella III-3b p.16; III-3a p.15",
+      "fonte_massimi": "FEDIAF 2025, tabelle III-3a p.15 e III-3b p.16",
+      "nota": "Massimo nutrizionale N e massimo legale L distinti. L applicabile quando vitamina D è aggiunta come additivo, sul totale del prodotto finito in sostanza secca. Limite L condizionato all’aggiunta del nutriente come additivo; riguarda il contenuto totale della razione, e si valuta sulla sostanza secca."
+    },
+    {
+      "id": "vitamin_e",
+      "nome_it": "Vitamina E",
+      "unita": "IU",
+      "minimo_raccomandato_per_1000_kcal_ME": {
+        "adulto_MER_95": 10.4,
+        "adulto_MER_110": 9.0
+      },
+      "minimo_raccomandato_per_100g_sostanza_secca": {
+        "adulto_MER_95": 4.17,
+        "adulto_MER_110": 3.6
+      },
+      "massimo_nutrizionale_adulto_per_1000_kcal_ME": null,
+      "massimo_legale_per_100g_sostanza_secca": null,
+      "tipo_massimo": null,
+      "fonte_minimi": "FEDIAF 2025, tabella III-3b p.16; III-3a p.15",
+      "fonte_massimi": "FEDIAF 2025, tabelle III-3a p.15 e III-3b p.16"
+    },
+    {
+      "id": "thiamine",
+      "nome_it": "Vitamina B1 (tiamina)",
+      "unita": "mg",
+      "minimo_raccomandato_per_1000_kcal_ME": {
+        "adulto_MER_95": 0.62,
+        "adulto_MER_110": 0.54
+      },
+      "minimo_raccomandato_per_100g_sostanza_secca": {
+        "adulto_MER_95": 0.25,
+        "adulto_MER_110": 0.21
+      },
+      "massimo_nutrizionale_adulto_per_1000_kcal_ME": null,
+      "massimo_legale_per_100g_sostanza_secca": null,
+      "tipo_massimo": null,
+      "fonte_minimi": "FEDIAF 2025, tabella III-3b p.16; III-3a p.15",
+      "fonte_massimi": "FEDIAF 2025, tabelle III-3a p.15 e III-3b p.16"
+    },
+    {
+      "id": "riboflavin",
+      "nome_it": "Vitamina B2 (riboflavina)",
+      "unita": "mg",
+      "minimo_raccomandato_per_1000_kcal_ME": {
+        "adulto_MER_95": 1.74,
+        "adulto_MER_110": 1.5
+      },
+      "minimo_raccomandato_per_100g_sostanza_secca": {
+        "adulto_MER_95": 0.69,
+        "adulto_MER_110": 0.6
+      },
+      "massimo_nutrizionale_adulto_per_1000_kcal_ME": null,
+      "massimo_legale_per_100g_sostanza_secca": null,
+      "tipo_massimo": null,
+      "fonte_minimi": "FEDIAF 2025, tabella III-3b p.16; III-3a p.15",
+      "fonte_massimi": "FEDIAF 2025, tabelle III-3a p.15 e III-3b p.16"
+    },
+    {
+      "id": "pantothenic_acid",
+      "nome_it": "Vitamina B5 (acido pantotenico)",
+      "unita": "mg",
+      "minimo_raccomandato_per_1000_kcal_ME": {
+        "adulto_MER_95": 4.11,
+        "adulto_MER_110": 3.55
+      },
+      "minimo_raccomandato_per_100g_sostanza_secca": {
+        "adulto_MER_95": 1.64,
+        "adulto_MER_110": 1.42
+      },
+      "massimo_nutrizionale_adulto_per_1000_kcal_ME": null,
+      "massimo_legale_per_100g_sostanza_secca": null,
+      "tipo_massimo": null,
+      "fonte_minimi": "FEDIAF 2025, tabella III-3b p.16; III-3a p.15",
+      "fonte_massimi": "FEDIAF 2025, tabelle III-3a p.15 e III-3b p.16"
+    },
+    {
+      "id": "pyridoxine",
+      "nome_it": "Vitamina B6 (piridossina)",
+      "unita": "mg",
+      "minimo_raccomandato_per_1000_kcal_ME": {
+        "adulto_MER_95": 0.42,
+        "adulto_MER_110": 0.36
+      },
+      "minimo_raccomandato_per_100g_sostanza_secca": {
+        "adulto_MER_95": 0.17,
+        "adulto_MER_110": 0.15
+      },
+      "massimo_nutrizionale_adulto_per_1000_kcal_ME": null,
+      "massimo_legale_per_100g_sostanza_secca": null,
+      "tipo_massimo": null,
+      "fonte_minimi": "FEDIAF 2025, tabella III-3b p.16; III-3a p.15",
+      "fonte_massimi": "FEDIAF 2025, tabelle III-3a p.15 e III-3b p.16"
+    },
+    {
+      "id": "vitamin_b12",
+      "nome_it": "Vitamina B12",
+      "unita": "µg",
+      "minimo_raccomandato_per_1000_kcal_ME": {
+        "adulto_MER_95": 9.68,
+        "adulto_MER_110": 8.36
+      },
+      "minimo_raccomandato_per_100g_sostanza_secca": {
+        "adulto_MER_95": 3.87,
+        "adulto_MER_110": 3.35
+      },
+      "massimo_nutrizionale_adulto_per_1000_kcal_ME": null,
+      "massimo_legale_per_100g_sostanza_secca": null,
+      "tipo_massimo": null,
+      "fonte_minimi": "FEDIAF 2025, tabella III-3b p.16; III-3a p.15",
+      "fonte_massimi": "FEDIAF 2025, tabelle III-3a p.15 e III-3b p.16"
+    },
+    {
+      "id": "niacin",
+      "nome_it": "Vitamina B3 (niacina)",
+      "unita": "mg",
+      "minimo_raccomandato_per_1000_kcal_ME": {
+        "adulto_MER_95": 4.74,
+        "adulto_MER_110": 4.09
+      },
+      "minimo_raccomandato_per_100g_sostanza_secca": {
+        "adulto_MER_95": 1.89,
+        "adulto_MER_110": 1.64
+      },
+      "massimo_nutrizionale_adulto_per_1000_kcal_ME": null,
+      "massimo_legale_per_100g_sostanza_secca": null,
+      "tipo_massimo": null,
+      "fonte_minimi": "FEDIAF 2025, tabella III-3b p.16; III-3a p.15",
+      "fonte_massimi": "FEDIAF 2025, tabelle III-3a p.15 e III-3b p.16"
+    },
+    {
+      "id": "folic_acid",
+      "nome_it": "Vitamina B9 (acido folico)",
+      "unita": "µg",
+      "minimo_raccomandato_per_1000_kcal_ME": {
+        "adulto_MER_95": 74.7,
+        "adulto_MER_110": 64.5
+      },
+      "minimo_raccomandato_per_100g_sostanza_secca": {
+        "adulto_MER_95": 29.9,
+        "adulto_MER_110": 25.8
+      },
+      "massimo_nutrizionale_adulto_per_1000_kcal_ME": null,
+      "massimo_legale_per_100g_sostanza_secca": null,
+      "tipo_massimo": null,
+      "fonte_minimi": "FEDIAF 2025, tabella III-3b p.16; III-3a p.15",
+      "fonte_massimi": "FEDIAF 2025, tabelle III-3a p.15 e III-3b p.16"
+    },
+    {
+      "id": "biotin",
+      "nome_it": "Vitamina B7 (biotina)",
+      "unita": "µg",
+      "minimo_raccomandato_per_1000_kcal_ME": {
+        "adulto_MER_95": null,
+        "adulto_MER_110": null
+      },
+      "minimo_raccomandato_per_100g_sostanza_secca": {
+        "adulto_MER_95": null,
+        "adulto_MER_110": null
+      },
+      "massimo_nutrizionale_adulto_per_1000_kcal_ME": null,
+      "massimo_legale_per_100g_sostanza_secca": null,
+      "tipo_massimo": null,
+      "fonte_minimi": "FEDIAF 2025, tabella III-3b p.16; III-3a p.15",
+      "fonte_massimi": "FEDIAF 2025, tabelle III-3a p.15 e III-3b p.16",
+      "nota": "Trattino nelle tabelle FEDIAF per cane adulto: nessun minimo numerico indicato, NON significa zero."
+    },
+    {
+      "id": "choline",
+      "nome_it": "Colina",
+      "unita": "mg",
+      "minimo_raccomandato_per_1000_kcal_ME": {
+        "adulto_MER_95": 474,
+        "adulto_MER_110": 409
+      },
+      "minimo_raccomandato_per_100g_sostanza_secca": {
+        "adulto_MER_95": 189,
+        "adulto_MER_110": 164
+      },
+      "massimo_nutrizionale_adulto_per_1000_kcal_ME": null,
+      "massimo_legale_per_100g_sostanza_secca": null,
+      "tipo_massimo": null,
+      "fonte_minimi": "FEDIAF 2025, tabella III-3b p.16; III-3a p.15",
+      "fonte_massimi": "FEDIAF 2025, tabelle III-3a p.15 e III-3b p.16"
+    },
+    {
+      "id": "vitamin_k",
+      "nome_it": "Vitamina K",
+      "unita": "µg",
+      "minimo_raccomandato_per_1000_kcal_ME": {
+        "adulto_MER_95": null,
+        "adulto_MER_110": null
+      },
+      "minimo_raccomandato_per_100g_sostanza_secca": {
+        "adulto_MER_95": null,
+        "adulto_MER_110": null
+      },
+      "massimo_nutrizionale_adulto_per_1000_kcal_ME": null,
+      "massimo_legale_per_100g_sostanza_secca": null,
+      "tipo_massimo": null,
+      "fonte_minimi": "FEDIAF 2025, tabella III-3b p.16; III-3a p.15",
+      "fonte_massimi": "FEDIAF 2025, tabelle III-3a p.15 e III-3b p.16",
+      "nota": "Trattino nelle tabelle FEDIAF per cane adulto: nessun minimo numerico indicato, NON significa zero."
+    }
+  ],
+  "vincoli_rapporto": [
+    {
+      "id": "calcium_phosphorus_ratio",
+      "minimo": 1.0,
+      "massimo_nutrizionale_adulto": 2.0,
+      "unita": "rapporto Ca/P in massa",
+      "fonte": "III-3a, III-3b pp.15-16"
+    }
+  ],
+  "note_normative": [
+    {
+      "id": "sodium_not_a_maximum",
+      "valore": 3.75,
+      "unita": "g/1000 kcal ME",
+      "natura": "livello indicato sicuro; NON massimo",
+      "fonte": "nota c p.21"
+    },
+    {
+      "id": "chloride_not_a_maximum",
+      "valore": 5.87,
+      "unita": "g/1000 kcal ME",
+      "natura": "livello indicato sicuro; NON massimo",
+      "fonte": "nota c p.21"
+    },
+    {
+      "id": "selenium_organic_specific_limit",
+      "valore": 22.73,
+      "unita": "µg selenio organico/100 g DM",
+      "natura": "massimo specifico per supplementazione di selenio organico",
+      "fonte": "nota d p.21"
+    },
+    {
+      "id": "amino_acids_digestibility",
+      "valore": 10,
+      "unita": "percento",
+      "natura": "aumento minimo raccomandato degli aminoacidi essenziali se digeribilità proteica >=80% non garantita",
+      "fonte": "§3.2.1 p.13"
+    },
+    {
+      "id": "vitamin_e_conversion",
+      "natura": "Non convertire automaticamente mg in UI senza la forma chimica (naturale/sintetica) dichiarata: le tabelle FEDIAF utilizzano UI.",
+      "fonte": "Tabella III-3b p.16"
+    },
+    {
+      "id": "arginine_protein_adjustment",
+      "natura": "FEDIAF fornisce un’aggiustamento dell’arginina legato all’aumento del tenore proteico, consultare allegato 7.4.",
+      "fonte": "§3.3.1 p.22; allegato 7.4"
+    }
+  ],
+  "avvertenza": "File dati di riferimento; non è uno schema JSON certificato per l’importatore dell’app. Va collegato dalla sviluppatrice alla logica dei controlli senza sovrascrivere i nutrienti esistenti."
+}

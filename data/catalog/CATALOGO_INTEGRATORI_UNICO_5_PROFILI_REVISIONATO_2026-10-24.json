@@ -1,0 +1,453 @@
+{
+  "supplements": [
+    {
+      "id": "qdiet",
+      "name_it": "Q.Diet Compensa (standard, NON Crescita/Ultra)",
+      "brand": "Q.Diet",
+      "product_variant": "Compensa standard (non Crescita/Ultra)",
+      "class": "multinutrient",
+      "dose_unit": "g",
+      "integer_dose": false,
+      "label_source": "https://www.qdiet.it/products/compensa-250-g",
+      "source_url": "https://www.qdiet.it/products/compensa-250-g",
+      "data_status": "review_required",
+      "usable_for_optimization": true,
+      "notes": "Additivi dichiarati presumibilmente per kg secondo convenzione; pagina non specifica esplicitamente unita di riferimento. Le quantita degli additivi sono aggiunte, non necessariamente analisi totale. | ABILITATO per richiesta dell’utente; valori incompleti/provvisori non equivalgono a prodotto verificato. | Vitamina E integrata: 2 IU/g (forma sintetica acetata). Potassio 7,5% storico NON confermato sulla scheda aggiornata. 40 kg non presente nella tabella del sito ufficiale corrente, pur comparendo in materiale commerciale storico.",
+      "nutrients": {
+        "protein": {
+          "value": 0.0425,
+          "unit": "g",
+          "status": "label",
+          "declared_total_or_added": "total",
+          "source": "https://www.qdiet.it/products/compensa-250-g"
+        },
+        "fat": {
+          "value": 0.0007000000000000001,
+          "unit": "g",
+          "status": "label",
+          "declared_total_or_added": "total",
+          "source": "https://www.qdiet.it/products/compensa-250-g"
+        },
+        "fiber": {
+          "value": 0.0001,
+          "unit": "g",
+          "status": "label",
+          "declared_total_or_added": "total",
+          "source": "https://www.qdiet.it/products/compensa-250-g"
+        },
+        "moisture": {
+          "value": 0.03,
+          "unit": "g",
+          "status": "label",
+          "declared_total_or_added": "total",
+          "source": "https://www.qdiet.it/products/compensa-250-g"
+        },
+        "calcium": {
+          "value": 0.18,
+          "unit": "g",
+          "status": "label",
+          "declared_total_or_added": "total",
+          "source": "https://www.qdiet.it/products/compensa-250-g"
+        },
+        "phosphorus": {
+          "value": 0.065,
+          "unit": "g",
+          "status": "label",
+          "declared_total_or_added": "total",
+          "source": "https://www.qdiet.it/products/compensa-250-g"
+        },
+        "sodium": {
+          "value": 0.02,
+          "unit": "g",
+          "status": "label",
+          "declared_total_or_added": "total",
+          "source": "https://www.qdiet.it/products/compensa-250-g"
+        },
+        "magnesium": {
+          "value": 0.015,
+          "unit": "g",
+          "status": "label",
+          "declared_total_or_added": "total",
+          "source": "https://www.qdiet.it/products/compensa-250-g"
+        },
+        "copper": {
+          "value": 0.25,
+          "unit": "mg",
+          "status": "label",
+          "declared_total_or_added": "added",
+          "source": "https://www.qdiet.it/products/compensa-250-g"
+        },
+        "iodine": {
+          "value": 0.045,
+          "unit": "mg",
+          "status": "label",
+          "declared_total_or_added": "added",
+          "source": "https://www.qdiet.it/products/compensa-250-g"
+        },
+        "iron": {
+          "value": 1.25,
+          "unit": "mg",
+          "status": "label",
+          "declared_total_or_added": "added",
+          "source": "https://www.qdiet.it/products/compensa-250-g"
+        },
+        "manganese": {
+          "value": 0.3,
+          "unit": "mg",
+          "status": "label",
+          "declared_total_or_added": "added",
+          "source": "https://www.qdiet.it/products/compensa-250-g"
+        },
+        "selenium_wet": {
+          "value": 4.0,
+          "unit": "µg",
+          "status": "label",
+          "declared_total_or_added": "added",
+          "source": "https://www.qdiet.it/products/compensa-250-g"
+        },
+        "zinc": {
+          "value": 2.0,
+          "unit": "mg",
+          "status": "label",
+          "declared_total_or_added": "added",
+          "source": "https://www.qdiet.it/products/compensa-250-g"
+        },
+        "vitamin_a": {
+          "value": 250.0,
+          "unit": "IU",
+          "status": "label",
+          "declared_total_or_added": "added",
+          "source": "https://www.qdiet.it/products/compensa-250-g"
+        },
+        "vitamin_d": {
+          "value": 25.0,
+          "unit": "IU",
+          "status": "label",
+          "declared_total_or_added": "added",
+          "source": "https://www.qdiet.it/products/compensa-250-g"
+        },
+        "vitamin_b1": {
+          "value": 0.075,
+          "unit": "mg",
+          "status": "label",
+          "declared_total_or_added": "added",
+          "source": "https://www.qdiet.it/products/compensa-250-g"
+        },
+        "vitamin_b2": {
+          "value": 0.25,
+          "unit": "mg",
+          "status": "label",
+          "declared_total_or_added": "added",
+          "source": "https://www.qdiet.it/products/compensa-250-g"
+        },
+        "vitamin_b3": {
+          "value": 0.05,
+          "unit": "mg",
+          "status": "label",
+          "declared_total_or_added": "added",
+          "source": "https://www.qdiet.it/products/compensa-250-g"
+        },
+        "vitamin_b6": {
+          "value": 0.05,
+          "unit": "mg",
+          "status": "label",
+          "declared_total_or_added": "added",
+          "source": "https://www.qdiet.it/products/compensa-250-g"
+        },
+        "vitamin_b9": {
+          "value": 10.0,
+          "unit": "µg",
+          "status": "label",
+          "declared_total_or_added": "added",
+          "source": "https://www.qdiet.it/products/compensa-250-g"
+        },
+        "vitamin_b12": {
+          "value": 1.0,
+          "unit": "µg",
+          "status": "label",
+          "declared_total_or_added": "added",
+          "source": "https://www.qdiet.it/products/compensa-250-g"
+        },
+        "vitamin_c": {
+          "value": 1.25,
+          "unit": "mg",
+          "status": "label",
+          "declared_total_or_added": "added",
+          "source": "https://www.qdiet.it/products/compensa-250-g"
+        },
+        "vitamin_b7": {
+          "value": 2.5,
+          "unit": "µg",
+          "status": "label",
+          "declared_total_or_added": "added",
+          "source": "https://www.qdiet.it/products/compensa-250-g"
+        },
+        "taurine": {
+          "value": 50.0,
+          "unit": "mg",
+          "status": "label",
+          "declared_total_or_added": "added",
+          "source": "https://www.qdiet.it/products/compensa-250-g"
+        },
+        "potassium": {
+          "value": 0.075,
+          "unit": "g",
+          "status": "estimated",
+          "declared_total_or_added": "total",
+          "source": "Catalogo Q.Diet 2024 (storico; non confermato su etichetta attuale)",
+          "method": "7,5% riportato da catalogo Q.Diet 2024, NON presente nella scheda online Compensa polvere attuale: dato da confermare su confezione o produttore"
+        },
+        "vitamin_b5": {
+          "value": 0.414,
+          "unit": "mg",
+          "status": "calculated",
+          "declared_total_or_added": "added",
+          "method": "0,45 mg pantotenato di calcio/g × 0,92",
+          "source": "Q.Diet Compensa + fattore FEDIAF 2025 VII-14"
+        },
+        "choline": {
+          "value": 67.14,
+          "unit": "mg",
+          "status": "calculated",
+          "declared_total_or_added": "added",
+          "method": "90 mg cloruro di colina/g ×0,746",
+          "source": "Q.Diet Compensa catalogo 2024 e conversione massa"
+        },
+        "vitamin_e": {
+          "value": 2.0,
+          "unit": "IU",
+          "status": "calculated",
+          "declared_total_or_added": "added",
+          "form": "all_rac_alpha_tocopheryl_acetate",
+          "method": "2000 mg/kg = 2 mg/g; FEDIAF 2025 tabella VII-14: 1 mg all-rac-alpha-tocopheryl acetate = 1 IU",
+          "source": "https://www.qdiet.it/products/compensa-250-g"
+        }
+      },
+      "kcal_per_unit": 0.96,
+      "dose_guide": {
+        "points": [
+          {
+            "weight_kg": 5,
+            "min": 1.0,
+            "max": 1.5
+          },
+          {
+            "weight_kg": 10,
+            "min": 1.5,
+            "max": 3.0
+          },
+          {
+            "weight_kg": 20,
+            "min": 3.0,
+            "max": 6.0
+          },
+          {
+            "weight_kg": 30,
+            "min": 4.5,
+            "max": 9.0
+          }
+        ],
+        "source": "https://www.qdiet.it/products/compensa-250-g",
+        "note": "Indicazioni del produttore fino a 30 kg. Oltre 30 kg: solo estrapolazione, NON dose ufficiale; 0,15–0,30 g/kg/die come proiezione operativa, non limite tossicologico. Un misurino raso = 3 g."
+      }
+    },
+    {
+      "id": "omegor_vitality",
+      "name_it": "Omegor Vitality 1000 (capsula)",
+      "brand": "Omegor",
+      "product_variant": "Vitality 1000",
+      "class": "fish_oil",
+      "dose_unit": "capsule",
+      "integer_dose": true,
+      "label_source": "https://www.omegor.com/products/omegor-vitality-1000/",
+      "source_url": "https://www.omegor.com/products/omegor-vitality-1000/",
+      "data_status": "review_required",
+      "usable_for_optimization": true,
+      "notes": "1 capsula contiene 1000 mg olio; massa totale capsula ignota. Vitamina E 10 mg per capsula: forma chimica da verificare, NON assumere d-alfa-tocoferolo e NON convertire in IU senza forma dichiarata. | ABILITATO per richiesta dell’utente; valori incompleti/provvisori non equivalgono a prodotto verificato.",
+      "nutrients": {
+        "fat": {
+          "value": 1,
+          "unit": "g",
+          "status": "label",
+          "declared_total_or_added": "total",
+          "source": "https://www.omegor.com/products/omegor-vitality-1000/"
+        },
+        "epa": {
+          "value": 0.535,
+          "unit": "g",
+          "status": "label",
+          "declared_total_or_added": "total",
+          "source": "https://www.omegor.com/products/omegor-vitality-1000/"
+        },
+        "dha": {
+          "value": 0.268,
+          "unit": "g",
+          "status": "label",
+          "declared_total_or_added": "total",
+          "source": "https://www.omegor.com/products/omegor-vitality-1000/"
+        },
+        "epa_dha": {
+          "value": 0.803,
+          "unit": "g",
+          "status": "label",
+          "declared_total_or_added": "total",
+          "source": "https://www.omegor.com/products/omegor-vitality-1000/"
+        },
+        "omega3_total": {
+          "value": 0.9,
+          "unit": "g",
+          "status": "label",
+          "declared_total_or_added": "total",
+          "source": "https://www.omegor.com/products/omegor-vitality-1000/"
+        },
+        "vitamin_e": {
+          "value": 10.0,
+          "unit": "mg",
+          "status": "estimated",
+          "declared_total_or_added": "added",
+          "source": "Valore storico 10 mg/capsula; forma chimica non verificata nell etichetta disponibile",
+          "method": "Non convertire in IU finché non è nota la forma chimica."
+        }
+      },
+      "content_mass_per_unit_g": 1.0,
+      "kcal_per_unit": 9.0
+    },
+    {
+      "id": "bone_meal",
+      "name_it": "Grau — Farina d’ossa naturale (Ca 22,6%, P 17,7%)",
+      "brand": "Grau",
+      "product_variant": "Farina d’ossa naturale, 100% ossa di manzo macinate",
+      "class": "calcium_phosphorus",
+      "dose_unit": "g",
+      "integer_dose": false,
+      "label_source": "https://www.zooplus.it/shop/cani/complementi_alimentari/grau/111002",
+      "data_status": "review_required",
+      "usable_for_optimization": true,
+      "notes": "Composizione 22,6% Ca e 17,7% P verificata nella scheda commerciale Grau; rapporto Ca/P 1,28 non è un errore da sostituire con stime. Dose indicativa dichiarata: fino a 25 kg 5 g/die, fino a 40 kg 7,5 g/die, oltre 40 kg 10 g/die; non è una soglia tossicologica. Confrontare con confezione reale, soprattutto se lotto o formulazione diversi. ABILITATO per richiesta utente.",
+      "nutrients": {
+        "protein": {
+          "value": 0.006,
+          "unit": "g",
+          "status": "label",
+          "declared_total_or_added": "total",
+          "source": "https://www.zooplus.it/shop/cani/complementi_alimentari/grau/111002"
+        },
+        "fat": {
+          "value": 0.003,
+          "unit": "g",
+          "status": "label",
+          "declared_total_or_added": "total",
+          "source": "https://www.zooplus.it/shop/cani/complementi_alimentari/grau/111002"
+        },
+        "fiber": {
+          "value": 0.003,
+          "unit": "g",
+          "status": "label",
+          "declared_total_or_added": "total",
+          "source": "https://www.zooplus.it/shop/cani/complementi_alimentari/grau/111002"
+        },
+        "moisture": {
+          "value": 0.209,
+          "unit": "g",
+          "status": "label",
+          "declared_total_or_added": "total",
+          "source": "https://www.zooplus.it/shop/cani/complementi_alimentari/grau/111002"
+        },
+        "calcium": {
+          "value": 0.226,
+          "unit": "g",
+          "status": "label",
+          "declared_total_or_added": "total",
+          "source": "https://www.zooplus.it/shop/cani/complementi_alimentari/grau/111002"
+        },
+        "phosphorus": {
+          "value": 0.177,
+          "unit": "g",
+          "status": "label",
+          "declared_total_or_added": "total",
+          "source": "https://www.zooplus.it/shop/cani/complementi_alimentari/grau/111002"
+        },
+        "sodium": {
+          "value": 0.0003,
+          "unit": "g",
+          "status": "label",
+          "declared_total_or_added": "total",
+          "source": "https://www.zooplus.it/shop/cani/complementi_alimentari/grau/111002"
+        }
+      },
+      "dose_guide": {
+        "points": [
+          {
+            "weight_kg": 10,
+            "max": 1.5
+          },
+          {
+            "weight_kg": 25,
+            "max": 5.0
+          },
+          {
+            "weight_kg": 40,
+            "max": 7.5
+          }
+        ],
+        "source": "https://www.zooplus.it/shop/cani/complementi_alimentari/grau/111002",
+        "note": "Raccomandazioni indicative Grau: fino a 10 kg 1,5 g; fino a 25 kg 5 g; fino a 40 kg 7,5 g; oltre 40 kg 10 g/die. Non dedurre interpolazione automatica senza logica approvata."
+      }
+    },
+    {
+      "id": "calcium_carbonate_pure_reference",
+      "name_it": "Carbonato di calcio puro (CaCO3) — riferimento teorico, prodotto da confermare",
+      "brand": "Da scegliere",
+      "product_variant": "CaCO3 puro, senza vitamina D o altri minerali",
+      "class": "calcium_only",
+      "dose_unit": "g",
+      "integer_dose": false,
+      "label_source": "Composizione stechiometrica CaCO3 puro, non etichetta di un prodotto commerciale; NIST Chemistry WebBook https://webbook.nist.gov/cgi/cbook.cgi?ID=B6000507&Mask=268",
+      "source_url": "https://webbook.nist.gov/cgi/cbook.cgi?ID=B6000507&Mask=268",
+      "data_status": "review_required",
+      "usable_for_optimization": true,
+      "notes": "RIFERIMENTO TEORICO. Il carbonato di calcio puro contiene circa 40,04% di Ca elementare e non contiene P nella formula. Serve scegliere prodotto alimentare/farmaceutico adatto, verificare etichetta, purezza e indicazioni d’uso prima di attivare. Non assegnare una dose massima universale, non approvare razioni senza verifica veterinaria. Non utilizzare carbonato di calcio tecnico o per edilizia. ABILITATO come riferimento generico su richiesta; il valore teorico non certifica purezza di qualunque confezione.",
+      "nutrients": {
+        "calcium": {
+          "value": 0.40043,
+          "unit": "g",
+          "basis": "per_dose",
+          "status": "calculated",
+          "declared_total_or_added": "total",
+          "method": "40.078 / 100.087 g Ca per g CaCO3; purezza teorica 100%, non analisi del prodotto commerciale"
+        },
+        "phosphorus": {
+          "value": 0,
+          "unit": "g",
+          "basis": "per_dose",
+          "status": "calculated",
+          "declared_total_or_added": "total",
+          "method": "La formula CaCO3 non contiene fosforo; valore riferito al composto puro, non impurità commerciali"
+        }
+      }
+    },
+    {
+      "id": "eggshell_powder_reference",
+      "name_it": "Guscio d’uovo in polvere finissima — riferimento generico",
+      "brand": "Nessuna, alimento/integratore generico",
+      "product_variant": "Gusci puliti, trattati e macinati finemente; pesati asciutti",
+      "class": "calcium_only",
+      "dose_unit": "g",
+      "integer_dose": false,
+      "label_source": "Valore indicativo per guscio d’uovo: circa 94–97% carbonato di calcio; composizione variabile in funzione della materia prima e della preparazione",
+      "data_status": "estimated",
+      "usable_for_optimization": true,
+      "notes": "RIFERIMENTO NON SPECIFICO DI PRODOTTO. Calcio stimato 38% in massa (380 mg/g), non analisi lotto; quantità di fosforo e oligoelementi non documentate: NON interpretare l’assenza del campo come zero. Possibili rischi igienici se preparato in casa senza trattamento adeguato. Confrontare etichetta/analisi prima dell’uso clinico.",
+      "nutrients": {
+        "calcium": {
+          "value": 0.38,
+          "unit": "g",
+          "status": "estimated",
+          "declared_total_or_added": "total",
+          "source": "Composizione tipica guscio d’uovo, ~95% carbonato di calcio; stima 0,95 × 0,4004 = 0,3804 g/g",
+          "method": "Stima formulativa non analisi del prodotto"
+        }
+      }
+    }
+  ]
+}
