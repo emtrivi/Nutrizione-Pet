@@ -42,5 +42,6 @@ Il motore contiene:
 npm install      # una volta
 npm test         # esegue tutti i test
 npm run typecheck
+npm run lint
 npx expo export --platform ios   # prova che l'app si impacchetta
 ```
