@@ -123,10 +123,31 @@ describe('vitamina A: UI, oppure retinolo ÷ 0,3, più beta-carotene × 0,833', 
     expect(va.notes.join(' ')).toContain('retinolo');
   });
 
-  it('fegato d’agnello: beta-carotene mancante → valore parziale', () => {
+  it('prodotti animali: beta-carotene non dichiarato = trascurabile, non parziale (regola utente)', () => {
     const va = food('lamb_liver_raw').nutrients.vitamin_a!;
     expect(va.value * 100).toBeCloseTo(24600, 8);
-    expect(va.partial).toBe(true);
+    expect(va.partial).toBe(false);
+    expect(va.parts!.da_beta_carotene).toBe(0);
+    expect(va.notes).toContain('Beta-carotene non dichiarato: considerato trascurabile nei prodotti animali.');
+    // carni, frattaglie, pesci, uova e olio di salmone
+    for (const id of ['lamb_lean_raw', 'rabbit_raw', 'horse_raw', 'chicken_heart_raw', 'beef_spleen_raw', 'salmon_oil']) {
+      expect(food(id).nutrients.vitamin_a!.partial).toBe(false);
+    }
+  });
+
+  it('alimenti vegetali e riso cotto senza beta-carotene: restano parziali', () => {
+    for (const id of ['rice_white_cooked', 'buckwheat_dry', 'millet_dry', 'pasta_wheat_dry']) {
+      expect(food(id).nutrients.vitamin_a!.partial).toBe(true);
+    }
+  });
+
+  it('dopo la regola restano parziali solo i 4 alimenti vegetali', () => {
+    const partial = catalog.foods.filter((f) => f.nutrients.vitamin_a?.partial).map((f) => f.id);
+    expect(partial.sort()).toEqual(['buckwheat_dry', 'millet_dry', 'pasta_wheat_dry', 'rice_white_cooked']);
+  });
+
+  it('un alimento animale senza vitamina A preformata resta senza dato (non zero)', () => {
+    expect(food('beef_mid_10').nutrients.vitamin_a).toBeUndefined();
   });
 });
 
@@ -185,6 +206,25 @@ describe('integratori (catalogo revisionato 24/10/2026, con le regole dell’ute
     expect(o.nutrients.vitamin_e!.partial).toBe(false);
     expect(o.nutrients.vitamin_e!.notes.join(' ')).toContain('1,49');
     expect(o.nutrients.epa_dha!.value).toBe(0.803);
+  });
+
+  it('Omegor: i nutrienti non dichiarati contano zero, con la nota (regola utente)', () => {
+    const o = supp('omegor_vitality');
+    for (const id of ['calcium', 'phosphorus', 'zinc', 'iodine', 'chloride', 'moisture', 'vitamin_a']) {
+      expect(o.nutrients[id]).toMatchObject({
+        value: 0,
+        status: 'undeclared_negligible',
+        partial: false,
+        notes: ['Non dichiarato dal produttore, considerato trascurabile.'],
+      });
+    }
+    expect(o.nutrients.epa_dha!.status).toBe('label'); // i dati dichiarati restano quelli
+  });
+
+  it('gli altri integratori: non dichiarato = sconosciuto', () => {
+    expect(supp('qdiet').nutrients.epa_dha).toBeUndefined();
+    expect(supp('bone_meal').nutrients.zinc).toBeUndefined();
+    expect(supp('calcium_carbonate_pure_reference').nutrients.moisture).toBeUndefined();
   });
 
   it('il file Omegor non è stato modificato (la regola si applica alla lettura)', () => {

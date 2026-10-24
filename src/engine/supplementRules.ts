@@ -31,6 +31,11 @@ export interface SupplementRule {
   /** Mostra l'etichetta "dato provvisorio". */
   provisional: boolean;
   nutrientOverrides?: Record<string, NutrientOverride>;
+  /**
+   * Se presente, i nutrienti non dichiarati contano zero e mostrano questa nota.
+   * Senza, restano sconosciuti (regola generale).
+   */
+  undeclaredAsZeroNote?: string;
   dose: DoseRule;
 }
 
@@ -60,6 +65,8 @@ export const SUPPLEMENT_RULES: Record<string, SupplementRule> = {
           '10 mg × 1,49 = 14,9 UI per capsula (FEDIAF VII-14). Regola dell’utente.',
       },
     },
+    // Olio di pesce con vitamina E: il resto è trascurabile (regola dell'utente, 24/10/2026).
+    undeclaredAsZeroNote: 'Non dichiarato dal produttore, considerato trascurabile.',
     dose: { kind: 'none', reason: 'Nessuna tabella di dosi del produttore nel catalogo.' },
   },
   bone_meal: {

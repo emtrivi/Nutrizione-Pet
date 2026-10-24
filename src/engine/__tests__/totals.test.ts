@@ -36,13 +36,16 @@ describe('ricetta di prova: totali calcolati a mano', () => {
     expect(t.massG.value).toBe(867);
   });
 
-  it('calcio: mg degli alimenti + g del QDiet; Omegor senza dato → parziale', () => {
+  it('calcio: mg degli alimenti + g del QDiet; Omegor non dichiarato → 0 (regola utente)', () => {
     // 7,14×4 + 3×3 + 33×1 + 0 + 8×0,5 = 28,56 + 9 + 33 + 0 + 4 = 74,56 mg = 0,07456 g
     // QDiet 0,18 g × 6 = 1,08 g → totale 1,15456 g
     const ca = t.nutrients.calcium!;
     expect(ca.value).toBeCloseTo(1.15456, 12);
-    expect(ca.partial).toBe(true);
-    expect(ca.missingIn).toEqual([OMEGOR]);
+    expect(ca.partial).toBe(false);
+    expect(ca.missingIn).toEqual([]);
+    const omegor = ca.contributions.find((c) => c.key === OMEGOR)!;
+    expect(omegor).toMatchObject({ value: 0, assumedZero: true });
+    expect(omegor.notes).toEqual(['Non dichiarato dal produttore, considerato trascurabile.']);
     // per 1.000 kcal: 1,15456 ÷ 1,336755 = 0,86370
     expect(per1000Kcal(ca.value!, t.kcal.value!)).toBeCloseTo(0.8637, 4);
   });
@@ -54,7 +57,7 @@ describe('ricetta di prova: totali calcolati a mano', () => {
     // 1,15456 ÷ 1,2765 = 0,90447
     const r = calciumPhosphorusRatio(t);
     expect(r.value).toBeCloseTo(0.90447, 5);
-    expect(r.partial).toBe(true);
+    expect(r.partial).toBe(false);
   });
 
   it('zinco (mg)', () => {
@@ -66,13 +69,14 @@ describe('ricetta di prova: totali calcolati a mano', () => {
 
   it('vitamina A con le parti separate', () => {
     // carota 6.897,24 + fegato (11.100 + 46,648) × 0,5 = 5.573,324 + QDiet 250 × 6 = 1.500
-    // riso 0 (retinolo 0) e olio 0 → totale 13.970,564; manzo e Omegor senza dato → parziale
+    // riso 0 (retinolo 0), olio 0, Omegor 0 → totale 13.970,564; manzo senza dato → parziale
     const va = t.nutrients.vitamin_a!;
     expect(va.value).toBeCloseTo(13970.564, 8);
     expect(va.partial).toBe(true);
     expect(va.missingIn).toContain('food:beef_mid_10');
-    expect(va.missingIn).toContain(OMEGOR);
+    expect(va.missingIn).not.toContain(OMEGOR);
     expect(va.missingIn).toContain('food:rice_white_cooked'); // beta-carotene del riso non noto
+    expect(va.missingIn).not.toContain('food:chicken_liver_raw');
     // preformata: 5.550 (fegato) + 1.500 (QDiet); da beta-carotene: 6.897,24 + 23,324
     expect(va.parts!.preformata).toBeCloseTo(7050, 8);
     expect(va.parts!.da_beta_carotene).toBeCloseTo(6920.564, 8);
@@ -95,18 +99,20 @@ describe('ricetta di prova: totali calcolati a mano', () => {
     expect(t.nutrients.iodine!.value).toBeCloseTo(0.27, 12); // 0,045 × 6
     expect(t.nutrients.iodine!.partial).toBe(true);
     expect(t.nutrients.chloride!.value).toBeNull();
-    expect(t.nutrients.chloride!.missingIn).toHaveLength(7);
+    // l'Omegor conta 0, ma uno zero "per scelta" da solo non è un dato: resta grigio
+    expect(t.nutrients.chloride!.missingIn).toHaveLength(6);
+    expect(t.nutrients.chloride!.missingIn).not.toContain(OMEGOR);
   });
 
   it('potassio: il dato del QDiet resta "da verificare" nel totale', () => {
     expect(t.nutrients.potassium!.toVerify).toBe(true);
   });
 
-  it('sostanza secca = peso − acqua (Omegor senza acqua → parziale)', () => {
-    // (400−276) + (300−205,8) + (100−88,3) + (10−0) + (50−38,25) + (6−0,18)
-    // = 124 + 94,2 + 11,7 + 10 + 11,75 + 5,82 = 257,47
-    expect(t.dryMatterG.value).toBeCloseTo(257.47, 10);
-    expect(t.dryMatterG.missingIn).toEqual([OMEGOR]);
+  it('sostanza secca = peso − acqua (acqua dell’Omegor considerata 0)', () => {
+    // (400−276) + (300−205,8) + (100−88,3) + (10−0) + (50−38,25) + (6−0,18) + (1−0)
+    // = 124 + 94,2 + 11,7 + 10 + 11,75 + 5,82 + 1 = 258,47
+    expect(t.dryMatterG.value).toBeCloseTo(258.47, 10);
+    expect(t.dryMatterG.missingIn).toEqual([]);
   });
 
   it('ingredienti con 0 g non contano; chiavi sconosciute segnalate', () => {
@@ -131,23 +137,23 @@ describe('ricetta di prova: colori (tabella 95)', () => {
     legalMaxMode: 'avviso' as const,
   };
 
-  it('calcio 0,864 contro minimo 1,45: rosso per carenza, provvisorio (parziale)', () => {
+  it('calcio 0,864 contro minimo 1,45: rosso per carenza, definitivo (dato completo)', () => {
     // (1,45 − 0,8637) ÷ 1,45 = 40,4% sotto
     const e = evaluateNutrient(t.nutrients.calcium!, req.byId.calcium!, ctx);
     expect(e.color).toBe('rosso');
     expect(e.direction).toBe('carenza');
     expect(e.distance).toBeCloseTo(0.4043, 4);
-    expect(e.provisional).toBe(true);
+    expect(e.provisional).toBe(false);
     expect(e.maxKind).toBe('N');
     expect(e.limitsPer1000.max).toBe(6.25);
   });
 
   it('zinco: verde; massimo di legge convertito perché c’è il QDiet', () => {
-    // L = 22,7 × 257,47 × 10 ÷ 1.336,755 = 43,722 mg/1.000 kcal
+    // L = 22,7 × 258,47 × 10 ÷ 1.336,755 = 43,892 mg/1.000 kcal
     const e = evaluateNutrient(t.nutrients.zinc!, req.byId.zinc!, ctx);
     expect(e.color).toBe('verde');
     expect(e.maxKind).toBe('L');
-    expect(e.limitsPer1000.max).toBeCloseTo(43.722, 3);
+    expect(e.limitsPer1000.max).toBeCloseTo(43.892, 3);
   });
 
   it('cloruro grigio per dato mancante, biotina grigia per nessun riferimento', () => {

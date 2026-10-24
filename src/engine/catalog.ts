@@ -205,7 +205,14 @@ function nutrientFrom(
 export function normalizeNutrients(
   raw: Record<string, RawNutrient>,
   scale: number,
-  options: { isSupplement: boolean; overrides?: Record<string, NutrientOverride> } = {
+  options: {
+    isSupplement: boolean;
+    /** Prodotto animale: beta-carotene non dichiarato considerato trascurabile (regola dell'utente). */
+    animalOrigin?: boolean;
+    overrides?: Record<string, NutrientOverride>;
+    /** Nutrienti non dichiarati contati zero, con questa nota (regola dell'utente, solo Omegor). */
+    undeclaredAsZeroNote?: string;
+  } = {
     isSupplement: false,
   },
 ): Record<string, ItemNutrient> {
@@ -245,7 +252,11 @@ export function normalizeNutrients(
     preformedSource = ret;
     vaNotes.push('Vitamina A preformata calcolata dal retinolo (µg ÷ 0,3).');
   }
-  const fromBc = isKnown(bc) ? (convertUnit(bc.value, bc.unit, 'µg') * BETA_CAROTENE_IU_PER_UG) / scale : null;
+  let fromBc = isKnown(bc) ? (convertUnit(bc.value, bc.unit, 'µg') * BETA_CAROTENE_IU_PER_UG) / scale : null;
+  if (fromBc === null && preformed !== null && options.animalOrigin) {
+    fromBc = 0;
+    vaNotes.push(ANIMAL_BETA_CAROTENE_NOTE);
+  }
   if (preformed !== null || fromBc !== null) {
     // Negli integratori il beta-carotene non è una voce d'etichetta: non rende parziale il valore.
     const bcMissing = fromBc === null && !options.isSupplement;
@@ -296,7 +307,34 @@ export function normalizeNutrients(
     if (o.toVerify) target.toVerify = true;
   }
 
+  // Nutrienti non dichiarati contati zero (solo dove l'utente lo ha deciso).
+  if (options.undeclaredAsZeroNote) {
+    for (const def of NUTRIENTS) {
+      if (out[def.id]) continue;
+      out[def.id] = {
+        value: 0,
+        status: UNDECLARED_NEGLIGIBLE,
+        partial: false,
+        toVerify: false,
+        notes: [options.undeclaredAsZeroNote],
+      };
+    }
+  }
+
   return out;
+}
+
+/** Stato di un nutriente non dichiarato e considerato zero per scelta dell'utente. */
+export const UNDECLARED_NEGLIGIBLE = 'undeclared_negligible';
+
+export const ANIMAL_BETA_CAROTENE_NOTE =
+  'Beta-carotene non dichiarato: considerato trascurabile nei prodotti animali.';
+
+/** Alimenti di origine animale fuori dalla categoria "animal" (regola dell'utente, 24/10/2026). */
+export const ANIMAL_ORIGIN_EXTRA_IDS = new Set(['salmon_oil']);
+
+export function isAnimalOrigin(raw: Pick<RawFood, 'id' | 'category'>): boolean {
+  return raw.category === 'animal' || ANIMAL_ORIGIN_EXTRA_IDS.has(raw.id);
 }
 
 // ---------------------------------------------------------------------------
@@ -322,7 +360,10 @@ export function normalizeFood(raw: RawFood): CatalogItem {
     nameIt: raw.name_it,
     doseUnit: 'g',
     integerDose: false,
-    nutrients: normalizeNutrients(raw.nutrients, 100, { isSupplement: false }),
+    nutrients: normalizeNutrients(raw.nutrients, 100, {
+      isSupplement: false,
+      animalOrigin: isAnimalOrigin(raw),
+    }),
     kcalPerUnit: kcal,
     kcalMethod: raw.me_method ?? null,
     massPerUnitG: 1,
@@ -371,6 +412,7 @@ export function normalizeSupplement(raw: RawSupplement): CatalogItem {
     nutrients: normalizeNutrients(raw.nutrients, 1, {
       isSupplement: true,
       overrides: rule.nutrientOverrides,
+      undeclaredAsZeroNote: rule.undeclaredAsZeroNote,
     }),
     kcalPerUnit: typeof raw.kcal_per_unit === 'number' ? raw.kcal_per_unit : null,
     kcalMethod: typeof raw.kcal_per_unit === 'number' ? 'Valore dichiarato nel catalogo integratori' : null,

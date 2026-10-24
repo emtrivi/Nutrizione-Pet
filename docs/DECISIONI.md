@@ -26,6 +26,20 @@ Il file non si modifica: queste regole sono in `src/engine/supplementRules.ts`.
 5. Potassio del QDiet (7,5%): mostrato "da verificare".
 6. Tutti e cinque abilitati, con l'etichetta "dato provvisorio".
 
+## 24/10/2026 — eccezioni alla regola del dato parziale (decise dall'utente)
+
+La regola generale resta: un dato mancante non è zero e rende il totale "valore parziale".
+Due eccezioni:
+
+1. **Beta-carotene nei prodotti animali.** Se carni, frattaglie, pesci, uova (categoria `animal` del catalogo) o olio di salmone (`salmon_oil`) non dichiarano il beta-carotene, la vitamina A **non** è segnata parziale: nei prodotti animali il beta-carotene è praticamente zero. Nel tocco sulla barra: "Beta-carotene non dichiarato: considerato trascurabile nei prodotti animali."
+   Per gli alimenti vegetali e per il riso cotto resta parziale (oggi: riso bianco cotto, grano saraceno, miglio, pasta di grano secchi).
+   Un alimento animale senza vitamina A preformata (es. macinato bovino) resta senza dato: l'eccezione riguarda solo il beta-carotene.
+2. **Omegor.** È olio di pesce con vitamina E: i nutrienti non dichiarati contano **zero**. Nel tocco sulla barra: "Non dichiarato dal produttore, considerato trascurabile."
+   Per tutti gli altri integratori i nutrienti non dichiarati restano sconosciuti.
+   Se un totale è fatto solo di questi zeri "per scelta" (es. cloruro con il solo Omegor), resta grigio: uno zero per scelta non è un dato.
+
+Nel codice: `ANIMAL_ORIGIN_EXTRA_IDS` e `isAnimalOrigin` in `src/engine/catalog.ts`; `undeclaredAsZeroNote` in `src/engine/supplementRules.ts`.
+
 ## Scelte tecniche del motore (proposte, modificabili)
 
 - Integratori: il beta-carotene non è una voce d'etichetta, quindi la sua assenza non rende parziale la vitamina A di un integratore. Negli alimenti invece sì.
