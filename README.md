@@ -6,11 +6,21 @@ Uso personale. **Strumento di supporto, da validare con la nutrizionista.**
 ## Com'è fatto il progetto
 
 ```
+App.tsx, index.ts    app Expo (React Native), per ora una schermata di prova
+app.json, eas.json   configurazione dell'app e della costruzione nel cloud (EAS → TestFlight)
 data/catalog/        i tre file di dati (alimenti, integratori, FEDIAF): si leggono, non si modificano
 docs/                specifiche e registro delle decisioni (DECISIONI.md)
 src/engine/          motore di calcolo, separato dall'interfaccia
 src/engine/__tests__ test con i calcoli fatti a mano sul cane d'esempio (30 kg)
+src/ui/              piccoli aiuti per l'interfaccia (formato dei numeri)
 ```
+
+## App per iPhone
+
+- Expo SDK 58, costruita nel cloud con EAS e inviata a TestFlight (nessun Mac necessario).
+- Account Expo: `eviemet`. Bundle ID: `com.eviemet.nutrizionepet`.
+- App Store Connect: Apple ID dell'app `6826643282`, Team ID `F9PKTRNTLH`.
+- Costruire e inviare a TestFlight: `npx eas-cli@latest build --platform ios --profile production --auto-submit`
 
 Il motore contiene:
 
@@ -32,4 +42,5 @@ Il motore contiene:
 npm install      # una volta
 npm test         # esegue tutti i test
 npm run typecheck
+npx expo export --platform ios   # prova che l'app si impacchetta
 ```
