@@ -1,0 +1,32 @@
+# Rinnovo della build TestFlight (le build di prova scadono dopo 90 giorni).
+#
+# Parte SOLO quando cambia release/rinnovo-testflight.json.
+# Fa sempre una build iOS nuova e la invia a TestFlight, anche senza modifiche native.
+# Non pubblica mai sull'App Store.
+
+name: Rinnovo TestFlight
+
+on:
+  push:
+    branches: ['**']
+    paths: ['release/rinnovo-testflight.json']
+
+concurrency:
+  cancel_in_progress: false
+  group: ${{ workflow.filename }}-${{ github.ref }}
+
+jobs:
+  build_ios:
+    name: Build iOS
+    type: build
+    params:
+      platform: ios
+      profile: production
+
+  invio_testflight:
+    name: Invio a TestFlight
+    needs: [build_ios]
+    type: submit
+    params:
+      build_id: ${{ needs.build_ios.outputs.build_id }}
+      profile: production

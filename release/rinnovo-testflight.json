@@ -1,0 +1,4 @@
+{
+  "ultimo_rinnovo": null,
+  "nota": "Cambiare la data qui fa partire una build nuova per TestFlight anche senza modifiche native (le build TestFlight scadono dopo 90 giorni)."
+}

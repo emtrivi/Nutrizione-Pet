@@ -2,8 +2,10 @@
 // e restituiscono una copia aggiornata; il salvataggio sul telefono è altrove.
 
 import {
-  DEFAULT_SETTINGS,
+  DATA_SCHEMA_VERSION,
   emptyPersonalData,
+  mergeSettings,
+  migrateData,
   type PersonalData,
   type PriceBook,
   type PriceEntry,
@@ -56,27 +58,56 @@ export function markBackup(data: PersonalData, now: Date): PersonalData {
 // File dei dati sul telefono
 
 export const LOCAL_FORMAT = 'nutrizione-pet-dati-locali';
-export const LOCAL_SCHEMA_VERSION = 1;
+export const LOCAL_SCHEMA_VERSION = DATA_SCHEMA_VERSION;
 
 export function serializeLocal(data: PersonalData): string {
   return JSON.stringify({ format: LOCAL_FORMAT, schemaVersion: LOCAL_SCHEMA_VERSION, data });
 }
 
-/** Legge il file locale; null se manca o se è illeggibile (chi chiama decide cosa fare). */
-export function parseLocal(text: string | null): PersonalData | null {
-  if (!text) return null;
+export type LocalLoad =
+  | { status: 'mancante' }
+  | { status: 'illeggibile' }
+  | { status: 'ok'; data: PersonalData; migratedFrom: number | null }
+  /** Salvati da una versione più nuova dell'app: si mostrano se possibile, ma non si sovrascrivono. */
+  | { status: 'piu_nuovi'; version: number; data: PersonalData | null };
+
+function normalize(d: Record<string, unknown>): PersonalData {
+  return {
+    ...emptyPersonalData(),
+    ...(d as Partial<PersonalData>),
+    settings: mergeSettings(d.settings as Partial<Settings> | undefined),
+  };
+}
+
+/** Legge il file locale e, se serve, lo porta alla struttura attuale (senza salvarlo). */
+export function parseLocal(text: string | null): LocalLoad {
+  if (!text) return { status: 'mancante' };
+  let parsed: { format?: string; schemaVersion?: unknown; data?: unknown };
   try {
-    const parsed = JSON.parse(text) as { format?: string; data?: PersonalData };
-    if (parsed.format !== LOCAL_FORMAT || !parsed.data || !Array.isArray(parsed.data.dogs)) return null;
-    // Impostazioni aggiunte in versioni successive prendono il valore iniziale.
-    return {
-      ...emptyPersonalData(),
-      ...parsed.data,
-      settings: mergeSettings(parsed.data.settings),
-    };
+    parsed = JSON.parse(text);
   } catch {
-    return null;
+    return { status: 'illeggibile' };
   }
+  const raw = parsed.data;
+  if (parsed.format !== LOCAL_FORMAT || typeof raw !== 'object' || raw === null || !Array.isArray((raw as { dogs?: unknown }).dogs)) {
+    return { status: 'illeggibile' };
+  }
+  // I file della versione 0.2.0 non hanno sempre il numero: valgono come versione 1.
+  const version = typeof parsed.schemaVersion === 'number' ? parsed.schemaVersion : 1;
+  const m = migrateData(raw as Record<string, unknown>, version);
+  if (!m.ok) {
+    if (m.reason === 'piu_nuovi') {
+      let shown: PersonalData | null = null;
+      try {
+        shown = normalize(raw as Record<string, unknown>);
+      } catch {
+        shown = null;
+      }
+      return { status: 'piu_nuovi', version, data: shown };
+    }
+    return { status: 'illeggibile' };
+  }
+  return { status: 'ok', data: normalize(m.data), migratedFrom: m.migrated ? version : null };
 }
 
 // ---------------------------------------------------------------------------
@@ -99,13 +130,4 @@ export function withSettings(data: PersonalData, settings: Settings): PersonalDa
   return { ...data, settings };
 }
 
-/** Impostazioni salvate + valori iniziali per quelle aggiunte dopo (anche dentro i gruppi). */
-export function mergeSettings(saved: Partial<Settings> | undefined): Settings {
-  const s = saved ?? {};
-  return {
-    ...DEFAULT_SETTINGS,
-    ...s,
-    calorieSplit: { ...DEFAULT_SETTINGS.calorieSplit, ...s.calorieSplit },
-    sanity: { ...DEFAULT_SETTINGS.sanity, ...s.sanity },
-  };
-}
+export { mergeSettings };

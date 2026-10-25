@@ -8,9 +8,13 @@ Uso personale. **Strumento di supporto, da validare con la nutrizionista.**
 ```
 src/app/             schermate (Expo Router): schede Cani, Ricette, Diario, Catalogo, Altro
 src/data/            dati personali: azioni, modulo del cane, salvataggio sul telefono, backup
-app.json, eas.json   configurazione dell'app e della costruzione nel cloud (EAS → TestFlight)
+app.json, eas.json   configurazione dell'app, della costruzione (EAS → TestFlight) e degli aggiornamenti
+.eas/workflows/      processi automatici su Expo: pubblica.yml, rinnovo-testflight.yml
+release/             versione.json (dichiara pronta una versione), rinnovo-testflight.json
+fingerprint.config.js impronta della parte nativa (preset balanced)
+src/updates/         avviso «Aggiornamento disponibile — Riavvia ora»
 data/catalog/        i tre file di dati (alimenti, integratori, FEDIAF): si leggono, non si modificano
-docs/                specifiche e registro delle decisioni (DECISIONI.md)
+docs/                specifiche, decisioni (DECISIONI.md), rilasci e ritiro aggiornamenti (RILASCI.md)
 src/engine/          motore di calcolo, separato dall'interfaccia
 src/engine/__tests__ test con i calcoli fatti a mano sul cane d'esempio (30 kg)
 src/ui/              componenti grafici, barre, formati dei numeri, testi delle spiegazioni
@@ -28,14 +32,17 @@ src/ui/recipe/       ricetta guidata (4 passi), scelta dal catalogo, dettaglio d
 - Numero di build: gestito da EAS (`appVersionSource: remote` + `autoIncrement`), sale da solo a ogni costruzione.
   La versione visibile (`version` in `app.json`) si cambia a mano solo quando serve.
 
-### Costruire e inviare a TestFlight (da GitHub Codespaces)
+### Aggiornamenti e rilasci (automatici)
 
-1. Apri un Codespace sul ramo di lavoro (le dipendenze si installano da sole).
-2. `npx eas-cli@latest login --device` (in Codespaces il login dal browser resta in attesa: usare `--device`).
-3. `npx eas-cli@latest build --platform ios --profile production --auto-submit`
-4. Spegni il Codespace da https://github.com/codespaces.
+Vedi **docs/RILASCI.md**. In breve: si dichiara pronta una versione cambiando `release/versione.json`;
+il workflow EAS `.eas/workflows/pubblica.yml` pubblica un aggiornamento via internet (EAS Update) se la
+parte nativa non è cambiata, altrimenti fa una build e la invia a TestFlight. Nessun terminale.
 
 Prima build: 0.1.0 (1), 25/10/2026, build EAS `3e93b1d2-2aa1-43ba-b9e8-49375fad3f88`.
+
+**Solo in emergenza** (se i workflow non sono disponibili), da GitHub Codespaces:
+`npx eas-cli@latest login --device` e poi
+`npx eas-cli@latest build --platform ios --profile production --auto-submit`.
 
 ### Avvisi di sicurezza delle dipendenze (`npm audit`)
 
@@ -57,6 +64,7 @@ Il motore contiene:
 | `dose.ts` | dose di partenza degli integratori |
 | `prices.ts` | prezzi al kg, a confezione, a capsula; totale "incompleto" se manca un prezzo |
 | `backup.ts` | "Esporta tutto" e "Ripristina" (senza catalogo), impostazioni |
+| `migrations.ts` | versione della struttura dei dati e migrazioni |
 | `recipes.ts` | grammi di partenza, valutazione della ricetta, controlli di buon senso, "da rivedere" |
 | `bars.ts` | barre a tratti uguali e posizione della freccia |
 

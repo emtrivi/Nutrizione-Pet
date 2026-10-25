@@ -6,6 +6,7 @@ import { RECIPE_CATEGORY_LABELS, getCatalog, unitPrice, type CatalogItem, type R
 import { Badge, Explain, Segmented, styles } from '../../ui/components';
 import { formatEuro, formatSmart } from '../../ui/format';
 import { colors } from '../../ui/theme';
+import { UpdateBanner } from '../../updates/UpdateBanner';
 
 const catalog = getCatalog();
 type Kind = 'food' | 'supplement';
@@ -79,6 +80,7 @@ export default function CatalogoScreen() {
         keyboardShouldPersistTaps="handled"
         ListHeaderComponent={
           <View style={{ gap: 12, marginBottom: 12 }}>
+            <UpdateBanner />
             <View style={styles.disclaimer}>
               <Text style={styles.disclaimerText}>Strumento di supporto, da validare con la nutrizionista.</Text>
             </View>

@@ -112,15 +112,17 @@ describe('azioni sui dati personali', () => {
 
   it('file locale: andata e ritorno, file rovinati ignorati', () => {
     const d = markBackup(addDog(emptyPersonalData(), fields, now, 'cane-1'), now);
-    expect(parseLocal(serializeLocal(d))).toEqual(d);
-    expect(parseLocal(null)).toBeNull();
-    expect(parseLocal('{rotto')).toBeNull();
-    expect(parseLocal('{"format":"altro"}')).toBeNull();
+    expect(parseLocal(serializeLocal(d))).toEqual({ status: 'ok', data: d, migratedFrom: null });
+    expect(parseLocal(null)).toEqual({ status: 'mancante' });
+    expect(parseLocal('{rotto')).toEqual({ status: 'illeggibile' });
+    expect(parseLocal('{"format":"altro"}')).toEqual({ status: 'illeggibile' });
   });
 
   it('impostazioni nuove prendono il valore iniziale', () => {
     const text = JSON.stringify({ format: 'nutrizione-pet-dati-locali', schemaVersion: 1, data: { dogs: [], prices: {}, settings: { tolerance: 0.2 } } });
-    expect(parseLocal(text)!.settings).toEqual({ ...DEFAULT_SETTINGS, tolerance: 0.2 });
+    const r = parseLocal(text);
+    expect(r.status).toBe('ok');
+    if (r.status === 'ok') expect(r.data.settings).toEqual({ ...DEFAULT_SETTINGS, tolerance: 0.2 });
   });
 
   it('backup del cane d’esempio e ripristino: nulla si perde', () => {
@@ -150,5 +152,74 @@ describe('ricette e impostazioni nei dati personali', () => {
     expect(s.tolerance).toBe(0.15);
     expect(s.sanity).toEqual({ ...DEFAULT_SETTINGS.sanity, liverPctOfFood: 7 });
     expect(s.calorieSplit).toEqual(DEFAULT_SETTINGS.calorieSplit);
+  });
+});
+
+describe('migrazioni e protezione dei dati negli aggiornamenti', () => {
+  // File salvato dalla versione 0.2.0 (struttura 1): cani, prezzi, impostazioni vecchie, nessuna ricetta.
+  const v1 = JSON.stringify({
+    format: 'nutrizione-pet-dati-locali',
+    schemaVersion: 1,
+    data: {
+      dogs: [{ id: 'c1', name: 'Fido', weightKg: 30, useIdealWeight: false, neutered: true, activity: 'normale', manualKcal: 1218, createdAt: 'x', updatedAt: 'x' }],
+      recipes: [],
+      diary: [],
+      prices: { 'food:beef_mid_10': { mode: 'per_kg', eurPerKg: 12 } },
+      settings: { backupReminderDays: 10, tolerance: 0.1, multipliers: null, aminoAcidDigestibilityIncrease: false, diaryAverageDays: 14, diaryAlertDays: 7 },
+      lastBackupAt: '2026-10-24T10:00:00.000Z',
+    },
+  });
+
+  it('i dati della 0.2.0 passano alla struttura 2 senza perdere nulla', async () => {
+    const { DATA_SCHEMA_VERSION } = await import('../../engine');
+    expect(DATA_SCHEMA_VERSION).toBe(2);
+    const r = parseLocal(v1);
+    expect(r.status).toBe('ok');
+    if (r.status !== 'ok') return;
+    expect(r.migratedFrom).toBe(1);
+    expect(r.data.dogs[0]!.name).toBe('Fido');
+    expect(r.data.dogs[0]!.manualKcal).toBe(1218);
+    expect(r.data.prices['food:beef_mid_10']).toEqual({ mode: 'per_kg', eurPerKg: 12 });
+    expect(r.data.settings.backupReminderDays).toBe(10); // scelta dell'utente conservata
+    expect(r.data.settings.calorieSplit).toEqual(DEFAULT_SETTINGS.calorieSplit); // nuova impostazione
+    expect(r.data.lastBackupAt).toBe('2026-10-24T10:00:00.000Z');
+    // salvata di nuovo, risulta già alla versione attuale
+    expect(parseLocal(serializeLocal(r.data))).toMatchObject({ status: 'ok', migratedFrom: null });
+  });
+
+  it('file senza numero di versione (0.2.0) vale come versione 1', () => {
+    const noVersion = JSON.stringify({ ...JSON.parse(v1), schemaVersion: undefined });
+    expect(parseLocal(noVersion)).toMatchObject({ status: 'ok', migratedFrom: 1 });
+  });
+
+  it('dati di una versione più nuova (es. dopo il ritiro di un aggiornamento): mostrati ma da non sovrascrivere', () => {
+    const v9 = JSON.stringify({ ...JSON.parse(v1), schemaVersion: 9 });
+    const r = parseLocal(v9);
+    expect(r.status).toBe('piu_nuovi');
+    if (r.status === 'piu_nuovi') {
+      expect(r.version).toBe(9);
+      expect(r.data!.dogs[0]!.name).toBe('Fido');
+    }
+  });
+
+  it('backup della 0.2.0 (struttura 1) si ripristina con la versione attuale', async () => {
+    const { parseBackup } = await import('../../engine');
+    const backupV1 = JSON.stringify({ format: 'nutrizione-pet-backup', schemaVersion: 1, exportedAt: '2026-10-24T10:00:00.000Z', catalogVersion: 'v', data: JSON.parse(v1).data });
+    const r = parseBackup(backupV1, now);
+    expect(r.ok).toBe(true);
+    if (!r.ok) return;
+    expect(r.data.dogs[0]!.name).toBe('Fido');
+    expect(r.data.recipes).toEqual([]);
+    expect(r.data.settings.sanity).toEqual(DEFAULT_SETTINGS.sanity);
+  });
+
+  it('i backup nuovi dichiarano la struttura 2', () => {
+    expect(JSON.parse(exportBackup(emptyPersonalData(), now, 'v')).schemaVersion).toBe(2);
+  });
+
+  it('migrazione mancante o versione non valida: rifiutata', async () => {
+    const { migrateData } = await import('../../engine');
+    expect(migrateData({}, 0)).toMatchObject({ ok: false, reason: 'versione_non_valida' });
+    expect(migrateData({}, 3)).toMatchObject({ ok: false, reason: 'piu_nuovi' });
   });
 });

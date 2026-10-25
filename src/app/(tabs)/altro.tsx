@@ -1,12 +1,15 @@
-import Constants from 'expo-constants';
 import { useState } from 'react';
 import { Alert, Platform, Text } from 'react-native';
 import { pickBackupText, shareBackupFile } from '../../data/backupIO';
 import { useData } from '../../data/DataContext';
-import { markBackup } from '../../data/personalStore';
+import { markBackup, parseLocal } from '../../data/personalStore';
+import { listCopies, readCopy } from '../../data/storage';
 import { backupFileName, backupReminder, exportBackup, getCatalog, parseBackup, type PersonalData } from '../../engine';
 import { Button, Card, Explain, Hint, InfoButton, LinkRow, Notice, Screen } from '../../ui/components';
 import { colors } from '../../ui/theme';
+import { UpdateBanner } from '../../updates/UpdateBanner';
+import { currentUpdateInfo } from '../../updates/UpdatesContext';
+import release from '../../../release/versione.json';
 
 const catalog = getCatalog();
 
@@ -27,8 +30,10 @@ const formatDate = (iso: string) => {
 };
 
 export default function AltroScreen() {
-  const { data, update } = useData();
+  const { data, update, readOnly, problem } = useData();
   const [message, setMessage] = useState<{ tone: 'info' | 'danger'; text: string } | null>(null);
+  const [copies, setCopies] = useState<string[] | null>(null);
+  const info = currentUpdateInfo();
   const reminder = backupReminder(data.lastBackupAt, new Date(), data.settings.backupReminderDays);
 
   const exportAll = async () => {
@@ -70,8 +75,36 @@ export default function AltroScreen() {
     );
   };
 
+  const showCopies = async () => {
+    try {
+      setCopies(await listCopies());
+    } catch {
+      setCopies([]);
+    }
+  };
+
+  const restoreCopy = async (name: string) => {
+    setMessage(null);
+    const r = parseLocal(await readCopy(name));
+    if (r.status !== 'ok') {
+      setMessage({ tone: 'danger', text: r.status === 'piu_nuovi' ? 'Questa copia viene da una versione più nuova dell’app: aggiorna l’app e riprova.' : 'Questa copia non è leggibile.' });
+      return;
+    }
+    ask(
+      'Ripristinare questa copia?',
+      `La copia contiene ${r.data.dogs.length} cani e ${r.data.recipes.length} ricette. I dati attuali (${data.dogs.length} cani, ${data.recipes.length} ricette) verranno sostituiti.`,
+      'Ripristina',
+      () => {
+        update(() => r.data);
+        setMessage({ tone: 'info', text: 'Copia ripristinata.' });
+      },
+    );
+  };
+
   return (
     <Screen>
+      <UpdateBanner />
+      {readOnly && problem ? <Notice tone="warning">{problem}</Notice> : null}
       <Card title="Backup dei tuoi dati" right={<InfoButton topic="backup" label="Backup: perché e come" />}>
         <Explain>
           I tuoi dati stanno solo su questo telefono. “Esporta tutto” crea un file da salvare in File o su iCloud Drive;
@@ -81,6 +114,20 @@ export default function AltroScreen() {
         <Button title="Esporta tutto" onPress={exportAll} />
         <Button title="Ripristina da un file" kind="secondary" onPress={restore} />
         {message ? <Notice tone={message.tone}>{message.text}</Notice> : null}
+      </Card>
+
+      <Card title="Copie automatiche">
+        <Hint>
+          L’app conserva da sola una copia dei dati prima di ogni cambio di struttura portato da un aggiornamento, e
+          una copia di un file illeggibile. Servono solo in caso di problemi.
+        </Hint>
+        {copies === null ? (
+          <Button title="Mostra le copie" kind="secondary" onPress={showCopies} />
+        ) : copies.length === 0 ? (
+          <Hint>Nessuna copia automatica.</Hint>
+        ) : (
+          copies.map((c) => <Button key={c} title={`Ripristina ${c.replace(/^copia-/, '').replace(/\.json$/, '')}`} kind="secondary" onPress={() => restoreCopy(c)} />)
+        )}
       </Card>
 
       <Card title="Impostazioni">
@@ -98,7 +145,16 @@ export default function AltroScreen() {
       </Card>
 
       <Card title="Informazioni">
-        <Hint>Nutrizione Pet, versione {Constants.expoConfig?.version ?? '?'}</Hint>
+        <Hint>
+          Nutrizione Pet, versione {release.versione} del {formatDate(release.data)}
+        </Hint>
+        <Hint>
+          {info.source === 'aggiornamento'
+            ? `Ricevuta via internet${info.date ? ` il ${formatDate(info.date.toISOString())}` : ''} (canale ${info.channel ?? '?'}).`
+            : info.source === 'build'
+              ? 'Versione inclusa nell’installazione da TestFlight.'
+              : 'Anteprima (senza aggiornamenti automatici).'}
+        </Hint>
         <Hint>{catalog.version.label}</Hint>
         <Hint>Riferimenti: FEDIAF Nutritional Guidelines 2025, cane adulto.</Hint>
       </Card>

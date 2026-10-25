@@ -1,6 +1,7 @@
 // Dati personali, "Esporta tutto" e "Ripristina".
 // Il backup NON contiene il catalogo: ripristinarlo non sovrascrive mai il catalogo dell'app.
 
+import { migrateData } from './migrations';
 import type { PriceBook } from './prices';
 import type { Recipe } from './recipes';
 import type { LegalMaxMode } from './status';
@@ -21,7 +22,8 @@ export interface SanityThresholds {
 }
 
 export const BACKUP_FORMAT = 'nutrizione-pet-backup';
-export const BACKUP_SCHEMA_VERSION = 1;
+/** Uguale a DATA_SCHEMA_VERSION (migrations.ts): backup e file locale hanno la stessa struttura. */
+export const BACKUP_SCHEMA_VERSION = 2;
 
 export interface Settings {
   /** Giorni dopo cui ricordare il backup (all'inizio 14). */
@@ -63,6 +65,17 @@ export interface PersonalData {
   prices: PriceBook;
   settings: Settings;
   lastBackupAt: string | null;
+}
+
+/** Impostazioni salvate + valori iniziali per quelle aggiunte dopo (anche dentro i gruppi). */
+export function mergeSettings(saved: Partial<Settings> | Record<string, unknown> | undefined): Settings {
+  const s = (saved ?? {}) as Partial<Settings>;
+  return {
+    ...DEFAULT_SETTINGS,
+    ...s,
+    calorieSplit: { ...DEFAULT_SETTINGS.calorieSplit, ...s.calorieSplit },
+    sanity: { ...DEFAULT_SETTINGS.sanity, ...s.sanity },
+  };
 }
 
 export function emptyPersonalData(): PersonalData {
@@ -132,8 +145,11 @@ export function parseBackup(text: string, now: Date): RestoreResult {
       error: 'Il backup è stato creato da una versione più nuova dell’app: aggiorna l’app e riprova.',
     };
   }
-  const data = parsed.data;
-  if (!isObject(data)) return { ok: false, error: 'Il backup è incompleto.' };
+  if (!isObject(parsed.data)) return { ok: false, error: 'Il backup è incompleto.' };
+  // Backup di una versione precedente: si porta alla struttura attuale.
+  const migration = migrateData(parsed.data, parsed.schemaVersion);
+  if (!migration.ok) return { ok: false, error: 'Il backup ha una struttura che questa versione dell’app non sa leggere.' };
+  const data = migration.data;
   const dogs = data.dogs;
   if (!Array.isArray(dogs)) return { ok: false, error: 'Il backup non contiene l’elenco dei cani.' };
   for (let i = 0; i < dogs.length; i++) {
@@ -160,7 +176,7 @@ export function parseBackup(text: string, now: Date): RestoreResult {
       recipes: Array.isArray(data.recipes) ? (data.recipes as Recipe[]) : [],
       diary: Array.isArray(data.diary) ? data.diary : [],
       prices: isObject(data.prices) ? (data.prices as PriceBook) : {},
-      settings: { ...DEFAULT_SETTINGS, ...(isObject(data.settings) ? (data.settings as Partial<Settings>) : {}) },
+      settings: mergeSettings(isObject(data.settings) ? data.settings : undefined),
       // Dopo un ripristino, l'ultimo backup è quello appena letto.
       lastBackupAt: typeof parsed.exportedAt === 'string' ? parsed.exportedAt : null,
     },

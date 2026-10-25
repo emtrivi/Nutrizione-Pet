@@ -6,6 +6,7 @@ import { computeCost, getCatalog, recipeSummary, reviewReasons, type Recipe } fr
 import { Badge, Button, Card, Explain, Hint, Screen, styles } from '../../ui/components';
 import { formatEuro } from '../../ui/format';
 import { colors } from '../../ui/theme';
+import { UpdateBanner } from '../../updates/UpdateBanner';
 
 const catalog = getCatalog();
 
@@ -45,6 +46,7 @@ export default function RicetteScreen() {
 
   return (
     <Screen>
+      <UpdateBanner />
       <Explain>
         Le tue ricette. Ognuna appartiene a un solo cane. “Da rivedere” compare se sono cambiati il peso o le calorie del
         cane, o i dati del catalogo: i grammi non vengono mai cambiati da soli.

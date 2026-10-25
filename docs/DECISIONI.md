@@ -71,3 +71,20 @@ Riferimenti generali delle linee guida veterinarie per cani adulti sani; il valo
 | Dose di partenza degli integratori | QDiet: la più bassa della tabella (interpolata); farina d'ossa: la dose della fascia; senza tabella del produttore: 0, la sceglie l'utente | proposta |
 | "Da rivedere" | peso o calorie del cane cambiati, ricetta copiata per un altro cane, dati del catalogo cambiati (impronta), cane eliminato. Salvare la ricetta la segna come rivista. I grammi non cambiano mai da soli | specifiche |
 | Cane eliminato | le sue ricette restano (segnate "il cane non esiste più") e si possono eliminare | proposta |
+
+## 25/10/2026 — aggiornamenti automatici (EAS Update + EAS Workflows)
+
+Decise dall'utente: pubblicazione solo quando cambia `release/versione.json` (non un ramo dedicato);
+avviso «Aggiornamento disponibile — Riavvia ora» con "Più tardi", mai durante una ricetta o un modulo;
+modifiche native → build e TestFlight automatici, il resto via EAS Update; mai App Store.
+
+Scelte tecniche (dettagli in `docs/RILASCI.md`):
+
+| Punto | Scelta | Perché |
+|---|---|---|
+| Compatibilità aggiornamento-build | `runtimeVersion: { policy: "fingerprint" }` | È l'unica politica che rende impossibile mandare un aggiornamento a una build con una parte nativa diversa, ed è la stessa impronta che il workflow usa per decidere se serve una build: una sola regola, nessun numero da ricordare di alzare. Nella documentazione dell'SDK 58 non è più indicata come sperimentale. L'alternativa `appVersion` (consigliata da `eas update:configure`) dipende dal ricordarsi di alzare la versione a ogni modifica nativa: se ci si dimentica, un aggiornamento può arrivare su una build incompatibile. |
+| Cosa conta nell'impronta | `fingerprint.config.js` con preset `balanced` esplicito | Esclude versione, `eas.json` e script; JavaScript e `release/` non ne fanno mai parte. Verificato misurando l'impronta (vedi RILASCI.md). |
+| Workflow | modello ufficiale "deploy to production" di Expo, solo iOS, ramo EAS Update `production` | Già collaudato da Expo; Android tolto. |
+| Ritiro di un aggiornamento | procedura scritta in tre livelli (revert + nuova pubblicazione; Republish dal sito; CLI) | Nessun workflow di ritiro non collaudabile da qui. |
+| Dati | `DATA_SCHEMA_VERSION` = 2, migrazioni, copia prima di migrare, sola lettura se i dati sono più nuovi, salvataggio con file temporaneo | Protegge dati e backup anche se un aggiornamento viene ritirato. |
+| Versione mostrata | da `release/versione.json` (nell'app, Altro → Informazioni) | `app.json` "version" si alza solo con le build native. |

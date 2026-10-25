@@ -1,0 +1,66 @@
+# Pubblica una versione di Nutrizione Pet.
+#
+# Parte SOLO quando cambia release/versione.json (versione dichiarata pronta e verificata).
+# I normali commit di sviluppo non la fanno partire.
+#
+# 1. Calcola l'impronta della parte nativa (fingerprint).
+# 2. Cerca una build iOS già fatta con la stessa impronta.
+# 3a. Se c'è: pubblica un aggiornamento via internet (EAS Update, ramo/canale "production").
+# 3b. Se non c'è (parte nativa cambiata): nuova build iOS e invio a TestFlight.
+# Non pubblica mai sull'App Store.
+
+name: Pubblica versione
+
+on:
+  push:
+    branches: ['**']
+    paths: ['release/versione.json']
+
+concurrency:
+  cancel_in_progress: false
+  group: ${{ workflow.filename }}-${{ github.ref }}
+
+jobs:
+  impronta:
+    name: Impronta della parte nativa
+    type: fingerprint
+    environment: production
+
+  cerca_build:
+    name: Cerca una build iOS compatibile
+    needs: [impronta]
+    type: get-build
+    params:
+      platform: ios
+      profile: production
+      fingerprint_hash: ${{ needs.impronta.outputs.ios_fingerprint_hash }}
+      wait_for_in_progress: true
+
+  build_ios:
+    name: Nuova build iOS (parte nativa cambiata)
+    needs: [cerca_build]
+    if: ${{ !needs.cerca_build.outputs.build_id }}
+    type: build
+    params:
+      platform: ios
+      profile: production
+
+  invio_testflight:
+    name: Invio a TestFlight
+    needs: [build_ios]
+    type: submit
+    params:
+      build_id: ${{ needs.build_ios.outputs.build_id }}
+      profile: production
+
+  aggiornamento:
+    name: Aggiornamento via internet (EAS Update)
+    needs: [cerca_build]
+    if: ${{ needs.cerca_build.outputs.build_id }}
+    type: update
+    environment: production
+    params:
+      # Ramo EAS Update "production", collegato al canale "production" delle build (come nel modello
+      # ufficiale di Expo). Senza questo parametro userebbe il nome del ramo Git: l'app non lo riceverebbe.
+      branch: production
+      platform: ios

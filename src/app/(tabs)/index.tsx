@@ -5,6 +5,7 @@ import { backupReminder, computeDogEnergy } from '../../engine';
 import { Badge, Button, Card, Explain, Hint, Notice, Screen, styles } from '../../ui/components';
 import { formatNumber, formatSmart } from '../../ui/format';
 import { colors } from '../../ui/theme';
+import { UpdateBanner } from '../../updates/UpdateBanner';
 
 export default function CaniScreen() {
   const { data, ready, problem } = useData();
@@ -12,6 +13,7 @@ export default function CaniScreen() {
 
   return (
     <Screen>
+      <UpdateBanner />
       {problem ? <Notice tone="danger">{problem}</Notice> : null}
       {ready && reminder.due && data.dogs.length > 0 ? (
         <Pressable onPress={() => router.navigate('/altro')} accessibilityRole="button">
