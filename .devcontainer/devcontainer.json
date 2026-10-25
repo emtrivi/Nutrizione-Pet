@@ -1,0 +1,8 @@
+{
+  "name": "Nutrizione Pet",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:22",
+  "postCreateCommand": "npm ci",
+  "hostRequirements": {
+    "cpus": 2
+  }
+}
