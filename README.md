@@ -6,13 +6,14 @@ Uso personale. **Strumento di supporto, da validare con la nutrizionista.**
 ## Com'è fatto il progetto
 
 ```
-App.tsx, index.ts    app Expo (React Native), per ora una schermata di prova
+src/app/             schermate (Expo Router): schede Cani, Ricette, Diario, Catalogo, Altro
+src/data/            dati personali: azioni, modulo del cane, salvataggio sul telefono, backup
 app.json, eas.json   configurazione dell'app e della costruzione nel cloud (EAS → TestFlight)
 data/catalog/        i tre file di dati (alimenti, integratori, FEDIAF): si leggono, non si modificano
 docs/                specifiche e registro delle decisioni (DECISIONI.md)
 src/engine/          motore di calcolo, separato dall'interfaccia
 src/engine/__tests__ test con i calcoli fatti a mano sul cane d'esempio (30 kg)
-src/ui/              piccoli aiuti per l'interfaccia (formato dei numeri)
+src/ui/              componenti grafici, formati dei numeri, testi delle spiegazioni
 ```
 
 ## App per iPhone
