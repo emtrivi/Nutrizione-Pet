@@ -21,6 +21,8 @@ export default function RootLayout() {
           <Stack.Screen name="cane/[id]/index" options={{ title: 'Cane' }} />
           <Stack.Screen name="cane/[id]/modifica" options={{ title: 'Modifica cane' }} />
           <Stack.Screen name="catalogo/[key]" options={{ title: 'Catalogo' }} />
+          <Stack.Screen name="ricetta/[id]" options={{ title: 'Ricetta' }} />
+          <Stack.Screen name="impostazioni" options={{ title: 'Impostazioni' }} />
           <Stack.Screen name="info/[topic]" options={{ presentation: 'modal', title: 'Spiegazione' }} />
         </Stack>
         <StatusBar style="dark" />

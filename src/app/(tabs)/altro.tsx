@@ -83,12 +83,17 @@ export default function AltroScreen() {
         {message ? <Notice tone={message.tone}>{message.text}</Notice> : null}
       </Card>
 
+      <Card title="Impostazioni">
+        <LinkRow href="/impostazioni" title="Valori da concordare con la nutrizionista" subtitle="Ripartizione delle calorie, controlli di buon senso, colori, moltiplicatori, promemoria" />
+      </Card>
+
       <Card title="Spiegazioni">
         <LinkRow href={{ pathname: '/info/[topic]', params: { topic: 'legenda' } }} title="Colori e segni" subtitle="Verde, arancione, rosso, grigio; dato indicativo e provvisorio" />
         <LinkRow href={{ pathname: '/info/[topic]', params: { topic: 'bcs' } }} title="BCS: condizione corporea" />
         <LinkRow href={{ pathname: '/info/[topic]', params: { topic: 'mcs' } }} title="MCS: massa muscolare" />
         <LinkRow href={{ pathname: '/info/[topic]', params: { topic: 'attivita' } }} title="Livelli di attività" />
         <LinkRow href={{ pathname: '/info/[topic]', params: { topic: 'calorie' } }} title="Come si calcolano le calorie" />
+        <LinkRow href={{ pathname: '/info/[topic]', params: { topic: 'moltiplicatore' } }} title="Come scegliere il moltiplicatore" />
         <LinkRow href={{ pathname: '/info/[topic]', params: { topic: 'tabella' } }} title="Tabella FEDIAF 95 o 110" />
       </Card>
 

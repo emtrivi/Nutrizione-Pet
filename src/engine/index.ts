@@ -10,4 +10,6 @@ export * from './status';
 export * from './dose';
 export * from './prices';
 export * from './backup';
+export * from './bars';
+export * from './recipes';
 export * from './bundledData';

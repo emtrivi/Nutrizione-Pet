@@ -13,7 +13,8 @@ data/catalog/        i tre file di dati (alimenti, integratori, FEDIAF): si legg
 docs/                specifiche e registro delle decisioni (DECISIONI.md)
 src/engine/          motore di calcolo, separato dall'interfaccia
 src/engine/__tests__ test con i calcoli fatti a mano sul cane d'esempio (30 kg)
-src/ui/              componenti grafici, formati dei numeri, testi delle spiegazioni
+src/ui/              componenti grafici, barre, formati dei numeri, testi delle spiegazioni
+src/ui/recipe/       ricetta guidata (4 passi), scelta dal catalogo, dettaglio dei nutrienti
 ```
 
 ## App per iPhone
@@ -55,7 +56,9 @@ Il motore contiene:
 | `status.ts` | colori delle barre (verde, arancione, rosso, grigio) |
 | `dose.ts` | dose di partenza degli integratori |
 | `prices.ts` | prezzi al kg, a confezione, a capsula; totale "incompleto" se manca un prezzo |
-| `backup.ts` | "Esporta tutto" e "Ripristina" (senza catalogo) |
+| `backup.ts` | "Esporta tutto" e "Ripristina" (senza catalogo), impostazioni |
+| `recipes.ts` | grammi di partenza, valutazione della ricetta, controlli di buon senso, "da rivedere" |
+| `bars.ts` | barre a tratti uguali e posizione della freccia |
 
 ## Comandi
 

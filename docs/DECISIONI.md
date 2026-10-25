@@ -50,3 +50,24 @@ Nel codice: `ANIMAL_ORIGIN_EXTRA_IDS` e `isAnimalOrigin` in `src/engine/catalog.
 ## Punti ancora aperti
 
 Vedi la tabella "Punti aperti" nelle specifiche (`docs/Specifiche_app_menu_cani.pdf`).
+
+## 25/10/2026 — moltiplicatore (richiesta dell'utente)
+
+Nel modulo del cane: spiegazione "Come scegliere il moltiplicatore" (tasto "i") e confronto con i numeri del cane
+(1,2 · 1,4 · 1,6 · 1,8 · 2,0 → kcal al giorno e tabella FEDIAF); si tocca un valore per sceglierlo.
+Riferimenti generali delle linee guida veterinarie per cani adulti sani; il valore giusto si conferma con peso e BCS.
+
+## 25/10/2026 — Fase 2: scelte proposte (modificabili in Altro → Impostazioni)
+
+| Punto | Scelta | Stato |
+|---|---|---|
+| Ripartizione delle calorie per i grammi di partenza | proteica 55%, energetica 30%, verdure 2%, grassi 8%, frattaglie 5%; riportata a 100 sulle sole categorie scelte; quota divisa in parti uguali tra gli alimenti della stessa categoria; arrotondamento al grammo | da concordare con la nutrizionista |
+| Controlli di buon senso | pasto oltre il 6% del peso del cane; verdure oltre il 30% del peso degli alimenti; fegato oltre il 5%; altre frattaglie oltre il 5% | da concordare con la nutrizionista |
+| Massimo di legge (L) su alimenti naturali | "solo avviso" (se arriva anche da un integratore vale sempre) | punto aperto |
+| Calorie della ricetta | verde entro ±5% dall'obiettivo, arancione entro ±10%, rosso oltre | proposta |
+| Barre | 5 tratti uguali; il tratto rosso alto arriva al doppio del limite +10%; con solo minimo il verde arriva al doppio del minimo; il verde comprende minimo e massimo | proposta |
+| Riepilogo dei colori | conta i 43 nutrienti con una riga FEDIAF (gli extra solo informativi non contano) | proposta |
+| Omega-6/omega-3 | acido linoleico ÷ (ALA + EPA + DHA), solo informativo | proposta |
+| Dose di partenza degli integratori | QDiet: la più bassa della tabella (interpolata); farina d'ossa: la dose della fascia; senza tabella del produttore: 0, la sceglie l'utente | proposta |
+| "Da rivedere" | peso o calorie del cane cambiati, ricetta copiata per un altro cane, dati del catalogo cambiati (impronta), cane eliminato. Salvare la ricetta la segna come rivista. I grammi non cambiano mai da soli | specifiche |
+| Cane eliminato | le sue ricette restano (segnate "il cane non esiste più") e si possono eliminare | proposta |

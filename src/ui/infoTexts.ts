@@ -45,6 +45,24 @@ export const INFO: Record<string, InfoTopic> = {
     ],
     outro: 'Questi moltiplicatori sono da confrontare con quelli della nutrizionista.',
   },
+  moltiplicatore: {
+    title: 'Come scegliere il moltiplicatore',
+    intro:
+      'Il moltiplicatore dice quante volte il fabbisogno a riposo (RER) serve al cane in una giornata normale: ' +
+      'kcal al giorno = RER × moltiplicatore. I valori qui sotto sono riferimenti generali delle linee guida ' +
+      'veterinarie per cani adulti sani. Ogni cane è diverso, anche del 20-30%: il valore giusto si trova con la bilancia.',
+    items: [
+      { label: '1,2 – 1,4', text: 'Cane sterilizzato poco attivo, che ingrassa facilmente, o adulto anziano tranquillo.' },
+      { label: '1,6', text: 'Adulto sterilizzato con attività normale (1-3 ore al giorno di passeggiate e gioco). È il punto di partenza più comune.' },
+      { label: '1,8', text: 'Adulto non sterilizzato con attività normale.' },
+      { label: '2,0', text: 'Cane molto attivo: più di 3 ore al giorno, corsa, agility, lunghe escursioni.' },
+      { label: 'Oltre 2', text: 'Cani da lavoro o sport intenso (fino a 3-5 e più): solo con la nutrizionista.' },
+      { label: 'Per dimagrire', text: 'Di solito si parte da circa 1,0 calcolato sul peso ideale: solo su indicazione della nutrizionista (accendi “Usa il peso ideale”).' },
+      { label: 'Come capire se è giusto', text: 'Pesa il cane ogni 2-4 settimane, sempre con la stessa bilancia, e controlla il BCS. Peso stabile e BCS 4-5: va bene. Se ingrassa, abbassa di circa il 10% (per esempio da 1,6 a 1,45). Se dimagrisce senza volerlo, alza di circa il 10%.' },
+      { label: 'Effetto sulla tabella FEDIAF', text: 'Con un moltiplicatore sotto circa 1,56 il fattore scende sotto 110 e si usa la tabella 95, più severa. Sotto circa 1,35 il fattore scende sotto 95 e compare un avviso.' },
+    ],
+    outro: 'Nel modulo del cane trovi il confronto con i numeri del tuo cane: tocca un valore per sceglierlo. Le kcal scritte a mano, se ci sono, hanno la precedenza sul moltiplicatore.',
+  },
   calorie: {
     title: 'Come si calcolano le calorie',
     intro: 'L’app propone le calorie al giorno; tu puoi sempre correggerle.',

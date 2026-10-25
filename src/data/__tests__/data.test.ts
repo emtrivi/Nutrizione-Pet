@@ -132,3 +132,23 @@ describe('azioni sui dati personali', () => {
     expect(r.data.prices).toEqual(d.prices);
   });
 });
+
+describe('ricette e impostazioni nei dati personali', () => {
+  it('salva, sostituisci, elimina una ricetta', async () => {
+    const { saveRecipe, deleteRecipe } = await import('../personalStore');
+    const r = { id: 'r1', name: 'A', dogId: 'c1' } as unknown as import('../../engine').Recipe;
+    let d = saveRecipe(emptyPersonalData(), r);
+    d = saveRecipe(d, { ...r, name: 'B' });
+    expect(d.recipes.map((x) => x.name)).toEqual(['B']);
+    d = deleteRecipe(d, 'r1');
+    expect(d.recipes).toEqual([]);
+  });
+
+  it('impostazioni vecchie senza i nuovi gruppi prendono i valori iniziali', async () => {
+    const { mergeSettings } = await import('../personalStore');
+    const s = mergeSettings({ tolerance: 0.15, sanity: { liverPctOfFood: 7 } } as never);
+    expect(s.tolerance).toBe(0.15);
+    expect(s.sanity).toEqual({ ...DEFAULT_SETTINGS.sanity, liverPctOfFood: 7 });
+    expect(s.calorieSplit).toEqual(DEFAULT_SETTINGS.calorieSplit);
+  });
+});

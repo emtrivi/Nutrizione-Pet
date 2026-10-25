@@ -1,7 +1,15 @@
 // Azioni sui dati personali (cani, prezzi, backup). Funzioni pure: ricevono i dati
 // e restituiscono una copia aggiornata; il salvataggio sul telefono è altrove.
 
-import { DEFAULT_SETTINGS, emptyPersonalData, type PersonalData, type PriceBook, type PriceEntry } from '../engine';
+import {
+  DEFAULT_SETTINGS,
+  emptyPersonalData,
+  type PersonalData,
+  type PriceBook,
+  type PriceEntry,
+  type Recipe,
+  type Settings,
+} from '../engine';
 import type { DogFields } from './dogForm';
 
 export function generateId(now: Date = new Date()): string {
@@ -64,9 +72,40 @@ export function parseLocal(text: string | null): PersonalData | null {
     return {
       ...emptyPersonalData(),
       ...parsed.data,
-      settings: { ...DEFAULT_SETTINGS, ...parsed.data.settings },
+      settings: mergeSettings(parsed.data.settings),
     };
   } catch {
     return null;
   }
+}
+
+// ---------------------------------------------------------------------------
+// Ricette e impostazioni
+
+/** Aggiunge la ricetta o la sostituisce se esiste già (stesso id). */
+export function saveRecipe(data: PersonalData, recipe: Recipe): PersonalData {
+  const exists = data.recipes.some((r) => r.id === recipe.id);
+  return {
+    ...data,
+    recipes: exists ? data.recipes.map((r) => (r.id === recipe.id ? recipe : r)) : [...data.recipes, recipe],
+  };
+}
+
+export function deleteRecipe(data: PersonalData, id: string): PersonalData {
+  return { ...data, recipes: data.recipes.filter((r) => r.id !== id) };
+}
+
+export function withSettings(data: PersonalData, settings: Settings): PersonalData {
+  return { ...data, settings };
+}
+
+/** Impostazioni salvate + valori iniziali per quelle aggiunte dopo (anche dentro i gruppi). */
+export function mergeSettings(saved: Partial<Settings> | undefined): Settings {
+  const s = saved ?? {};
+  return {
+    ...DEFAULT_SETTINGS,
+    ...s,
+    calorieSplit: { ...DEFAULT_SETTINGS.calorieSplit, ...s.calorieSplit },
+    sanity: { ...DEFAULT_SETTINGS.sanity, ...s.sanity },
+  };
 }

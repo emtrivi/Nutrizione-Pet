@@ -1,11 +1,13 @@
 // Modulo del cane (nuovo e modifica), con anteprima delle calorie mentre si scrive.
 
 import { useState } from 'react';
-import { Text, View } from 'react-native';
+import { Pressable, Text, View } from 'react-native';
+import { useData } from '../data/DataContext';
 import { EMPTY_DOG_FORM, validateDogForm, type DogFields, type DogFormValues } from '../data/dogForm';
 import { computeDogEnergy, proposedMultiplier, type ActivityLevel, type MuscleScore } from '../engine';
 import { Button, Card, Explain, Field, Hint, Notice, Row, Screen, Segmented, SwitchRow } from './components';
 import { formatNumber, formatSmart } from './format';
+import { colors } from './theme';
 
 const BCS_OPTIONS: { value: number; label: string }[] = [
   { value: 0, label: '—' },
@@ -24,6 +26,61 @@ const ACTIVITY_OPTIONS: { value: ActivityLevel; label: string }[] = [
   { value: 'alta', label: 'Alta' },
 ];
 
+const COMPARE_VALUES = [1.2, 1.4, 1.6, 1.8, 2.0];
+
+/** Confronto: per ogni moltiplicatore, kcal e tabella FEDIAF con il peso scritto. Tocca per scegliere. */
+function MultiplierCompare({
+  fields,
+  proposed,
+  selected,
+  onPick,
+  multipliers,
+}: {
+  multipliers: Parameters<typeof computeDogEnergy>[1];
+  fields: DogFields;
+  proposed: number;
+  selected: number | undefined;
+  onPick: (m: number) => void;
+}) {
+  return (
+    <View style={{ gap: 4 }}>
+      <Text style={{ fontSize: 14, fontWeight: '600', color: colors.text }}>
+        Confronto per {fields.name === 'anteprima' ? 'questo cane' : fields.name} ({formatSmart(fields.useIdealWeight && fields.idealWeightKg ? fields.idealWeightKg : fields.weightKg)} kg). Tocca per scegliere:
+      </Text>
+      {COMPARE_VALUES.map((m) => {
+        const e = computeDogEnergy({ ...fields, manualKcal: undefined, multiplierOverride: m, fediafTableOverride: undefined }, multipliers);
+        const isSelected = selected === undefined ? m === proposed : Math.abs(selected - m) < 1e-9;
+        return (
+          <Pressable
+            key={m}
+            accessibilityRole="button"
+            accessibilityLabel={`Moltiplicatore ${formatSmart(m)}`}
+            onPress={() => onPick(m)}
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              paddingVertical: 8,
+              paddingHorizontal: 10,
+              borderRadius: 8,
+              borderWidth: 1,
+              borderColor: isSelected ? colors.primary : colors.border,
+              backgroundColor: isSelected ? '#E8F1EC' : colors.card,
+            }}
+          >
+            <Text style={{ fontSize: 15, fontWeight: '700', color: colors.text, width: 44 }}>{formatSmart(m)}</Text>
+            <Text style={{ fontSize: 15, color: colors.text, flex: 1 }}>{formatNumber(e.kcalPerDay)} kcal</Text>
+            <Text style={{ fontSize: 14, color: e.belowReference ? colors.warningText : colors.muted }}>
+              tab. {e.table}
+              {e.belowReference ? ' · avviso' : ''}
+              {m === proposed ? ' · proposto' : ''}
+            </Text>
+          </Pressable>
+        );
+      })}
+    </View>
+  );
+}
+
 export function DogForm({
   initial = EMPTY_DOG_FORM,
   submitLabel,
@@ -35,14 +92,16 @@ export function DogForm({
   onSubmit: (fields: DogFields) => void;
   onDelete?: () => void;
 }) {
+  const { data } = useData();
+  const multipliers = data.settings.multipliers ?? undefined;
   const [v, setV] = useState<DogFormValues>(initial);
   const [errors, setErrors] = useState<Partial<Record<keyof DogFormValues, string>>>({});
   const set = <K extends keyof DogFormValues>(key: K, value: DogFormValues[K]) => setV((old) => ({ ...old, [key]: value }));
 
   // Anteprima: si calcola solo se i numeri scritti sono validi.
   const check = validateDogForm({ ...v, name: v.name || 'anteprima' });
-  const preview = check.ok ? computeDogEnergy(check.fields) : null;
-  const proposed = proposedMultiplier(v.activity, v.neutered);
+  const preview = check.ok ? computeDogEnergy(check.fields, multipliers) : null;
+  const proposed = proposedMultiplier(v.activity, v.neutered, multipliers);
 
   const submit = () => {
     const r = validateDogForm(v);
@@ -106,14 +165,25 @@ export function DogForm({
         </Hint>
         <Field
           label="Moltiplicatore (facoltativo)"
-          info="calorie"
+          info="moltiplicatore"
           value={v.multiplier}
           onChangeText={(t) => set('multiplier', t)}
           keyboardType="decimal-pad"
           error={errors.multiplier}
           placeholder={`proposto: ${formatSmart(proposed)}`}
-          hint={`Vuoto = proposto ${formatSmart(proposed)} (attività ${v.activity}, ${v.neutered ? 'sterilizzato' : 'non sterilizzato'}).`}
+          hint={`Vuoto = proposto ${formatSmart(proposed)} (attività ${v.activity}, ${v.neutered ? 'sterilizzato' : 'non sterilizzato'}). Tocca la “i” per sapere come sceglierlo.`}
         />
+        {check.ok && v.manualKcal.trim() === '' ? (
+          <MultiplierCompare
+            multipliers={multipliers}
+            fields={check.fields}
+            proposed={proposed}
+            selected={check.fields.multiplierOverride}
+            onPick={(m) => set('multiplier', m === proposed ? '' : formatSmart(m))}
+          />
+        ) : check.ok ? (
+          <Hint>Hai scritto le kcal a mano: il moltiplicatore non viene usato.</Hint>
+        ) : null}
         <Field
           label="Kcal al giorno scritte a mano (facoltativo)"
           value={v.manualKcal}

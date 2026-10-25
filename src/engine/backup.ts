@@ -2,7 +2,23 @@
 // Il backup NON contiene il catalogo: ripristinarlo non sovrascrive mai il catalogo dell'app.
 
 import type { PriceBook } from './prices';
-import type { Dog } from './types';
+import type { Recipe } from './recipes';
+import type { LegalMaxMode } from './status';
+import type { ActivityLevel, Dog } from './types';
+
+/** Categorie della ricetta guidata che ricevono una parte delle calorie. */
+export type SplitCategory = 'proteica' | 'energetica' | 'verdure' | 'grassi' | 'frattaglie';
+
+export interface SanityThresholds {
+  /** Peso totale del pasto oltre questa % del peso del cane. */
+  mealPctOfBodyWeight: number;
+  /** Verdure oltre questa % del peso degli alimenti. */
+  vegetablesPctOfFood: number;
+  /** Fegato oltre questa % del peso degli alimenti. */
+  liverPctOfFood: number;
+  /** Altre frattaglie (rene, milza, altre) oltre questa % del peso degli alimenti. */
+  otherOffalPctOfFood: number;
+}
 
 export const BACKUP_FORMAT = 'nutrizione-pet-backup';
 export const BACKUP_SCHEMA_VERSION = 1;
@@ -13,12 +29,18 @@ export interface Settings {
   /** Zona arancione (all'inizio 0,10). */
   tolerance: number;
   /** Moltiplicatori modificati (null = quelli proposti). */
-  multipliers: Record<string, { sterilizzato: number; intero: number }> | null;
+  multipliers: Record<ActivityLevel, { sterilizzato: number; intero: number }> | null;
   /** Aumento del 10% degli aminoacidi (punto aperto, spento). */
   aminoAcidDigestibilityIncrease: boolean;
   /** Media del diario (all'inizio 14 giorni) e avviso nel tempo (all'inizio 7). */
   diaryAverageDays: number;
   diaryAlertDays: number;
+  /** Ripartizione indicativa delle calorie per i grammi di partenza (%), da concordare con la nutrizionista. */
+  calorieSplit: Record<SplitCategory, number>;
+  /** Soglie dei controlli di buon senso (provvisorie, da concordare con la nutrizionista). */
+  sanity: SanityThresholds;
+  /** Massimo di legge (L) quando il nutriente arriva solo da alimenti naturali (punto aperto). */
+  legalMaxNaturalMode: LegalMaxMode;
 }
 
 export const DEFAULT_SETTINGS: Settings = {
@@ -28,12 +50,15 @@ export const DEFAULT_SETTINGS: Settings = {
   aminoAcidDigestibilityIncrease: false,
   diaryAverageDays: 14,
   diaryAlertDays: 7,
+  calorieSplit: { proteica: 55, energetica: 30, verdure: 2, grassi: 8, frattaglie: 5 },
+  sanity: { mealPctOfBodyWeight: 6, vegetablesPctOfFood: 30, liverPctOfFood: 5, otherOffalPctOfFood: 5 },
+  legalMaxNaturalMode: 'avviso',
 };
 
 export interface PersonalData {
   dogs: Dog[];
-  /** Ricette e diario: la forma arriverà nelle fasi 2 e 3. */
-  recipes: unknown[];
+  recipes: Recipe[];
+  /** Diario: la forma arriverà nella Fase 3. */
   diary: unknown[];
   prices: PriceBook;
   settings: Settings;
@@ -115,6 +140,13 @@ export function parseBackup(text: string, now: Date): RestoreResult {
     const err = checkDog(dogs[i], i);
     if (err) return { ok: false, error: err };
   }
+  const recipes = Array.isArray(data.recipes) ? data.recipes : [];
+  for (let i = 0; i < recipes.length; i++) {
+    const r = recipes[i];
+    if (!isObject(r) || typeof r.id !== 'string' || typeof r.dogId !== 'string' || typeof r.name !== 'string' || !Array.isArray(r.lines)) {
+      return { ok: false, error: `Ricetta n. ${i + 1}: dati non validi.` };
+    }
+  }
   const ids = new Set<string>();
   for (const dog of dogs as Dog[]) {
     if (ids.has(dog.id)) return { ok: false, error: `Cane “${dog.name}” presente due volte.` };
@@ -125,7 +157,7 @@ export function parseBackup(text: string, now: Date): RestoreResult {
     exportedAt: typeof parsed.exportedAt === 'string' ? parsed.exportedAt : now.toISOString(),
     data: {
       dogs: dogs as Dog[],
-      recipes: Array.isArray(data.recipes) ? data.recipes : [],
+      recipes: Array.isArray(data.recipes) ? (data.recipes as Recipe[]) : [],
       diary: Array.isArray(data.diary) ? data.diary : [],
       prices: isObject(data.prices) ? (data.prices as PriceBook) : {},
       settings: { ...DEFAULT_SETTINGS, ...(isObject(data.settings) ? (data.settings as Partial<Settings>) : {}) },

@@ -1,10 +1,12 @@
 import { Stack, router, useLocalSearchParams } from 'expo-router';
 import { Text, View } from 'react-native';
 import { useData } from '../../../data/DataContext';
-import { ACTIVITY_LABELS, computeDogEnergy, computeRequirements, fediaf } from '../../../engine';
-import { Button, Card, Explain, Hint, InfoButton, Notice, Row, Screen } from '../../../ui/components';
+import { ACTIVITY_LABELS, computeDogEnergy, computeRequirements, fediaf, getCatalog, reviewReasons } from '../../../engine';
+import { Button, Card, Explain, Hint, InfoButton, LinkRow, Notice, Row, Screen } from '../../../ui/components';
 import { formatNumber, formatSmart } from '../../../ui/format';
 import { RequirementsView } from '../../../ui/RequirementsView';
+
+const catalog = getCatalog();
 
 const MCS_LABELS = {
   normale: 'Normale',
@@ -26,6 +28,7 @@ export default function CaneScreen() {
   }
 
   const e = computeDogEnergy(dog, data.settings.multipliers ?? undefined);
+  const recipes = data.recipes.filter((r) => r.dogId === dog.id);
   const req = computeRequirements(fediaf, {
     table: e.table,
     kcalPerDay: e.kcalPerDay,
@@ -100,8 +103,17 @@ export default function CaneScreen() {
         giudizio della nutrizionista.
       </Hint>
 
-      <Card title="Ricette">
-        <Hint>Da qui si creerà una ricetta per {dog.name}: arriva con la Fase 2.</Hint>
+      <Card title={`Ricette di ${dog.name}`}>
+        {recipes.length === 0 ? <Hint>Nessuna ricetta per {dog.name}.</Hint> : null}
+        {recipes.map((r) => (
+          <LinkRow
+            key={r.id}
+            href={{ pathname: '/ricetta/[id]', params: { id: r.id } }}
+            title={r.name}
+            subtitle={reviewReasons(r, data.dogs, catalog, data.settings.multipliers).length > 0 ? 'da rivedere' : undefined}
+          />
+        ))}
+        <Button title={`Crea una ricetta per ${dog.name}`} onPress={() => router.push({ pathname: '/ricetta/[id]', params: { id: 'nuova', dogId: dog.id } })} />
       </Card>
     </Screen>
   );
