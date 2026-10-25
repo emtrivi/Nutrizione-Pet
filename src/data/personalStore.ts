@@ -3,6 +3,9 @@
 
 import {
   DATA_SCHEMA_VERSION,
+  assignPeriod,
+  removePeriod,
+  type DiaryEntry,
   emptyPersonalData,
   mergeSettings,
   migrateData,
@@ -128,6 +131,18 @@ export function deleteRecipe(data: PersonalData, id: string): PersonalData {
 
 export function withSettings(data: PersonalData, settings: Settings): PersonalData {
   return { ...data, settings };
+}
+
+// ---------------------------------------------------------------------------
+// Diario
+
+/** Aggiunge un periodo al diario (i giorni sovrapposti dello stesso cane vengono sostituiti). */
+export function addDiaryPeriod(data: PersonalData, entry: DiaryEntry): PersonalData {
+  return { ...data, diary: assignPeriod(data.diary, entry, () => generateId()) };
+}
+
+export function deleteDiaryPeriod(data: PersonalData, id: string): PersonalData {
+  return { ...data, diary: removePeriod(data.diary, id) };
 }
 
 export { mergeSettings };

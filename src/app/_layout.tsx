@@ -25,6 +25,7 @@ export default function RootLayout() {
             <Stack.Screen name="catalogo/[key]" options={{ title: 'Catalogo' }} />
             <Stack.Screen name="ricetta/[id]" options={{ title: 'Ricetta' }} />
             <Stack.Screen name="impostazioni" options={{ title: 'Impostazioni' }} />
+            <Stack.Screen name="diario/giorno" options={{ title: 'Giorno' }} />
             <Stack.Screen name="info/[topic]" options={{ presentation: 'modal', title: 'Spiegazione' }} />
           </Stack>
           <StatusBar style="dark" />

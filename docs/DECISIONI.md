@@ -88,3 +88,16 @@ Scelte tecniche (dettagli in `docs/RILASCI.md`):
 | Ritiro di un aggiornamento | procedura scritta in tre livelli (revert + nuova pubblicazione; Republish dal sito; CLI) | Nessun workflow di ritiro non collaudabile da qui. |
 | Dati | `DATA_SCHEMA_VERSION` = 2, migrazioni, copia prima di migrare, sola lettura se i dati sono più nuovi, salvataggio con file temporaneo | Protegge dati e backup anche se un aggiornamento viene ritirato. |
 | Versione mostrata | da `release/versione.json` (nell'app, Altro → Informazioni) | `app.json` "version" si alza solo con le build native. |
+
+## 25/10/2026 — Fase 3: diario, suggerimenti, sostituzione (scelte proposte)
+
+| Punto | Scelta |
+|---|---|
+| Copia fissa | All'assegnazione si salvano ingredienti con grammi, kcal, peso e kcal del cane, e per ogni nutriente valore, colore, limiti e barra già calcolati. Il diario non ricalcola mai il passato. |
+| Periodi | Una ricetta al giorno per cane. Un periodo "in corso" vale fino a oggi; i giorni futuri restano vuoti. Assegnando giorni già occupati l'app chiede conferma e toglie solo quei giorni dai periodi esistenti (un periodo tagliato in mezzo diventa due, con la stessa copia fissa). |
+| Media | Media dei valori ogni 1.000 kcal dei soli giorni con ricetta, confrontata con la media dei limiti di quei giorni; a righe ("almeno") se un giorno ha il dato parziale o mancante. Calcio/fosforo con i limiti FEDIAF 1–2. |
+| Avviso nel tempo | Nutrienti con riga FEDIAF rossi o arancioni per almeno N giorni di fila fino a oggi (N = 7 all'inizio, in Impostazioni). Un giorno senza ricetta interrompe la serie. |
+| Suggerimenti | Solo per nutrienti in carenza (rossi o arancioni). Si propongono gli integratori del catalogo che contengono il nutriente (non quelli "non dichiarati = 0" né quelli già nella ricetta). Dose: la più bassa del produttore (o la fascia); se il produttore non dà una dose, quella che porterebbe il nutriente al minimo del giorno, arrotondata per eccesso a 0,5 g (o a 1 capsula). Anteprima: nutriente prima/dopo, altri nutrienti che cambiano colore, calcio/fosforo. Si aggiunge solo toccando "Aggiungi". |
+| Sostituzione | Il nuovo alimento prende le stesse calorie del vecchio (grammi arrotondati al grammo); se le calorie non sono note restano gli stessi grammi. |
+| Date | Pulsanti ‹ › e "Oggi" invece del selettore nativo: nessun componente nativo nuovo, quindi la versione arriva via internet. |
+| Struttura dei dati | Nessun cambio di numero (resta 2): il campo "diario" esisteva già vuoto, quindi un eventuale ritiro dell'aggiornamento non crea incompatibilità. |

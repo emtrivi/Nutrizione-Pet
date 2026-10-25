@@ -30,6 +30,8 @@ function toTexts(s: Settings): Texts {
   const t: Texts = {
     tolerance: decimalToText(Math.round(s.tolerance * 1000) / 10),
     backupReminderDays: String(s.backupReminderDays),
+    diaryAverageDays: String(s.diaryAverageDays),
+    diaryAlertDays: String(s.diaryAlertDays),
   };
   for (const k of Object.keys(s.calorieSplit) as SplitCategory[]) t[`split.${k}`] = decimalToText(s.calorieSplit[k]);
   for (const k of Object.keys(s.sanity) as (keyof Settings['sanity'])[]) t[`sanity.${k}`] = decimalToText(s.sanity[k]);
@@ -77,6 +79,12 @@ export default function ImpostazioniScreen() {
         multipliers: same ? null : multipliers,
         tolerance: num('tolerance', 'Zona arancione', 1, 50) / 100,
         backupReminderDays: Math.round(num('backupReminderDays', 'Promemoria backup', 1, 365)),
+        diaryAverageDays: [5, 7, 14, 21, 30].includes(Math.round(num('diaryAverageDays', 'Media del diario', 5, 30)))
+          ? Math.round(num('diaryAverageDays', 'Media del diario', 5, 30))
+          : (() => {
+              throw new Error('Media del diario: scegli 5, 7, 14, 21 o 30 giorni.');
+            })(),
+        diaryAlertDays: Math.round(num('diaryAlertDays', 'Avviso nel tempo', 2, 60)),
         legalMaxNaturalMode: legal,
         aminoAcidDigestibilityIncrease: amino,
       };
@@ -144,6 +152,11 @@ export default function ImpostazioniScreen() {
             </View>
           </View>
         ))}
+      </Card>
+
+      <Card title="Diario">
+        <Field label="Media mostrata all’inizio (5, 7, 14, 21 o 30 giorni)" {...f('diaryAverageDays')} />
+        <Field label="Avviso se un nutriente resta rosso o arancione per (giorni di fila)" {...f('diaryAlertDays')} hint="All’inizio 7." />
       </Card>
 
       <Card title="Backup">

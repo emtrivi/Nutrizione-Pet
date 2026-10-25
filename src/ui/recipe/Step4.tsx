@@ -2,11 +2,14 @@
 // Ogni cambio di grammi aggiorna subito tutto; nulla viene bloccato.
 
 import Slider from '@react-native-community/slider';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Pressable, Text, TextInput, View } from 'react-native';
+import { useData } from '../../data/DataContext';
 import { parseDecimal } from '../../data/dogForm';
 import {
+  fediaf,
   getCatalog,
+  substituteGrams,
   shortName,
   startingDose,
   summaryText,
@@ -21,7 +24,7 @@ import { NutrientBarRow, Bar } from '../NutrientBar';
 import { Badge, Button, Card, Hint, InfoButton, Notice, Row, styles } from '../components';
 import { formatEuro, formatFixedUnit, formatNumber, formatSmart } from '../format';
 import { colors } from '../theme';
-import type { Draft, DraftLine } from './draft';
+import { draftLines, type Draft, type DraftLine } from './draft';
 import { NutrientDetail } from './NutrientDetail';
 import { CatalogPicker } from './Pickers';
 
@@ -149,6 +152,27 @@ export function Step4({
   const [open, setOpen] = useState<Record<string, boolean>>({});
   const [detail, setDetail] = useState<NutrientView | null>(null);
   const [picking, setPicking] = useState(false);
+  const [replacing, setReplacing] = useState<string | null>(null);
+  const [notice, setNotice] = useState<string | null>(null);
+  const { data } = useData();
+
+  // Ricetta così com'è adesso, per i suggerimenti con anteprima.
+  const suggestInput = useMemo(
+    () => ({ lines: draftLines(draft), kcalTarget: ev.kcal.target, table: ev.requirements.table, overrides: draft.overrides, dogWeightKg }),
+    [draft, ev.kcal.target, ev.requirements.table, dogWeightKg],
+  );
+  const suggestCtx = useMemo(() => ({ catalog, fediaf, settings: data.settings, prices }), [data.settings, prices]);
+  const deficits = ev.groups
+    .flatMap((g) => g.items)
+    .filter((v) => v.def.inFediaf && v.evaluation.direction === 'carenza' && (v.evaluation.color === 'rosso' || v.evaluation.color === 'arancione'));
+
+  const addSupplement = (key: string, dose: number) => {
+    const exists = draft.supplements.some((x) => x.key === key);
+    set({ supplements: exists ? draft.supplements.map((x) => (x.key === key ? { ...x, amount: dose } : x)) : [...draft.supplements, { key, amount: dose }] });
+    setDetail(null);
+    const item = catalog.get(key);
+    setNotice(`Aggiunto: ${item ? shortName(item) : key} ${formatSmart(dose)} ${item?.doseUnit === 'capsule' ? 'capsule' : 'g'}. Controlla le barre.`);
+  };
 
   const updateLine = (field: 'foods' | 'supplements', key: string, amount: number) =>
     set({ [field]: draft[field].map((l: DraftLine) => (l.key === key ? { ...l, amount } : l)) } as Partial<Draft>);
@@ -181,7 +205,12 @@ export function Step4({
           const amount = l.amount ?? 0;
           return (
             <View key={l.key} style={{ gap: 4, paddingVertical: 8, borderBottomWidth: 0.5, borderBottomColor: colors.border }}>
-              <Text style={{ fontSize: 15, fontWeight: '600', color: colors.text }}>{item.nameIt}</Text>
+              <View style={{ flexDirection: 'row', alignItems: 'flex-start', gap: 8 }}>
+                <Text style={{ flex: 1, fontSize: 15, fontWeight: '600', color: colors.text }}>{item.nameIt}</Text>
+                <Pressable accessibilityRole="button" accessibilityLabel={`Sostituisci ${item.nameIt}`} hitSlop={8} onPress={() => setReplacing(l.key)}>
+                  <Text style={{ color: colors.primary, fontSize: 14 }}>Sostituisci</Text>
+                </Pressable>
+              </View>
               <View style={{ flexDirection: 'row', gap: 6, flexWrap: 'wrap' }}>
                 <Badge text={item.processingLabel ?? ''} tone="info" />
                 {item.indicative ? <Badge text="dato indicativo" tone="warning" /> : null}
@@ -200,6 +229,26 @@ export function Step4({
         })}
         <Button title="Ricalcola i grammi di partenza" kind="secondary" onPress={onRecalculate} />
       </Card>
+
+      {notice ? <Notice tone="info">{notice}</Notice> : null}
+
+      {deficits.length > 0 ? (
+        <Card title="Suggerimenti">
+          <Hint>Nutrienti in carenza: tocca per vedere gli integratori che li contengono e cosa cambierebbe.</Hint>
+          <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 6 }}>
+            {deficits.map((v) => (
+              <Pressable
+                key={v.def.id}
+                accessibilityRole="button"
+                onPress={() => setDetail(v)}
+                style={[styles.segment, { borderColor: v.evaluation.color === 'rosso' ? colors.red : colors.orange }]}
+              >
+                <Text style={styles.segmentText}>{v.def.nameIt}</Text>
+              </Pressable>
+            ))}
+          </View>
+        </Card>
+      ) : null}
 
       {ev.sanity.map((w) => (
         <Notice key={w} tone="warning">
@@ -322,7 +371,30 @@ export function Step4({
           setPicking(false);
         }}
       />
-      <NutrientDetail view={detail} recipeKcal={ev.kcal.value} onClose={() => setDetail(null)} />
+      <CatalogPicker
+        visible={replacing !== null}
+        category={replacing ? catalog.get(replacing)?.recipeCategory : undefined}
+        exclude={draft.foods.map((f) => f.key)}
+        onClose={() => setReplacing(null)}
+        onPick={(newItem) => {
+          const oldLine = draft.foods.find((f) => f.key === replacing);
+          const oldItem = replacing ? catalog.get(replacing) : undefined;
+          setReplacing(null);
+          if (!oldLine || !oldItem) return;
+          const r = substituteGrams(oldItem, oldLine.amount ?? 0, newItem);
+          set({ foods: draft.foods.map((f) => (f.key === oldItem.key ? { key: newItem.key, amount: r.grams } : f)) });
+          setNotice(
+            `Sostituito: ${shortName(oldItem)} ${formatSmart(oldLine.amount ?? 0)} g → ${shortName(newItem)} ${formatSmart(r.grams)} g` +
+              (r.sameKcal ? ' (stesse calorie).' : ' (stessi grammi: calorie non note).'),
+          );
+        }}
+      />
+      <NutrientDetail
+        view={detail}
+        recipeKcal={ev.kcal.value}
+        onClose={() => setDetail(null)}
+        suggest={{ input: suggestInput, ctx: suggestCtx, onAdd: addSupplement }}
+      />
     </View>
   );
 }

@@ -13,4 +13,6 @@ export * from './backup';
 export * from './migrations';
 export * from './bars';
 export * from './recipes';
+export * from './diary';
+export * from './suggestions';
 export * from './bundledData';

@@ -3,6 +3,7 @@
 
 import { migrateData } from './migrations';
 import type { PriceBook } from './prices';
+import type { DiaryEntry } from './diary';
 import type { Recipe } from './recipes';
 import type { LegalMaxMode } from './status';
 import type { ActivityLevel, Dog } from './types';
@@ -60,8 +61,8 @@ export const DEFAULT_SETTINGS: Settings = {
 export interface PersonalData {
   dogs: Dog[];
   recipes: Recipe[];
-  /** Diario: la forma arriverà nella Fase 3. */
-  diary: unknown[];
+  /** Diario: periodi con la copia fissa della ricetta (Fase 3). */
+  diary: DiaryEntry[];
   prices: PriceBook;
   settings: Settings;
   lastBackupAt: string | null;
@@ -163,6 +164,13 @@ export function parseBackup(text: string, now: Date): RestoreResult {
       return { ok: false, error: `Ricetta n. ${i + 1}: dati non validi.` };
     }
   }
+  const diary = Array.isArray(data.diary) ? data.diary : [];
+  for (let i = 0; i < diary.length; i++) {
+    const e = diary[i];
+    if (!isObject(e) || typeof e.id !== 'string' || typeof e.dogId !== 'string' || typeof e.from !== 'string' || !isObject(e.snapshot)) {
+      return { ok: false, error: `Diario, periodo n. ${i + 1}: dati non validi.` };
+    }
+  }
   const ids = new Set<string>();
   for (const dog of dogs as Dog[]) {
     if (ids.has(dog.id)) return { ok: false, error: `Cane “${dog.name}” presente due volte.` };
@@ -174,7 +182,7 @@ export function parseBackup(text: string, now: Date): RestoreResult {
     data: {
       dogs: dogs as Dog[],
       recipes: Array.isArray(data.recipes) ? (data.recipes as Recipe[]) : [],
-      diary: Array.isArray(data.diary) ? data.diary : [],
+      diary: Array.isArray(data.diary) ? (data.diary as DiaryEntry[]) : [],
       prices: isObject(data.prices) ? (data.prices as PriceBook) : {},
       settings: mergeSettings(isObject(data.settings) ? data.settings : undefined),
       // Dopo un ripristino, l'ultimo backup è quello appena letto.

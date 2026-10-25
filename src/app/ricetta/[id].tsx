@@ -200,6 +200,11 @@ export default function RicettaScreen() {
             <Button title="Salva la ricetta" onPress={save} />
             {saved ? (
               <>
+                <Button
+                  title="Aggiungi al diario"
+                  kind="secondary"
+                  onPress={() => router.navigate({ pathname: '/diario', params: { dogId: dog.id, recipeId: saved.id, t: String(Date.now()) } })}
+                />
                 <Button title="Duplica (anche per un altro cane)" kind="secondary" onPress={() => setChoosingDog(true)} />
                 <Button
                   title="Elimina la ricetta"

@@ -1,7 +1,8 @@
 // Tocco su una barra: valore, limite, da quali ingredienti arriva, pagina FEDIAF.
 
 import { Modal, ScrollView, Text, View } from 'react-native';
-import { getCatalog, shortName, type NutrientView } from '../../engine';
+import { getCatalog, shortName, type EvaluateInput, type NutrientView } from '../../engine';
+import { SuggestionsPanel } from './Suggestions';
 import { Bar } from '../NutrientBar';
 import { Button, Card, Hint, Notice, Row } from '../components';
 import { formatFixedUnit, formatSmart, unitLabel } from '../format';
@@ -10,7 +11,18 @@ import { colors } from '../theme';
 const catalog = getCatalog();
 const COLOR_WORD = { verde: 'verde: nei limiti', arancione: 'arancione: fuori di poco (fino al 10%)', rosso: 'rosso: fuori di oltre il 10%', grigio: 'grigio' };
 
-export function NutrientDetail({ view, recipeKcal, onClose }: { view: NutrientView | null; recipeKcal: number | null; onClose: () => void }) {
+export function NutrientDetail({
+  view,
+  recipeKcal,
+  onClose,
+  suggest,
+}: {
+  view: NutrientView | null;
+  recipeKcal: number | null;
+  onClose: () => void;
+  /** Se presente e il nutriente è in carenza: integratori che lo contengono, con anteprima. */
+  suggest?: { input: EvaluateInput; ctx: Parameters<typeof SuggestionsPanel>[0]['ctx']; onAdd: (key: string, dose: number) => void };
+}) {
   if (!view) return null;
   const { def, req, total, evaluation: ev } = view;
   const u = def.unit;
@@ -96,6 +108,9 @@ export function NutrientDetail({ view, recipeKcal, onClose }: { view: NutrientVi
             {req.source ? <Hint>{req.source}</Hint> : null}
             {def.note ? <Hint>{def.note}</Hint> : null}
           </Card>
+        ) : null}
+        {suggest && def.inFediaf && ev.direction === 'carenza' && (ev.color === 'rosso' || ev.color === 'arancione') ? (
+          <SuggestionsPanel def={def} input={suggest.input} ctx={suggest.ctx} onAdd={suggest.onAdd} />
         ) : null}
         <Button title="Chiudi" kind="secondary" onPress={onClose} />
       </ScrollView>
