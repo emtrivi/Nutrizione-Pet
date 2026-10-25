@@ -1,5 +1,5 @@
 {
   "versione": "0.3.0",
   "data": "2026-10-25",
-  "note": "Ricetta guidata, barre dei nutrienti, integratori, lista ricette; aggiornamenti automatici."
+  "note": "Prima pubblicazione automatica: ricetta guidata, barre dei nutrienti, integratori, lista ricette, slider nativo e aggiornamenti via internet. Parte nativa cambiata: attesa build iOS + TestFlight."
 }
