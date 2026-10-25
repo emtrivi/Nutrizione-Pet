@@ -18,9 +18,29 @@ src/ui/              piccoli aiuti per l'interfaccia (formato dei numeri)
 ## App per iPhone
 
 - Expo SDK 58, costruita nel cloud con EAS e inviata a TestFlight (nessun Mac necessario).
-- Account Expo: `eviemet`. Bundle ID: `com.eviemet.nutrizionepet`.
+- Progetto Expo: `@eviemets-team/nutrizione-pet` (owner `eviemets-team`, ID `7da057fe-9294-45e9-b684-7a233703b730`).
+  Non cambiare owner né projectId: il progetto esiste sotto il team.
+- Bundle ID: `com.eviemet.nutrizionepet`.
 - App Store Connect: Apple ID dell'app `6826643282`, Team ID `F9PKTRNTLH`.
-- Costruire e inviare a TestFlight: `npx eas-cli@latest build --platform ios --profile production --auto-submit`
+- Credenziali Apple (certificato, profilo, chiave API) conservate su EAS, valide fino al 25/10/2027: non ricrearle.
+- Numero di build: gestito da EAS (`appVersionSource: remote` + `autoIncrement`), sale da solo a ogni costruzione.
+  La versione visibile (`version` in `app.json`) si cambia a mano solo quando serve.
+
+### Costruire e inviare a TestFlight (da GitHub Codespaces)
+
+1. Apri un Codespace sul ramo di lavoro (le dipendenze si installano da sole).
+2. `npx eas-cli@latest login --device` (in Codespaces il login dal browser resta in attesa: usare `--device`).
+3. `npx eas-cli@latest build --platform ios --profile production --auto-submit`
+4. Spegni il Codespace da https://github.com/codespaces.
+
+Prima build: 0.1.0 (1), 25/10/2026, build EAS `3e93b1d2-2aa1-43ba-b9e8-49375fad3f88`.
+
+### Avvisi di sicurezza delle dipendenze (`npm audit`)
+
+Restano 5 avvisi "high", tutti negli strumenti di sviluppo, non nell'app installata sul telefono:
+`node-forge` (nessuna versione corretta esiste ancora) e `zod` 3 (corretto solo in zod 4),
+dentro `@expo/cli` e `eslint-config-expo`. Non usare `npm audit fix --force`: proporrebbe
+di tornare a Expo SDK 44 e romperebbe l'app. Si risolveranno aggiornando Expo quando escono le correzioni.
 
 Il motore contiene:
 
