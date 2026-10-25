@@ -5,7 +5,7 @@
 #
 # 1. Calcola l'impronta della parte nativa (fingerprint).
 # 2. Cerca una build iOS già fatta con la stessa impronta.
-# 3a. Se c'è: pubblica un aggiornamento via internet (EAS Update, ramo/canale "production").
+# 3a. Se c'è: pubblica un aggiornamento via internet (EAS Update, canale "production").
 # 3b. Se non c'è (parte nativa cambiata): nuova build iOS e invio a TestFlight.
 # Non pubblica mai sull'App Store.
 
@@ -60,7 +60,8 @@ jobs:
     type: update
     environment: production
     params:
-      # Ramo EAS Update "production", collegato al canale "production" delle build (come nel modello
-      # ufficiale di Expo). Senza questo parametro userebbe il nome del ramo Git: l'app non lo riceverebbe.
-      branch: production
+      # Canale "production", lo stesso delle build (eas.json): l'aggiornamento va sul ramo a cui il
+      # canale è collegato su Expo, quindi arriva sempre alle app installate da TestFlight.
+      # Senza questo parametro userebbe il nome del ramo Git: l'app non lo riceverebbe.
+      channel: production
       platform: ios

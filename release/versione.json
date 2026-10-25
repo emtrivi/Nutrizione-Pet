@@ -1,5 +1,5 @@
 {
   "versione": "0.4.0",
   "data": "2026-10-25",
-  "note": "Fase 3: diario con periodi e copia fissa, colori giorno per giorno, medie su 5-30 giorni, avvisi nel tempo; suggerimenti di integratori con anteprima; sostituzione di un ingrediente. Solo JavaScript: atteso aggiornamento via internet."
+  "note": "Fase 3: diario con periodi e copia fissa, colori giorno per giorno, medie su 5-30 giorni, avvisi nel tempo; suggerimenti di integratori con anteprima; sostituzione di un ingrediente. Ripubblicata sul canale production (la prima pubblicazione sul ramo non era arrivata all'app)."
 }
