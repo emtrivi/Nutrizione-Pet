@@ -115,3 +115,15 @@ spostato in `data/catalog/archivio/`) + due voci dal foglio `data/catalog/fonti/
 Procedura (script `scripts/catalogo_da_excel.py`): le voci già presenti devono essere identiche, altrimenti lo script si ferma ed
 elenca le differenze (vanno confermate a parte); nessuna voce si cancella; cella vuota = dato non noto. Le impronte delle 95 voci
 esistenti non cambiano, quindi nessuna ricetta diventa "da rivedere". Arriva con un aggiornamento via internet.
+
+## 26/10/2026 — suggerimenti anche dalla fonte di grassi (decisione dell'utente)
+
+Per gli acidi grassi in carenza (acido linoleico; arachidonico, ALA ed EPA+DHA solo se si sceglie a mano un minimo,
+perché FEDIAF non ne dà per l'adulto) il dettaglio del nutriente propone, oltre agli integratori, gli **alimenti della
+fonte di grassi** del catalogo che lo contengono e si possono usare nelle ricette, dal più ricco. Solo la fonte di grassi:
+proporre carne o cereali cambierebbe troppo la ricetta.
+
+Grammi proposti: i minimi che portano il nutriente al minimo ogni 1.000 kcal contando anche le calorie dell'olio,
+g = (m·K/1.000 − T) ÷ (n − m·k/1.000), arrotondati per eccesso al grammo. Un olio troppo povero rispetto alle
+calorie che porta (es. cocco per il linoleico) non si propone. Anteprima: nutriente prima/dopo, altri nutrienti che
+cambiano colore, calcio/fosforo e calorie prima/dopo. Si aggiunge solo toccando "Aggiungi". *Da confermare con la nutrizionista.*

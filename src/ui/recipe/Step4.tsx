@@ -174,6 +174,13 @@ export function Step4({
     setNotice(`Aggiunto: ${item ? shortName(item) : key} ${formatSmart(dose)} ${item?.doseUnit === 'capsule' ? 'capsule' : 'g'}. Controlla le barre.`);
   };
 
+  const addFood = (key: string, grams: number) => {
+    set({ foods: [...draft.foods, { key, amount: grams }] });
+    setDetail(null);
+    const item = catalog.get(key);
+    setNotice(`Aggiunto: ${item ? shortName(item) : key} ${formatSmart(grams)} g (fonte di grassi). Le calorie salgono: controlla le barre ed eventualmente riduci gli altri alimenti.`);
+  };
+
   const updateLine = (field: 'foods' | 'supplements', key: string, amount: number) =>
     set({ [field]: draft[field].map((l: DraftLine) => (l.key === key ? { ...l, amount } : l)) } as Partial<Draft>);
 
@@ -234,7 +241,7 @@ export function Step4({
 
       {deficits.length > 0 ? (
         <Card title="Suggerimenti">
-          <Hint>Nutrienti in carenza: tocca per vedere gli integratori che li contengono e cosa cambierebbe.</Hint>
+          <Hint>Nutrienti in carenza: tocca per vedere gli integratori (e per gli acidi grassi gli oli) che li contengono e cosa cambierebbe.</Hint>
           <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 6 }}>
             {deficits.map((v) => (
               <Pressable
@@ -393,7 +400,7 @@ export function Step4({
         view={detail}
         recipeKcal={ev.kcal.value}
         onClose={() => setDetail(null)}
-        suggest={{ input: suggestInput, ctx: suggestCtx, onAdd: addSupplement }}
+        suggest={{ input: suggestInput, ctx: suggestCtx, onAdd: addSupplement, onAddFood: addFood }}
       />
     </View>
   );

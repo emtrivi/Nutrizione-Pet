@@ -1,17 +1,74 @@
 // Integratori che contengono un nutriente in carenza, con l'anteprima di cosa cambierebbe.
+// Per gli acidi grassi anche gli oli della fonte di grassi.
 // Non aggiunge nulla da solo: l'utente tocca "Aggiungi" se vuole.
 
 import { useMemo } from 'react';
 import { Text, View } from 'react-native';
-import { supplementSuggestions, type Color, type EvaluateInput, type NutrientDef } from '../../engine';
+import {
+  fatSourceSuggestions,
+  FAT_SOURCE_NUTRIENTS,
+  supplementSuggestions,
+  type Color,
+  type ColorChange,
+  type EvaluateInput,
+  type NutrientDef,
+  type SupplementSuggestion,
+} from '../../engine';
 import { Badge, Button, Card, Hint } from '../components';
 import { formatFixedUnit, formatNumber, formatSmart } from '../format';
 import { colors } from '../theme';
 
-const DOT: Record<Color, string> = { verde: colors.green, arancione: colors.orange, rosso: colors.red, grigio: colors.grey };
+const DOT: Record<Color, string> = {
+  verde: colors.green,
+  arancione: colors.orange,
+  rosso: colors.red,
+  grigio: colors.grey,
+};
 
 function Dot({ c }: { c: Color }) {
-  return <View style={{ width: 10, height: 10, borderRadius: 5, backgroundColor: DOT[c] }} />;
+  return (
+    <View
+      style={{
+        width: 10,
+        height: 10,
+        borderRadius: 5,
+        backgroundColor: DOT[c],
+      }}
+    />
+  );
+}
+
+/** Nutriente prima → dopo, altri nutrienti che cambiano colore, calcio/fosforo. */
+function Preview({ def, target, others, caP }: { def: NutrientDef; target: ColorChange; others: ColorChange[]; caP: SupplementSuggestion['caP'] }) {
+  return (
+    <>
+      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
+        <Dot c={target.before} />
+        <Text style={{ fontSize: 14, color: colors.text }}>
+          {def.nameIt}: {target.beforeValue !== null ? formatFixedUnit(target.beforeValue, def.unit) : '—'} →{' '}
+        </Text>
+        <Dot c={target.after} />
+        <Text style={{ fontSize: 14, color: colors.text }}>{target.afterValue !== null ? formatFixedUnit(target.afterValue, def.unit) : '—'}</Text>
+      </View>
+      {others.map((o) => (
+        <View key={o.id} style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
+          <Dot c={o.before} />
+          <Text style={{ fontSize: 13, color: colors.muted }}>{o.name} →</Text>
+          <Dot c={o.after} />
+          <Text style={{ fontSize: 13, color: colors.muted }}>{o.after === 'verde' ? 'migliora' : o.before === 'verde' ? 'peggiora' : 'cambia'}</Text>
+        </View>
+      ))}
+      {caP.beforeColor !== caP.afterColor ||
+      (caP.before !== null && caP.after !== null && formatNumber(caP.before, 2) !== formatNumber(caP.after, 2)) ? (
+        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
+          <Dot c={caP.beforeColor} />
+          <Text style={{ fontSize: 13, color: colors.muted }}>Calcio/fosforo {caP.before !== null ? formatNumber(caP.before, 2) : '—'} →</Text>
+          <Dot c={caP.afterColor} />
+          <Text style={{ fontSize: 13, color: colors.muted }}>{caP.after !== null ? formatNumber(caP.after, 2) : '—'}</Text>
+        </View>
+      ) : null}
+    </>
+  );
 }
 
 export function SuggestionsPanel({
@@ -19,64 +76,85 @@ export function SuggestionsPanel({
   input,
   ctx,
   onAdd,
+  onAddFood,
 }: {
   def: NutrientDef;
   input: EvaluateInput;
   ctx: Parameters<typeof supplementSuggestions>[2];
   onAdd: (key: string, dose: number) => void;
+  onAddFood: (key: string, grams: number) => void;
 }) {
   const list = useMemo(() => supplementSuggestions(input, def.id, ctx), [input, def.id, ctx]);
+  const fats = useMemo(() => fatSourceSuggestions(input, def.id, ctx), [input, def.id, ctx]);
   return (
-    <Card title="Integratori che lo contengono">
-      <Hint>
-        Anteprima: cosa cambierebbe aggiungendo l’integratore alla ricetta. Guarda anche gli altri nutrienti che cambiano
-        colore. Decidi tu; la nutrizionista conferma.
-      </Hint>
-      {list.length === 0 ? <Hint>Nessun integratore del catalogo da aggiungere per questo nutriente.</Hint> : null}
-      {list.map((s) => {
-        const unit = s.item.doseUnit === 'capsule' ? (s.dose === 1 ? 'capsula' : 'capsule') : 'g';
-        return (
-          <View key={s.key} style={{ gap: 6, paddingVertical: 8, borderBottomWidth: 0.5, borderBottomColor: colors.border }}>
-            <Text style={{ fontSize: 15, fontWeight: '600', color: colors.text }}>{s.item.nameIt}</Text>
-            <View style={{ flexDirection: 'row', gap: 6, flexWrap: 'wrap' }}>
-              {s.item.provisional ? <Badge text="dato provvisorio" tone="warning" /> : null}
+    <>
+      {FAT_SOURCE_NUTRIENTS.includes(def.id) ? (
+        <Card title="Oli della fonte di grassi che lo contengono">
+          <Hint>
+            Dal più ricco. I grammi sono quelli che portano il nutriente al minimo, contando anche le calorie dell’olio. L’olio aggiunge calorie: dopo
+            puoi ridurre un po’ gli altri alimenti. Decidi tu; la nutrizionista conferma.
+          </Hint>
+          {fats.length === 0 ? <Hint>Nessun olio del catalogo da aggiungere per questo nutriente.</Hint> : null}
+          {fats.map((f) => (
+            <View
+              key={f.key}
+              style={{
+                gap: 6,
+                paddingVertical: 8,
+                borderBottomWidth: 0.5,
+                borderBottomColor: colors.border,
+              }}
+            >
+              <Text style={{ fontSize: 15, fontWeight: '600', color: colors.text }}>{f.item.nameIt}</Text>
               <Text style={{ fontSize: 13, color: colors.muted }}>
-                {formatSmart(s.dose)} {unit} ·{' '}
-                {s.doseSource === 'produttore' ? `dose del produttore per ${formatSmart(input.dogWeightKg)} kg` : `quanto servirebbe per arrivare al minimo (nessuna dose del produttore)`}
+                {formatSmart(f.grams)} g · {formatFixedUnit(f.item.nutrients[def.id]!.value * 100, def.unit)} ogni 100 g
               </Text>
-            </View>
-            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
-              <Dot c={s.target.before} />
-              <Text style={{ fontSize: 14, color: colors.text }}>
-                {def.nameIt}: {s.target.beforeValue !== null ? formatFixedUnit(s.target.beforeValue, def.unit) : '—'} →{' '}
-              </Text>
-              <Dot c={s.target.after} />
-              <Text style={{ fontSize: 14, color: colors.text }}>
-                {s.target.afterValue !== null ? formatFixedUnit(s.target.afterValue, def.unit) : '—'}
-              </Text>
-            </View>
-            {s.others.map((o) => (
-              <View key={o.id} style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
-                <Dot c={o.before} />
-                <Text style={{ fontSize: 13, color: colors.muted }}>{o.name} →</Text>
-                <Dot c={o.after} />
-                <Text style={{ fontSize: 13, color: colors.muted }}>{o.after === 'verde' ? 'migliora' : o.before === 'verde' ? 'peggiora' : 'cambia'}</Text>
-              </View>
-            ))}
-            {s.caP.before !== s.caP.after ? (
+              <Preview def={def} target={f.target} others={f.others} caP={f.caP} />
               <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
-                <Dot c={s.caP.beforeColor} />
-                <Text style={{ fontSize: 13, color: colors.muted }}>
-                  Calcio/fosforo {s.caP.before !== null ? formatNumber(s.caP.before, 2) : '—'} →
-                </Text>
-                <Dot c={s.caP.afterColor} />
-                <Text style={{ fontSize: 13, color: colors.muted }}>{s.caP.after !== null ? formatNumber(s.caP.after, 2) : '—'}</Text>
+                <Dot c={f.kcal.beforeColor} />
+                <Text style={{ fontSize: 13, color: colors.muted }}>Calorie {f.kcal.before !== null ? formatNumber(f.kcal.before) : '—'} →</Text>
+                <Dot c={f.kcal.afterColor} />
+                <Text style={{ fontSize: 13, color: colors.muted }}>{f.kcal.after !== null ? `${formatNumber(f.kcal.after)} kcal` : '—'}</Text>
               </View>
-            ) : null}
-            <Button title={`Aggiungi alla ricetta (${formatSmart(s.dose)} ${unit})`} kind="secondary" onPress={() => onAdd(s.key, s.dose)} />
-          </View>
-        );
-      })}
-    </Card>
+              <Button title={`Aggiungi alla ricetta (${formatSmart(f.grams)} g)`} kind="secondary" onPress={() => onAddFood(f.key, f.grams)} />
+            </View>
+          ))}
+        </Card>
+      ) : null}
+      <Card title="Integratori che lo contengono">
+        <Hint>
+          Anteprima: cosa cambierebbe aggiungendo l’integratore alla ricetta. Guarda anche gli altri nutrienti che cambiano colore. Decidi tu; la
+          nutrizionista conferma.
+        </Hint>
+        {list.length === 0 ? <Hint>Nessun integratore del catalogo da aggiungere per questo nutriente.</Hint> : null}
+        {list.map((s) => {
+          const unit = s.item.doseUnit === 'capsule' ? (s.dose === 1 ? 'capsula' : 'capsule') : 'g';
+          return (
+            <View
+              key={s.key}
+              style={{
+                gap: 6,
+                paddingVertical: 8,
+                borderBottomWidth: 0.5,
+                borderBottomColor: colors.border,
+              }}
+            >
+              <Text style={{ fontSize: 15, fontWeight: '600', color: colors.text }}>{s.item.nameIt}</Text>
+              <View style={{ flexDirection: 'row', gap: 6, flexWrap: 'wrap' }}>
+                {s.item.provisional ? <Badge text="dato provvisorio" tone="warning" /> : null}
+                <Text style={{ fontSize: 13, color: colors.muted }}>
+                  {formatSmart(s.dose)} {unit} ·{' '}
+                  {s.doseSource === 'produttore'
+                    ? `dose del produttore per ${formatSmart(input.dogWeightKg)} kg`
+                    : `quanto servirebbe per arrivare al minimo (nessuna dose del produttore)`}
+                </Text>
+              </View>
+              <Preview def={def} target={s.target} others={s.others} caP={s.caP} />
+              <Button title={`Aggiungi alla ricetta (${formatSmart(s.dose)} ${unit})`} kind="secondary" onPress={() => onAdd(s.key, s.dose)} />
+            </View>
+          );
+        })}
+      </Card>
+    </>
   );
 }
