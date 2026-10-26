@@ -1,5 +1,5 @@
 {
-  "versione": "0.4.0",
-  "data": "2026-10-25",
-  "note": "Fase 3: diario con periodi e copia fissa, colori giorno per giorno, medie su 5-30 giorni, avvisi nel tempo; suggerimenti di integratori con anteprima; sostituzione di un ingrediente. Ripubblicata sul canale production (la prima pubblicazione sul ramo non era arrivata all'app)."
+  "versione": "0.4.1",
+  "data": "2026-10-26",
+  "note": "Catalogo alimenti del 26/10/2026: aggiunti macinato di manzo crudo 10% grassi e olio di lino spremuto a freddo (dati della nutrizionista, USDA SR Legacy). Le altre 95 voci, gli integratori e i calcoli non cambiano."
 }

@@ -9,8 +9,9 @@ const food = (id: string) => catalog.get(`food:${id}`)!;
 const supp = (id: string) => catalog.get(`supplement:${id}`)!;
 
 describe('catalogo: contenuto e versione', () => {
-  it('95 alimenti e 5 integratori, identificativi unici', () => {
-    expect(catalog.foods).toHaveLength(95);
+  it('97 alimenti e 5 integratori, identificativi unici', () => {
+    expect(catalog.foods).toHaveLength(97);
+    expect(new Set(catalog.foods.map((f) => f.id)).size).toBe(97);
     expect(catalog.supplements.map((s) => s.id)).toEqual([
       'qdiet',
       'omegor_vitality',
@@ -21,9 +22,9 @@ describe('catalogo: contenuto e versione', () => {
   });
 
   it('versione ricavata dal nome del file (decisione A7)', () => {
-    expect(catalog.version.foods.label).toBe('23/10/2026');
+    expect(catalog.version.foods.label).toBe('26/10/2026');
     expect(catalog.version.supplements.label).toBe('24/10/2026');
-    expect(catalog.version.label).toBe('Alimenti v. 23/10/2026 · Integratori v. 24/10/2026');
+    expect(catalog.version.label).toBe('Alimenti v. 26/10/2026 · Integratori v. 24/10/2026');
     expect(versionFromFileName('senza_data.json').date).toBeNull();
   });
 

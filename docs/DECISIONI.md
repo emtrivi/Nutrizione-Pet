@@ -101,3 +101,17 @@ Scelte tecniche (dettagli in `docs/RILASCI.md`):
 | Sostituzione | Il nuovo alimento prende le stesse calorie del vecchio (grammi arrotondati al grammo); se le calorie non sono note restano gli stessi grammi. |
 | Date | Pulsanti ‹ › e "Oggi" invece del selettore nativo: nessun componente nativo nuovo, quindi la versione arriva via internet. |
 | Struttura dei dati | Nessun cambio di numero (resta 2): il campo "diario" esisteva già vuoto, quindi un eventuale ritiro dell'aggiornamento non crea incompatibilità. |
+
+## 26/10/2026 — catalogo alimenti: aggiunte dal foglio Excel della nutrizionista
+
+Nuovo file `data/catalog/CATALOGO_CANI_REVISIONATO_2026-10-26.json` = catalogo del 23/10 (95 voci identiche,
+spostato in `data/catalog/archivio/`) + due voci dal foglio `data/catalog/fonti/Catalogo_Nutrizione_Pet_LINO_MANZO10_COMPLETATI_2026-10-26.xlsx`:
+
+- `beef_10` Macinato di manzo crudo 10% grassi (USDA SR Legacy 174030), distinto da `beef_mid_10` (12,8%, Foundation) per scelta della nutrizionista.
+  La forma della vitamina E era vuota nel foglio: indicata all'importazione come naturale (d-alfa-tocoferolo), come scritto nella nota
+  della voce ("E alfa-tocoferolo") e come per tutti gli altri alimenti. Acido arachidonico, EPA, DHA e cloruro restano sconosciuti (celle vuote).
+- `linseed_oil` Olio di lino spremuto a freddo (USDA SR Legacy 167702); minerali a 0 come dichiarato dalla fonte.
+
+Procedura (script `scripts/catalogo_da_excel.py`): le voci già presenti devono essere identiche, altrimenti lo script si ferma ed
+elenca le differenze (vanno confermate a parte); nessuna voce si cancella; cella vuota = dato non noto. Le impronte delle 95 voci
+esistenti non cambiano, quindi nessuna ricetta diventa "da rivedere". Arriva con un aggiornamento via internet.
