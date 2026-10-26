@@ -9,9 +9,9 @@ const food = (id: string) => catalog.get(`food:${id}`)!;
 const supp = (id: string) => catalog.get(`supplement:${id}`)!;
 
 describe('catalogo: contenuto e versione', () => {
-  it('97 alimenti e 5 integratori, identificativi unici', () => {
-    expect(catalog.foods).toHaveLength(97);
-    expect(new Set(catalog.foods.map((f) => f.id)).size).toBe(97);
+  it('115 alimenti e 5 integratori, identificativi unici', () => {
+    expect(catalog.foods).toHaveLength(115);
+    expect(new Set(catalog.foods.map((f) => f.id)).size).toBe(115);
     expect(catalog.supplements.map((s) => s.id)).toEqual([
       'qdiet',
       'omegor_vitality',
@@ -28,8 +28,8 @@ describe('catalogo: contenuto e versione', () => {
     expect(versionFromFileName('senza_data.json').date).toBeNull();
   });
 
-  it('18 alimenti "da rivedere" mostrano "dato indicativo"', () => {
-    expect(catalog.foods.filter((f) => f.indicative)).toHaveLength(18);
+  it('36 alimenti "da rivedere" mostrano "dato indicativo" (18 + le 18 voci CDB/Igea)', () => {
+    expect(catalog.foods.filter((f) => f.indicative)).toHaveLength(36);
   });
 
   it('olio di colza non si offre per nuove ricette', () => {
@@ -44,8 +44,8 @@ describe('catalogo: contenuto e versione', () => {
     }
   });
 
-  it('vitamina D, E e colina mancanti in 25, 21 e 30 alimenti (restano assenti, non zero)', () => {
-    const missing = (id: string) => catalog.foods.filter((f) => !f.nutrients[id]).length;
+  it('vitamina D, E e colina mancanti in 25, 21 e 30 dei 95 alimenti originali (restano assenti, non zero)', () => {
+    const missing = (id: string) => catalog.foods.slice(0, 95).filter((f) => !f.nutrients[id]).length;
     expect(missing('vitamin_d')).toBe(25);
     expect(missing('vitamin_e')).toBe(21);
     expect(missing('choline')).toBe(30);

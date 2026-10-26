@@ -21,8 +21,8 @@ describe('le voci esistenti non cambiano', () => {
       expect(food(old.id)).toEqual(old);
     }
   });
-  it('le voci nuove sono in fondo', () => {
-    expect(catalog.foods.slice(95).map((f) => f.id)).toEqual(['beef_10', 'linseed_oil']);
+  it('le voci nuove sono dopo le 95 di prima', () => {
+    expect(catalog.foods.slice(95, 97).map((f) => f.id)).toEqual(['beef_10', 'linseed_oil']);
   });
 });
 

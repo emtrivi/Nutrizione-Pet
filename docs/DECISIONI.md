@@ -127,3 +127,15 @@ Grammi proposti: i minimi che portano il nutriente al minimo ogni 1.000 kcal con
 g = (m·K/1.000 − T) ÷ (n − m·k/1.000), arrotondati per eccesso al grammo. Un olio troppo povero rispetto alle
 calorie che porta (es. cocco per il linoleico) non si propone. Anteprima: nutriente prima/dopo, altri nutrienti che
 cambiano colore, calcio/fosforo e calorie prima/dopo. Si aggiunge solo toccando "Aggiungi". *Da confermare con la nutrizionista.*
+
+## 26/10/2026 — 18 voci CDB / Igea dal foglio della nutrizionista
+
+Foglio `data/catalog/fonti/Catalogo_Nutrizione_Pet_115_ALIMENTI_CDB_IGEA_2026-10-26.xlsx`: 9 prodotti di Centro
+Distribuzione BARF, ciascuno con una voce CDB e una Igea (stessi valori, prezzi separati). Le 97 voci di prima sono
+identiche (catalogo precedente in `archivio/CATALOGO_CANI_REVISIONATO_2026-10-26_97_voci.json`); tutte e 18 sono
+"dato indicativo" (micronutrienti da USDA per la parte molle; calcio e fosforo dei macinati con osso stimati dalle ceneri).
+
+**Calorie (decisione dell'utente):** le kcal dichiarate dal venditore non tornano con proteine e grassi (da −47% a +31%),
+quindi si calcolano come nel resto del catalogo, 4 kcal/g proteine + 9 kcal/g grassi; il valore del venditore resta
+scritto nel metodo delle kcal. Esempio: macinato di pollo con osso 4 × 15,2 + 9 × 19,4 = 235,4 kcal (venditore 125).
+Script: `--kcal-da-proteine-grassi`.

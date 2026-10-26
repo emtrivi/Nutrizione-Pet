@@ -3,7 +3,7 @@
 
 Uso:
   python3 scripts/catalogo_da_excel.py FILE.xlsx CATALOGO_BASE.json CATALOGO_NUOVO.json \
-      [--forma-vitamina-e CODICE=forma ...]
+      [--forma-vitamina-e CODICE=forma ...] [--kcal-da-proteine-grassi]
 
 Regole:
 - Le voci già presenti (stesso Codice) devono essere identiche al catalogo base: se un valore
@@ -11,6 +11,9 @@ Regole:
 - Una voce del catalogo base che manca nel foglio ferma lo script (non si cancella nulla).
 - Le voci nuove vengono aggiunte in fondo. Cella vuota = dato non noto (mai zero).
 - Vitamina E in mg senza forma: lo script si ferma, a meno di --forma-vitamina-e.
+- --kcal-da-proteine-grassi: per le voci nuove le kcal si calcolano come nel resto del catalogo
+  (4 kcal/g proteine + 9 kcal/g grassi + 4 kcal/g carboidrati disponibili); il valore del foglio
+  resta scritto nel metodo delle kcal.
 Richiede openpyxl.
 """
 
@@ -69,6 +72,7 @@ def main():
     ap.add_argument('base')
     ap.add_argument('uscita')
     ap.add_argument('--forma-vitamina-e', action='append', default=[])
+    ap.add_argument('--kcal-da-proteine-grassi', action='store_true')
     a = ap.parse_args()
     forme_extra = dict(x.split('=', 1) for x in a.forma_vitamina_e)
 
@@ -140,6 +144,16 @@ def main():
                 nutrienti['vitamin_e']['form'] = forma
                 if codice in forme_extra and vuoto(r.get('Forma della vitamina E')):
                     nutrienti['vitamin_e']['method'] = f'Forma {forma} indicata all’importazione (cella vuota nel foglio).'
+        kcal, metodo = r['kcal_me_per_100g'], None if vuoto(r.get('me_method')) else r['me_method'].strip()
+        if a.kcal_da_proteine_grassi:
+            if 'protein' not in nutrienti or 'fat' not in nutrienti:
+                errori.append(f'riga {n} ({codice}): servono proteine e grassi per calcolare le kcal')
+                continue
+            carb = nutrienti.get('carbohydrate_available', {}).get('value', 0)
+            kcal = round(4 * nutrienti['protein']['value'] + 9 * nutrienti['fat']['value'] + 4 * carb, 1)
+            metodo = (f'Stima 4 kcal/g proteine + 9 kcal/g grassi + 4 kcal/g carboidrati disponibili, come il resto del catalogo; '
+                      f'non energia metabolizzabile misurata. Valore nel foglio: {r["kcal_me_per_100g"]} kcal/100 g'
+                      + (f' ({metodo})' if metodo else '') + ', non usato.')
         cibo = {
             'id': codice, 'name_it': r['name_it'].strip(), 'category': categoria, 'subcategory': sottocategoria,
             'processing_state': stato,
@@ -148,8 +162,7 @@ def main():
             cibo[k] = None if vuoto(r.get(k)) else str(r[k]).strip()
         cibo.update({'data_status': affidabilita, 'available_to_formulate': usabile,
                      'notes': None if vuoto(r.get('notes')) else r['notes'].strip(),
-                     'nutrients': nutrienti, 'kcal_me_per_100g': r['kcal_me_per_100g'],
-                     'me_method': None if vuoto(r.get('me_method')) else r['me_method'].strip()})
+                     'nutrients': nutrienti, 'kcal_me_per_100g': kcal, 'me_method': metodo})
         cibi.append(cibo)
 
     if errori:
