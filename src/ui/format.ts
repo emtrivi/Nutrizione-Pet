@@ -1,6 +1,6 @@
 // Numeri in formato italiano: virgola per i decimali, punto per le migliaia.
 
-import type { PriceEntry, Unit } from '../engine';
+import { unitPrice, type PriceEntry, type Unit } from '../engine';
 
 export function formatNumber(value: number, decimals = 0): string {
   const fixed = Math.abs(value).toFixed(decimals);
@@ -64,4 +64,11 @@ export function describePrice(entry: PriceEntry, doseUnit: 'g' | 'capsule'): str
     case 'per_unit':
       return `${formatEuro(entry.eurPerUnit)} a capsula`;
   }
+}
+
+/** Prezzo al chilo (o a capsula) di un prezzo inserito, es. "8,90 €/kg"; null se non valido. */
+export function priceRateText(entry: PriceEntry | undefined, doseUnit: 'g' | 'capsule'): string | null {
+  const p = entry ? unitPrice(entry, doseUnit) : null;
+  if (p === null) return null;
+  return doseUnit === 'capsule' ? `${formatEuro(p)} a capsula` : `${formatEuro(p * 1000)}/kg`;
 }

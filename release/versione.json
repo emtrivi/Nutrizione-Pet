@@ -1,5 +1,5 @@
 {
-  "versione": "0.4.3",
-  "data": "2026-10-26",
-  "note": "Catalogo alimenti: aggiunti 9 prodotti CDB, ciascuno come voce CDB e Igea (18 voci, dato indicativo), con calorie calcolate da proteine e grassi come il resto del catalogo. Le altre 97 voci non cambiano."
+  "versione": "0.4.4",
+  "data": "2026-10-27",
+  "note": "Prezzo al chilo in piccolo nella scelta degli ingredienti e tra parentesi accanto al prezzo di ogni ingrediente; nel passo 4 gli ingredienti sono in ordine di sezione (proteiche, energetiche, verdure, grassi, frattaglie)."
 }

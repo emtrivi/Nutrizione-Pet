@@ -2,9 +2,10 @@
 
 import { useMemo, useState } from 'react';
 import { FlatList, Modal, Pressable, Text, TextInput, View } from 'react-native';
+import { useData } from '../../data/DataContext';
 import { RECIPE_CATEGORY_LABELS, getCatalog, type CatalogItem, type RecipeCategory } from '../../engine';
 import { Badge, Button, styles } from '../components';
-import { formatSmart } from '../format';
+import { formatSmart, priceRateText } from '../format';
 import { colors } from '../theme';
 
 const catalog = getCatalog();
@@ -27,6 +28,7 @@ export function CatalogPicker({
   onClose: () => void;
 }) {
   const [query, setQuery] = useState('');
+  const { data } = useData();
   const items = useMemo(() => {
     const q = norm(query.trim());
     const base = supplements ? catalog.supplements : catalog.foods.filter((f) => f.recipeCategory === category);
@@ -75,6 +77,7 @@ export function CatalogPicker({
                     ? 'a capsule'
                     : 'in grammi'}
               </Text>
+              <Text style={{ fontSize: 12, color: colors.grey }}>{priceRateText(data.prices[item.key], item.doseUnit) ?? 'prezzo non inserito'}</Text>
               <View style={{ flexDirection: 'row', gap: 6 }}>
                 {item.indicative ? <Badge text="dato indicativo" tone="warning" /> : null}
                 {item.provisional ? <Badge text="dato provvisorio" tone="warning" /> : null}

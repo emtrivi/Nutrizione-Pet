@@ -18,11 +18,12 @@ import {
   type DoseSuggestion,
   type NutrientView,
   type PriceBook,
+  type RecipeCategory,
   type RecipeEvaluation,
 } from '../../engine';
 import { NutrientBarRow, Bar } from '../NutrientBar';
 import { Badge, Button, Card, Hint, InfoButton, Notice, Row, styles } from '../components';
-import { formatEuro, formatFixedUnit, formatNumber, formatSmart } from '../format';
+import { formatEuro, formatFixedUnit, formatNumber, formatSmart, priceRateText } from '../format';
 import { colors } from '../theme';
 import { draftLines, type Draft, type DraftLine } from './draft';
 import { NutrientDetail } from './NutrientDetail';
@@ -103,8 +104,12 @@ const stepTxt = { fontSize: 22, color: colors.primary, lineHeight: 24 };
 function costText(item: CatalogItem, amount: number, prices: PriceBook): string {
   const e = prices[item.key];
   const p = e ? unitPrice(e, item.doseUnit) : null;
-  return p === null ? 'prezzo non inserito' : formatEuro(p * amount);
+  return p === null ? 'prezzo non inserito' : `${formatEuro(p * amount)} (${priceRateText(e, item.doseUnit)})`;
 }
+
+/** Ordine degli ingredienti nel passo 4: come le sezioni del passo 3 (dentro la sezione, l'ordine di scelta). */
+const CATEGORY_ORDER: RecipeCategory[] = ['proteica', 'energetica', 'verdure', 'grassi', 'frattaglie', 'altro'];
+const categoryRank = (key: string) => CATEGORY_ORDER.indexOf(catalog.get(key)?.recipeCategory ?? 'altro');
 
 function suggestionText(s: DoseSuggestion, dogWeight: number): string {
   if (s.kind === 'none') return s.reason;
@@ -206,7 +211,7 @@ export function Step4({
 
       <Card title="Ingredienti">
         <Hint>Peso nella ciotola, come indicato (crudo o cotto). Cambia i grammi con la barra o scrivendo il numero.</Hint>
-        {draft.foods.map((l) => {
+        {[...draft.foods].sort((a, b) => categoryRank(a.key) - categoryRank(b.key)).map((l) => {
           const item = catalog.get(l.key);
           if (!item) return null;
           const amount = l.amount ?? 0;
