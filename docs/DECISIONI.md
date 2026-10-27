@@ -153,3 +153,16 @@ macronutrienti, indicativa). Le 115 voci di prima sono identiche (catalogo prece
 - Vitamina E della vaccina "Naturale (alfa-tocoferolo…)": d-alfa-tocoferolo come per gli altri alimenti.
 - Nel foglio le 18 voci CDB/Igea hanno ancora le kcal del venditore: lo script le riconosce (sono scritte nel metodo
   delle kcal) e non le considera una modifica; restano le kcal 4/9 decise il 26/10.
+
+## 27/10/2026 — esporta la ricetta in PDF (richiesta dell'utente)
+
+Nella ricetta (passo 4) il pulsante "Esporta PDF (per la nutrizionista)" crea una scheda A4 e apre la condivisione di iOS.
+Contenuto: riepilogo; cane (profilo, BCS, MCS, attività) e calcolo delle calorie (peso usato, peso metabolico, RER,
+moltiplicatore, MER, fattore, tabella proposta e usata); calorie e tabella della ricetta; ingredienti e integratori con
+quantità, kcal, quota di calorie, prezzo al kg e prezzo, totale; tutti i nutrienti del dizionario per gruppo (al giorno,
+minimo al giorno, ogni 1.000 kcal, minimo e massimo con il tipo, colore, note: parziale con gli ingredienti senza dato,
+da verificare, avviso del massimo di legge, di quanto si è fuori); rapporti (Ca/P, omega, ripartizione delle calorie,
+sostanza secca); impostazioni usate e fabbisogni modificati; avviso "Strumento di supporto…". Se la ricetta ha
+modifiche non salvate la scheda lo dice.
+
+Richiede `expo-print` (modulo nativo): la versione 0.5.0 è una **build nuova per TestFlight**, non un aggiornamento via internet.

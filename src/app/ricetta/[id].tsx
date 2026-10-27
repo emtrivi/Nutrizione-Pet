@@ -14,6 +14,10 @@ import {
   type CatalogItem,
   type Dog,
 } from '../../engine';
+import release from '../../../release/versione.json';
+import { recipePdfFileName } from '../../export/fileName';
+import { shareRecipePdf } from '../../export/pdfIO';
+import { recipeReportHtml } from '../../export/recipeReport';
 import { Button, Card, Disclaimer, Field, Hint, Notice, styles } from '../../ui/components';
 import { draftEnergy, draftFromRecipe, draftLines, draftToRecipe, newDraft, type Draft } from '../../ui/recipe/draft';
 import { Step1, Step2, Step3, StepBand } from '../../ui/recipe/Steps123';
@@ -80,6 +84,7 @@ export default function RicettaScreen() {
   const [step, setStep] = useState(saved ? 4 : 1);
   const [message, setMessage] = useState<{ tone: 'info' | 'danger'; text: string } | null>(null);
   const [choosingDog, setChoosingDog] = useState(false);
+  const [exporting, setExporting] = useState(false);
   const scroll = useRef<ScrollViewInstance>(null);
 
   const energy = useMemo(() => (draft && dog ? draftEnergy(draft, dog, multipliers) : null), [draft, dog, multipliers]);
@@ -150,6 +155,38 @@ export default function RicettaScreen() {
     if (!saved) router.replace({ pathname: '/ricetta/[id]', params: { id: recipeId } });
   };
 
+  /** Scheda PDF con tutto ciò che si vede nel passo 4, più i dati del cane e il calcolo delle calorie. */
+  const exportPdf = async () => {
+    if (!evaluation) return;
+    const now = new Date();
+    const current = draftToRecipe(draft, dog, catalog, saved?.id ?? 'bozza', now, multipliers);
+    const same = (r: typeof current) => JSON.stringify([r.name, r.lines, r.kcalTarget, r.table, r.requirementOverrides]);
+    setExporting(true);
+    try {
+      const html = recipeReportHtml({
+        recipeName: draft.name.trim() || 'Ricetta senza nome',
+        saved: !!saved && same(saved) === same(current),
+        reviewReasons: reasons,
+        dog,
+        energy,
+        ev: evaluation,
+        foods: draftLines({ ...draft, supplements: [] }),
+        supplements: draftLines({ ...draft, foods: [] }),
+        overrides: draft.overrides,
+        prices: data.prices,
+        settings: data.settings,
+        catalog,
+        appVersion: release.versione,
+        now,
+      });
+      await shareRecipePdf(html, recipePdfFileName(draft.name.trim() || 'ricetta', dog.name, now));
+    } catch {
+      setMessage({ tone: 'danger', text: 'Non sono riuscito a creare il PDF. Riprova.' });
+    } finally {
+      setExporting(false);
+    }
+  };
+
   const duplicateFor = (target: Dog) => {
     if (!saved) return;
     const now = new Date();
@@ -198,6 +235,8 @@ export default function RicettaScreen() {
             <Field label="Nome della ricetta" value={draft.name} onChangeText={(t) => set({ name: t })} placeholder="es. Manzo e riso" />
             <Hint>Le modifiche restano solo qui finché non tocchi Salva.</Hint>
             <Button title="Salva la ricetta" onPress={save} />
+            <Button title={exporting ? 'Creo il PDF…' : 'Esporta PDF (per la nutrizionista)'} kind="secondary" onPress={exportPdf} disabled={exporting} />
+            <Hint>Scheda con cane e calcolo delle calorie, ingredienti con grammi e prezzi, tutti i nutrienti e i rapporti.</Hint>
             {saved ? (
               <>
                 <Button

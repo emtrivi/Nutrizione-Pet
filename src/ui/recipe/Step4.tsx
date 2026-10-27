@@ -15,7 +15,6 @@ import {
   summaryText,
   unitPrice,
   type CatalogItem,
-  type DoseSuggestion,
   type NutrientView,
   type PriceBook,
   type RecipeCategory,
@@ -27,6 +26,7 @@ import { formatEuro, formatFixedUnit, formatNumber, formatSmart, priceRateText }
 import { colors } from '../theme';
 import { draftLines, type Draft, type DraftLine } from './draft';
 import { NutrientDetail } from './NutrientDetail';
+import { describeDose } from './doseText';
 import { CatalogPicker } from './Pickers';
 
 const catalog = getCatalog();
@@ -110,13 +110,6 @@ function costText(item: CatalogItem, amount: number, prices: PriceBook): string 
 /** Ordine degli ingredienti nel passo 4: come le sezioni del passo 3 (dentro la sezione, l'ordine di scelta). */
 const CATEGORY_ORDER: RecipeCategory[] = ['proteica', 'energetica', 'verdure', 'grassi', 'frattaglie', 'altro'];
 const categoryRank = (key: string) => CATEGORY_ORDER.indexOf(catalog.get(key)?.recipeCategory ?? 'altro');
-
-function suggestionText(s: DoseSuggestion, dogWeight: number): string {
-  if (s.kind === 'none') return s.reason;
-  if (s.kind === 'band') return `Produttore, ${s.bandLabel}: ${formatSmart(s.max)} g al giorno${s.fromNoteOnly ? ' (valore scritto solo nella nota)' : ''}.`;
-  const hm = s.householdMeasure ? ` (${formatSmart(s.householdMeasure.min)}–${formatSmart(s.householdMeasure.max)} ${s.householdMeasure.label})` : '';
-  return `Produttore, per ${formatSmart(dogWeight)} kg: ${formatSmart(s.min)}–${formatSmart(s.max)} ${s.unit === 'capsule' ? 'capsule' : 'g'}${hm}${s.extrapolated ? ' — estrapolata' : ''}.`;
-}
 
 /** Barra della dose: verde fino al massimo del produttore, rossa oltre (non blocca). */
 function DoseBar({ dose, max }: { dose: number; max: number }) {
@@ -353,7 +346,7 @@ export function Step4({
                 {item.provisional ? <Badge text="dato provvisorio" tone="warning" /> : null}
                 <Text style={{ fontSize: 13, color: colors.muted }}>{costText(item, amount, prices)}</Text>
               </View>
-              {s ? <Hint>{suggestionText(s.suggestion, dogWeightKg)}</Hint> : null}
+              {s ? <Hint>{describeDose(s.suggestion, dogWeightKg)}</Hint> : null}
               <AmountControl
                 label={shortName(item)}
                 value={amount}

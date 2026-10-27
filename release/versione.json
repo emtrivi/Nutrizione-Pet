@@ -1,5 +1,5 @@
 {
-  "versione": "0.4.5",
+  "versione": "0.5.0",
   "data": "2026-10-27",
-  "note": "Catalogo alimenti del 27/10/2026: aggiunte ricotta vaccina, di pecora e fresca di capra (fonte proteica). Le altre 115 voci non cambiano."
+  "note": "Esporta PDF della ricetta per la nutrizionista: cane e calcolo delle calorie (RER, moltiplicatore, MER, tabella), ingredienti con grammi e prezzi, tutti i nutrienti con i limiti FEDIAF, rapporti. Parte nativa nuova (expo-print): build per TestFlight."
 }
