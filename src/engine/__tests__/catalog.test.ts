@@ -9,9 +9,9 @@ const food = (id: string) => catalog.get(`food:${id}`)!;
 const supp = (id: string) => catalog.get(`supplement:${id}`)!;
 
 describe('catalogo: contenuto e versione', () => {
-  it('115 alimenti e 5 integratori, identificativi unici', () => {
-    expect(catalog.foods).toHaveLength(115);
-    expect(new Set(catalog.foods.map((f) => f.id)).size).toBe(115);
+  it('118 alimenti e 5 integratori, identificativi unici', () => {
+    expect(catalog.foods).toHaveLength(118);
+    expect(new Set(catalog.foods.map((f) => f.id)).size).toBe(118);
     expect(catalog.supplements.map((s) => s.id)).toEqual([
       'qdiet',
       'omegor_vitality',
@@ -22,14 +22,14 @@ describe('catalogo: contenuto e versione', () => {
   });
 
   it('versione ricavata dal nome del file (decisione A7)', () => {
-    expect(catalog.version.foods.label).toBe('26/10/2026');
+    expect(catalog.version.foods.label).toBe('27/10/2026');
     expect(catalog.version.supplements.label).toBe('24/10/2026');
-    expect(catalog.version.label).toBe('Alimenti v. 26/10/2026 · Integratori v. 24/10/2026');
+    expect(catalog.version.label).toBe('Alimenti v. 27/10/2026 · Integratori v. 24/10/2026');
     expect(versionFromFileName('senza_data.json').date).toBeNull();
   });
 
-  it('36 alimenti "da rivedere" mostrano "dato indicativo" (18 + le 18 voci CDB/Igea)', () => {
-    expect(catalog.foods.filter((f) => f.indicative)).toHaveLength(36);
+  it('38 alimenti "da rivedere" mostrano "dato indicativo" (18 + 18 voci CDB/Igea + 2 ricotte)', () => {
+    expect(catalog.foods.filter((f) => f.indicative)).toHaveLength(38);
   });
 
   it('olio di colza non si offre per nuove ricette', () => {

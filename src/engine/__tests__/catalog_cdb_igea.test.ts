@@ -38,8 +38,8 @@ describe('le 97 voci di prima non cambiano', () => {
     expect(before.foods).toHaveLength(97);
     for (const old of before.foods) expect(food(old.id)).toEqual(old);
   });
-  it('18 voci nuove in fondo', () => {
-    expect(catalog.foods.slice(97).map((f) => f.id)).toEqual(NEW);
+  it('18 voci nuove dopo le 97', () => {
+    expect(catalog.foods.slice(97, 115).map((f) => f.id)).toEqual(NEW);
   });
 });
 

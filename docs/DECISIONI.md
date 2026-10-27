@@ -139,3 +139,17 @@ identiche (catalogo precedente in `archivio/CATALOGO_CANI_REVISIONATO_2026-10-26
 quindi si calcolano come nel resto del catalogo, 4 kcal/g proteine + 9 kcal/g grassi; il valore del venditore resta
 scritto nel metodo delle kcal. Esempio: macinato di pollo con osso 4 × 15,2 + 9 × 19,4 = 235,4 kcal (venditore 125).
 Script: `--kcal-da-proteine-grassi`.
+
+## 27/10/2026 — tre ricotte dal foglio della nutrizionista
+
+Foglio `data/catalog/fonti/Catalogo_Nutrizione_Pet_118_RICOTTA_CAPRA_FRESCA_CORRETTA_2026-10-27.xlsx`: ricotta vaccina
+(CREA 166820 + USDA 170851, indicativa), di pecora (CREA 166810) e fresca di capra (scheda Pinna Formaggi, solo
+macronutrienti, indicativa). Le 115 voci di prima sono identiche (catalogo precedente in `archivio/`).
+
+- Il Tipo "Proteine" del foglio non è tra i valori ammessi: importate come nuovo Tipo **Latticini** (animale), che nella
+  ricetta sta nella fonte proteica, come chiesto ("Categoria Proteine invariata"). Prodotto di origine animale: il
+  beta-carotene non dichiarato non rende parziale la vitamina A (regola del 24/10).
+- Kcal come il resto del catalogo (4/9/4): 147,3 / 158,3 / 155 (fonti 146 / 157 / 155).
+- Vitamina E della vaccina "Naturale (alfa-tocoferolo…)": d-alfa-tocoferolo come per gli altri alimenti.
+- Nel foglio le 18 voci CDB/Igea hanno ancora le kcal del venditore: lo script le riconosce (sono scritte nel metodo
+  delle kcal) e non le considera una modifica; restano le kcal 4/9 decise il 26/10.

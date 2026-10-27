@@ -3,7 +3,7 @@
 
 Uso:
   python3 scripts/catalogo_da_excel.py FILE.xlsx CATALOGO_BASE.json CATALOGO_NUOVO.json \
-      [--forma-vitamina-e CODICE=forma ...] [--kcal-da-proteine-grassi]
+      [--forma-vitamina-e CODICE=forma ...] [--tipo CODICE=Tipo ...] [--kcal-da-proteine-grassi]
 
 Regole:
 - Le voci già presenti (stesso Codice) devono essere identiche al catalogo base: se un valore
@@ -11,6 +11,10 @@ Regole:
 - Una voce del catalogo base che manca nel foglio ferma lo script (non si cancella nulla).
 - Le voci nuove vengono aggiunte in fondo. Cella vuota = dato non noto (mai zero).
 - Vitamina E in mg senza forma: lo script si ferma, a meno di --forma-vitamina-e.
+- --tipo CODICE=Tipo: Tipo da usare quando quello del foglio non è tra i valori ammessi.
+- Forma della vitamina E che inizia con "Naturale": d-alfa-tocoferolo, come per gli altri alimenti.
+- Voci esistenti con kcal ricalcolate a un'importazione precedente: il valore originale del foglio
+  (scritto nel metodo delle kcal) non conta come modifica.
 - --kcal-da-proteine-grassi: per le voci nuove le kcal si calcolano come nel resto del catalogo
   (4 kcal/g proteine + 9 kcal/g grassi + 4 kcal/g carboidrati disponibili); il valore del foglio
   resta scritto nel metodo delle kcal.
@@ -29,9 +33,10 @@ TIPI = {
     'Milza': ('animal', 'secreting_offal_spleen'), 'Altre frattaglie': ('animal', 'secreting_offal_other'),
     'Cereale': ('starch', 'cereal'), 'Legume': ('starch', 'legume'), 'Tubero': ('starch', 'tuber'),
     'Verdura': ('vegetable', 'vegetable_generic'), 'Olio o grasso': ('other', 'fat_oil'),
+    'Latticini': ('animal', 'dairy'),
 }
 STATI = {'Crudo': 'raw', 'Bollito': 'cooked_boiled', 'Cotto al vapore': 'cooked_steamed', 'Secco': 'dried', 'In scatola': 'canned'}
-AFFIDABILITA = {'Normale': 'estimated', 'Indicativo (da rivedere)': 'review_required'}
+AFFIDABILITA = {'Normale': 'estimated', 'Indicativo (da rivedere)': 'review_required', 'Indicativo': 'review_required'}
 SI_NO = {'Sì': True, 'Si': True, 'No': False}
 FORME_VIT_E = {
     'Naturale (d-alfa-tocoferolo)': 'd_alpha_tocopherol',
@@ -72,9 +77,11 @@ def main():
     ap.add_argument('base')
     ap.add_argument('uscita')
     ap.add_argument('--forma-vitamina-e', action='append', default=[])
+    ap.add_argument('--tipo', action='append', default=[])
     ap.add_argument('--kcal-da-proteine-grassi', action='store_true')
     a = ap.parse_args()
     forme_extra = dict(x.split('=', 1) for x in a.forma_vitamina_e)
+    tipi_extra = dict(x.split('=', 1) for x in a.tipo)
 
     base = json.load(open(a.base, encoding='utf-8'))
     esistenti = {f['id']: f for f in base['foods']}
@@ -95,7 +102,8 @@ def main():
                 attuale = f['nutrients'].get(k, {}).get('value')
                 if r.get(k) != attuale:
                     errori.append(f'{codice}: {k} cambiato da {attuale} a {r.get(k)}')
-            if r['kcal_me_per_100g'] != f['kcal_me_per_100g']:
+            ricalcolate = f'Valore nel foglio: {r["kcal_me_per_100g"]} kcal/100 g' in (f.get('me_method') or '')
+            if r['kcal_me_per_100g'] != f['kcal_me_per_100g'] and not ricalcolate:
                 errori.append(f'{codice}: kcal cambiate da {f["kcal_me_per_100g"]} a {r["kcal_me_per_100g"]}')
             continue
         nuove.append((n, r))
@@ -118,7 +126,7 @@ def main():
         if not str(codice).replace('_', '').isalnum() or not str(codice).isascii():
             errori.append(f'riga {n}: Codice {codice} non valido (solo lettere, numeri e _)')
         try:
-            categoria, sottocategoria = TIPI[r['Tipo']]
+            categoria, sottocategoria = TIPI[tipi_extra.get(codice, r['Tipo'])]
             stato = STATI[r['Stato']]
             affidabilita = AFFIDABILITA[r['Affidabilità']]
             usabile = SI_NO[r['Si può usare nelle ricette']]
@@ -137,7 +145,8 @@ def main():
             nutrienti[k] = {'value': v, 'unit': u, 'status': 'estimated',
                             'source': fonte}
         if 'vitamin_e' in nutrienti:
-            forma = FORME_VIT_E.get(r.get('Forma della vitamina E') or '') or forme_extra.get(codice)
+            testo = r.get('Forma della vitamina E') or ''
+            forma = FORME_VIT_E.get(testo) or forme_extra.get(codice) or ('d_alpha_tocopherol' if testo.startswith('Naturale') else None)
             if not forma:
                 errori.append(f'riga {n} ({codice}): vitamina E in mg senza forma')
             else:
