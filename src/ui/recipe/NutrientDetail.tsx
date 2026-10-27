@@ -20,7 +20,7 @@ export function NutrientDetail({
   view: NutrientView | null;
   recipeKcal: number | null;
   onClose: () => void;
-  /** Se presente e il nutriente è in carenza: integratori (e per gli acidi grassi gli oli) che lo contengono, con anteprima. */
+  /** Se presente e il nutriente è in carenza: integratori e alimenti che lo contengono, con anteprima. */
   suggest?: {
     input: EvaluateInput;
     ctx: Parameters<typeof SuggestionsPanel>[0]['ctx'];

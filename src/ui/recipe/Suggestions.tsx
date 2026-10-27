@@ -1,12 +1,13 @@
 // Integratori che contengono un nutriente in carenza, con l'anteprima di cosa cambierebbe.
-// Per gli acidi grassi anche gli oli della fonte di grassi.
+// Poi gli alimenti del catalogo più ricchi di quel nutriente.
 // Non aggiunge nulla da solo: l'utente tocca "Aggiungi" se vuole.
 
 import { useMemo } from 'react';
 import { Text, View } from 'react-native';
 import {
-  fatSourceSuggestions,
-  FAT_SOURCE_NUTRIENTS,
+  foodSuggestions,
+  RECIPE_CATEGORY_LABELS,
+  FOOD_SUGGESTION_COUNT,
   supplementSuggestions,
   type Color,
   type ColorChange,
@@ -85,42 +86,9 @@ export function SuggestionsPanel({
   onAddFood: (key: string, grams: number) => void;
 }) {
   const list = useMemo(() => supplementSuggestions(input, def.id, ctx), [input, def.id, ctx]);
-  const fats = useMemo(() => fatSourceSuggestions(input, def.id, ctx), [input, def.id, ctx]);
+  const foods = useMemo(() => foodSuggestions(input, def.id, ctx), [input, def.id, ctx]);
   return (
     <>
-      {FAT_SOURCE_NUTRIENTS.includes(def.id) ? (
-        <Card title="Oli della fonte di grassi che lo contengono">
-          <Hint>
-            Dal più ricco. I grammi sono quelli che portano il nutriente al minimo, contando anche le calorie dell’olio. L’olio aggiunge calorie: dopo
-            puoi ridurre un po’ gli altri alimenti. Decidi tu; la nutrizionista conferma.
-          </Hint>
-          {fats.length === 0 ? <Hint>Nessun olio del catalogo da aggiungere per questo nutriente.</Hint> : null}
-          {fats.map((f) => (
-            <View
-              key={f.key}
-              style={{
-                gap: 6,
-                paddingVertical: 8,
-                borderBottomWidth: 0.5,
-                borderBottomColor: colors.border,
-              }}
-            >
-              <Text style={{ fontSize: 15, fontWeight: '600', color: colors.text }}>{f.item.nameIt}</Text>
-              <Text style={{ fontSize: 13, color: colors.muted }}>
-                {formatSmart(f.grams)} g · {formatFixedUnit(f.item.nutrients[def.id]!.value * 100, def.unit)} ogni 100 g
-              </Text>
-              <Preview def={def} target={f.target} others={f.others} caP={f.caP} />
-              <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
-                <Dot c={f.kcal.beforeColor} />
-                <Text style={{ fontSize: 13, color: colors.muted }}>Calorie {f.kcal.before !== null ? formatNumber(f.kcal.before) : '—'} →</Text>
-                <Dot c={f.kcal.afterColor} />
-                <Text style={{ fontSize: 13, color: colors.muted }}>{f.kcal.after !== null ? `${formatNumber(f.kcal.after)} kcal` : '—'}</Text>
-              </View>
-              <Button title={`Aggiungi alla ricetta (${formatSmart(f.grams)} g)`} kind="secondary" onPress={() => onAddFood(f.key, f.grams)} />
-            </View>
-          ))}
-        </Card>
-      ) : null}
       <Card title="Integratori che lo contengono">
         <Hint>
           Anteprima: cosa cambierebbe aggiungendo l’integratore alla ricetta. Guarda anche gli altri nutrienti che cambiano colore. Decidi tu; la
@@ -154,6 +122,40 @@ export function SuggestionsPanel({
             </View>
           );
         })}
+      </Card>
+      <Card title="Alimenti che lo contengono">
+        <Hint>
+          I {FOOD_SUGGESTION_COUNT} alimenti del catalogo più ricchi di questo nutriente (per 100 g). I grammi sono quelli che lo portano al minimo,
+          contando anche le calorie che l’alimento aggiunge: dopo puoi ridurre gli altri alimenti. Decidi tu; la nutrizionista conferma.
+        </Hint>
+        {foods.length === 0 ? <Hint>Nessun alimento del catalogo da aggiungere per questo nutriente.</Hint> : null}
+        {foods.map((f) => (
+          <View key={f.key} style={{ gap: 6, paddingVertical: 8, borderBottomWidth: 0.5, borderBottomColor: colors.border }}>
+            <Text style={{ fontSize: 15, fontWeight: '600', color: colors.text }}>{f.item.nameIt}</Text>
+            {f.sameAs.length > 0 ? (
+              <Text style={{ fontSize: 13, color: colors.muted }}>Stessi valori anche: {f.sameAs.map((x) => x.nameIt).join(', ')}</Text>
+            ) : null}
+            <View style={{ flexDirection: 'row', gap: 6, flexWrap: 'wrap' }}>
+              {f.item.indicative ? <Badge text="dato indicativo" tone="warning" /> : null}
+              <Text style={{ fontSize: 13, color: colors.muted }}>
+                {RECIPE_CATEGORY_LABELS[f.item.recipeCategory]} · {formatFixedUnit(f.item.nutrients[def.id]!.value * 100, def.unit)} ogni 100 g
+              </Text>
+            </View>
+            <Text style={{ fontSize: 13, color: f.reachesMin ? colors.muted : colors.orange }}>
+              {f.reachesMin
+                ? `${formatSmart(f.grams)} g per arrivare al minimo`
+                : `Da solo non basta ad arrivare al minimo (porta molte calorie rispetto al nutriente): ecco l’effetto di ${formatSmart(f.grams)} g`}
+            </Text>
+            <Preview def={def} target={f.target} others={f.others} caP={f.caP} />
+            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
+              <Dot c={f.kcal.beforeColor} />
+              <Text style={{ fontSize: 13, color: colors.muted }}>Calorie {f.kcal.before !== null ? formatNumber(f.kcal.before) : '—'} →</Text>
+              <Dot c={f.kcal.afterColor} />
+              <Text style={{ fontSize: 13, color: colors.muted }}>{f.kcal.after !== null ? `${formatNumber(f.kcal.after)} kcal` : '—'}</Text>
+            </View>
+            <Button title={`Aggiungi alla ricetta (${formatSmart(f.grams)} g)`} kind="secondary" onPress={() => onAddFood(f.key, f.grams)} />
+          </View>
+        ))}
       </Card>
     </>
   );

@@ -9,6 +9,7 @@ import { parseDecimal } from '../../data/dogForm';
 import {
   fediaf,
   getCatalog,
+  RECIPE_CATEGORY_LABELS,
   substituteGrams,
   shortName,
   startingDose,
@@ -176,7 +177,7 @@ export function Step4({
     set({ foods: [...draft.foods, { key, amount: grams }] });
     setDetail(null);
     const item = catalog.get(key);
-    setNotice(`Aggiunto: ${item ? shortName(item) : key} ${formatSmart(grams)} g (fonte di grassi). Le calorie salgono: controlla le barre ed eventualmente riduci gli altri alimenti.`);
+    setNotice(`Aggiunto: ${item ? shortName(item) : key} ${formatSmart(grams)} g (${item ? RECIPE_CATEGORY_LABELS[item.recipeCategory].toLowerCase() : 'alimento'}). Le calorie salgono: controlla le barre ed eventualmente riduci gli altri alimenti.`);
   };
 
   const updateLine = (field: 'foods' | 'supplements', key: string, amount: number) =>
@@ -239,7 +240,7 @@ export function Step4({
 
       {deficits.length > 0 ? (
         <Card title="Suggerimenti">
-          <Hint>Nutrienti in carenza: tocca per vedere gli integratori (e per gli acidi grassi gli oli) che li contengono e cosa cambierebbe.</Hint>
+          <Hint>Nutrienti in carenza: tocca per vedere gli integratori e gli alimenti che li contengono e cosa cambierebbe.</Hint>
           <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 6 }}>
             {deficits.map((v) => (
               <Pressable

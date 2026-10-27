@@ -1,6 +1,6 @@
 // Suggerimenti: per un nutriente in carenza, quali integratori del catalogo lo contengono e cosa
-// cambierebbe aggiungendoli (anteprima). Per gli acidi grassi anche gli alimenti della fonte di grassi
-// (oli). Non si aggiunge nulla da solo: decide l'utente.
+// cambierebbe aggiungendoli (anteprima); poi gli alimenti del catalogo più ricchi di quel nutriente.
+// Non si aggiunge nulla da solo: decide l'utente.
 // Sostituzione: cambia un alimento con un altro mantenendo le stesse calorie.
 
 import type { Settings } from './backup';
@@ -112,14 +112,21 @@ export function supplementSuggestions(input: EvaluateInput, nutrientId: string, 
   return out;
 }
 
-/** Acidi grassi per cui si propongono anche gli alimenti della fonte di grassi (decisione dell'utente). */
-export const FAT_SOURCE_NUTRIENTS = ['linoleic_acid', 'arachidonic_acid', 'alpha_linolenic_acid', 'epa_dha'];
+/** Quanti alimenti proporre per un nutriente in carenza (decisione dell'utente: 3-5). */
+export const FOOD_SUGGESTION_COUNT = 5;
+/** Oltre questi grammi la quantità per arrivare al minimo non è realistica: si mostra l'effetto di 100 g. */
+export const FOOD_SUGGESTION_MAX_GRAMS = 500;
+const FOOD_PREVIEW_GRAMS = 100;
 
 export interface FoodSuggestion {
   key: string;
   item: CatalogItem;
-  /** Grammi che portano il nutriente al minimo ogni 1.000 kcal, contando anche le calorie aggiunte. */
+  /** Grammi dell'anteprima: quelli che portano il nutriente al minimo, oppure 100 g se non realistico. */
   grams: number;
+  /** true se con questi grammi il nutriente arriva al minimo ogni 1.000 kcal. */
+  reachesMin: boolean;
+  /** Altre voci con valori identici (es. lo stesso prodotto CDB e Igea): contano come una sola proposta. */
+  sameAs: CatalogItem[];
   target: ColorChange;
   others: ColorChange[];
   caP: SupplementSuggestion['caP'];
@@ -128,47 +135,55 @@ export interface FoodSuggestion {
 }
 
 /**
- * Alimenti della fonte di grassi che contengono l'acido grasso in carenza, dal più ricco.
- * Grammi g tali che (T + g·n) ÷ (K + g·k) × 1.000 ≥ minimo m, cioè g = (m·K/1.000 − T) ÷ (n − m·k/1.000),
- * arrotondati per eccesso al grammo (T totale e K kcal della ricetta; n e k per 1 g di alimento).
- * Se l'alimento è troppo povero rispetto alle calorie che porta (denominatore ≤ 0) non si propone.
+ * Alimenti del catalogo (tutte le sezioni) che contengono il nutriente in carenza: i più ricchi per 100 g,
+ * al massimo FOOD_SUGGESTION_COUNT; voci con valori identici (stessa impronta, es. CDB e Igea) contano una volta. Grammi g tali che (T + g·n) ÷ (K + g·k) × 1.000 ≥ minimo m, cioè
+ * g = (m·K/1.000 − T) ÷ (n − m·k/1.000), arrotondati per eccesso al grammo (T totale e K kcal della ricetta;
+ * n e k per 1 g di alimento). Se l'alimento porta troppe calorie rispetto al nutriente (denominatore ≤ 0)
+ * o servirebbero più di 500 g, l'anteprima mostra l'effetto di 100 g e reachesMin è false.
  */
-export function fatSourceSuggestions(input: EvaluateInput, nutrientId: string, ctx: Ctx): FoodSuggestion[] {
-  if (!FAT_SOURCE_NUTRIENTS.includes(nutrientId)) return [];
+export function foodSuggestions(input: EvaluateInput, nutrientId: string, ctx: Ctx): FoodSuggestion[] {
   const before = evaluateRecipe(input, ctx);
   const view = before.nutrients[nutrientId];
   const K = before.kcal.value;
   const m = view?.evaluation.limitsPer1000.min ?? null;
   if (!view || K === null || !(K > 0) || m === null) return [];
   const T = view.total.value ?? 0;
+  const missing = (m * K) / 1000 - T;
+  if (!(missing > 0)) return [];
   const present = new Set(input.lines.filter((l) => l.amount > 0).map((l) => l.key));
-  const out: FoodSuggestion[] = [];
 
-  const candidates = ctx.catalog.foods
-    .filter((f) => f.recipeCategory === 'grassi' && f.availableForNewRecipes && !present.has(f.key))
-    .filter((f) => (f.nutrients[nutrientId]?.value ?? 0) > 0)
-    .sort((a, b) => b.nutrients[nutrientId]!.value - a.nutrients[nutrientId]!.value);
-
-  for (const item of candidates) {
-    const n = item.nutrients[nutrientId]!.value;
-    const k = item.kcalPerUnit ?? 0;
-    const denom = n - (m * k) / 1000;
-    const missing = (m * K) / 1000 - T;
-    if (!(denom > 0) || !(missing > 0)) continue;
-    const grams = Math.max(1, Math.ceil(missing / denom - 1e-9));
-    const after = evaluateRecipe({ ...input, lines: [...input.lines, { key: item.key, amount: grams }] }, ctx);
-    out.push({
-      key: item.key,
-      item,
-      grams,
-      target: change(nutrientId, before, after),
-      others: otherChanges(nutrientId, before, after),
-      caP: caPChange(before, after),
-      kcal: { before: K, after: after.kcal.value, beforeColor: before.kcal.color, afterColor: after.kcal.color },
-      after,
+  const groups = new Map<string, [CatalogItem, ...CatalogItem[]]>();
+  ctx.catalog.foods
+    .filter((f) => f.availableForNewRecipes && !present.has(f.key) && (f.nutrients[nutrientId]?.value ?? 0) > 0)
+    .sort((a, b) => b.nutrients[nutrientId]!.value - a.nutrients[nutrientId]!.value)
+    .forEach((f) => {
+      const g = groups.get(f.fingerprint);
+      if (g) g.push(f);
+      else groups.set(f.fingerprint, [f]);
     });
-  }
-  return out;
+
+  return [...groups.values()]
+    .slice(0, FOOD_SUGGESTION_COUNT)
+    .map(([item, ...sameAs]) => {
+      const n = item.nutrients[nutrientId]!.value;
+      const denom = n - (m * (item.kcalPerUnit ?? 0)) / 1000;
+      const needed = denom > 0 ? Math.max(1, Math.ceil(missing / denom - 1e-9)) : Infinity;
+      const reachesMin = needed <= FOOD_SUGGESTION_MAX_GRAMS;
+      const grams = reachesMin ? needed : FOOD_PREVIEW_GRAMS;
+      const after = evaluateRecipe({ ...input, lines: [...input.lines, { key: item.key, amount: grams }] }, ctx);
+      return {
+        key: item.key,
+        item,
+        grams,
+        reachesMin,
+        sameAs,
+        target: change(nutrientId, before, after),
+        others: otherChanges(nutrientId, before, after),
+        caP: caPChange(before, after),
+        kcal: { before: K, after: after.kcal.value, beforeColor: before.kcal.color, afterColor: after.kcal.color },
+        after,
+      };
+    });
 }
 
 /**

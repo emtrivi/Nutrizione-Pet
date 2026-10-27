@@ -166,3 +166,14 @@ sostanza secca); impostazioni usate e fabbisogni modificati; avviso "Strumento d
 modifiche non salvate la scheda lo dice.
 
 Richiede `expo-print` (modulo nativo): la versione 0.5.0 è una **build nuova per TestFlight**, non un aggiornamento via internet.
+
+## 27/10/2026 — suggerimenti anche dagli alimenti del catalogo (richiesta dell'utente)
+
+Sostituisce la regola del 26/10 ("solo fonte di grassi, solo acidi grassi"). Per ogni nutriente FEDIAF in carenza
+(rosso o arancione) il dettaglio mostra, dopo gli integratori, **"Alimenti che lo contengono"**: i 5 alimenti del
+catalogo (tutte le sezioni, solo quelli usabili nelle ricette e non già presenti) più ricchi per 100 g. Voci con valori
+identici (es. lo stesso prodotto CDB e Igea) contano una volta ("Stessi valori anche: …").
+
+Grammi: i minimi che portano il nutriente al minimo ogni 1.000 kcal contando le calorie aggiunte (stessa formula del
+26/10). Se l'alimento da solo non può arrivarci (porta troppe calorie rispetto al nutriente) o servirebbero più di 500 g,
+l'anteprima mostra l'effetto di 100 g con l'avviso "Da solo non basta". Anteprima e "Aggiungi" come per gli integratori.
