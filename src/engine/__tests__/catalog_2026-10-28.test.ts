@@ -6,10 +6,15 @@
 //   fegati di coniglio 4 × 19,5 + 9 × 4,7  = 78   + 42,3  = 120,3
 import { describe, expect, it } from 'vitest';
 import { buildCatalog, type RawFood } from '../catalog';
-import { getCatalog, rawSupplements, SUPPLEMENTS_FILE } from '../bundledData';
+import { rawSupplements, SUPPLEMENTS_FILE } from '../bundledData';
+import afterImport from '../../../data/catalog/archivio/CATALOGO_CANI_REVISIONATO_2026-10-28_v0.5.2.json';
 import before118 from '../../../data/catalog/archivio/CATALOGO_CANI_REVISIONATO_2026-10-27.json';
 
-const catalog = getCatalog();
+// Catalogo come uscito da questa importazione (archiviato): le modifiche successive non cambiano questi controlli.
+const catalog = buildCatalog({
+  foods: { fileName: 'CATALOGO_CANI_REVISIONATO_2026-10-28.json', data: afterImport as unknown as { foods: RawFood[] } },
+  supplements: { fileName: SUPPLEMENTS_FILE, data: rawSupplements },
+});
 const food = (id: string) => catalog.get(`food:${id}`)!;
 const before = buildCatalog({
   foods: { fileName: 'CATALOGO_CANI_REVISIONATO_2026-10-27.json', data: before118 as unknown as { foods: RawFood[] } },

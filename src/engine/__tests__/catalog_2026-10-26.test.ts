@@ -2,11 +2,16 @@
 // manzo 10% (beef_10) e olio di lino (linseed_oil). Valori del foglio Excel ÷ 100 = per 1 g.
 import { describe, expect, it } from 'vitest';
 import { buildCatalog, type RawFood } from '../catalog';
-import { getCatalog, rawSupplements, SUPPLEMENTS_FILE } from '../bundledData';
+import { rawSupplements, SUPPLEMENTS_FILE } from '../bundledData';
+import afterImport from '../../../data/catalog/archivio/CATALOGO_CANI_REVISIONATO_2026-10-26_97_voci.json';
 import { computeTotals } from '../totals';
 import oldFoods from '../../../data/catalog/archivio/CATALOGO_CANI_REVISIONATO_2026-10-23.json';
 
-const catalog = getCatalog();
+// Catalogo come uscito da questa importazione (archiviato): le modifiche successive non cambiano questi controlli.
+const catalog = buildCatalog({
+  foods: { fileName: 'CATALOGO_CANI_REVISIONATO_2026-10-26.json', data: afterImport as unknown as { foods: RawFood[] } },
+  supplements: { fileName: SUPPLEMENTS_FILE, data: rawSupplements },
+});
 const food = (id: string) => catalog.get(`food:${id}`)!;
 const before = buildCatalog({
   foods: { fileName: 'CATALOGO_CANI_REVISIONATO_2026-10-23.json', data: oldFoods as unknown as { foods: RawFood[] } },

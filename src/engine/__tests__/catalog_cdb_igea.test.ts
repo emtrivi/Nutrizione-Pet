@@ -10,10 +10,15 @@
 //   tacchino con ossa    4 × 17,5 + 9 × 16,7 = 70   + 150,3 = 220,3  (venditore 125)
 import { describe, expect, it } from 'vitest';
 import { buildCatalog, type RawFood } from '../catalog';
-import { getCatalog, rawSupplements, SUPPLEMENTS_FILE } from '../bundledData';
+import { rawSupplements, SUPPLEMENTS_FILE } from '../bundledData';
+import afterImport from '../../../data/catalog/archivio/CATALOGO_CANI_REVISIONATO_2026-10-26.json';
 import before97 from '../../../data/catalog/archivio/CATALOGO_CANI_REVISIONATO_2026-10-26_97_voci.json';
 
-const catalog = getCatalog();
+// Catalogo come uscito da questa importazione (archiviato): le modifiche successive non cambiano questi controlli.
+const catalog = buildCatalog({
+  foods: { fileName: 'CATALOGO_CANI_REVISIONATO_2026-10-26.json', data: afterImport as unknown as { foods: RawFood[] } },
+  supplements: { fileName: SUPPLEMENTS_FILE, data: rawSupplements },
+});
 const food = (id: string) => catalog.get(`food:${id}`)!;
 const before = buildCatalog({
   foods: { fileName: 'CATALOGO_CANI_REVISIONATO_2026-10-26.json', data: before97 as unknown as { foods: RawFood[] } },

@@ -8453,7 +8453,7 @@
       "id": "beef_tripe_raw",
       "name_it": "Trippa bovina cruda pulita",
       "category": "animal",
-      "subcategory": "secreting_offal_other",
+      "subcategory": "muscle",
       "processing_state": "raw",
       "preparation": "pesato crudo",
       "edible_portion": "100% parte edibile, esclusi ossa, pelle non consumata e parti non commestibili",
@@ -8476,18 +8476,44 @@
           "status": "measured",
           "source": "USDA FoodData Central; FDC ID 170599; SR Legacy; nutrient derivation A"
         },
-        "moisture": {
-          "value": 84.2,
+        "c18_2_undifferentiated": {
+          "value": 0.116,
           "unit": "g",
           "status": "measured",
           "source": "USDA FoodData Central; FDC ID 170599; SR Legacy; nutrient derivation A"
         },
-        "fiber": {
+        "c20_4_undifferentiated": {
+          "value": 0.048,
+          "unit": "g",
+          "status": "measured",
+          "source": "USDA FoodData Central; FDC ID 170599; SR Legacy; nutrient derivation A"
+        },
+        "ala": {
+          "value": 0.007,
+          "unit": "g",
+          "status": "measured",
+          "source": "USDA FoodData Central FDC ID 170599; nutrient ID 1404"
+        },
+        "epa": {
           "value": 0.0,
           "unit": "g",
           "status": "calculated",
           "source": "USDA FoodData Central; FDC ID 170599; SR Legacy; nutrient derivation Z",
           "method": "Zero riportato nella fonte USDA per il nutriente; presenza analitica non esclusa sotto il limite di rilevazione. Registro del database, non assenza biologica assoluta."
+        },
+        "dha": {
+          "value": 0.0,
+          "unit": "g",
+          "status": "calculated",
+          "source": "USDA FoodData Central; FDC ID 170599; SR Legacy; nutrient derivation Z",
+          "method": "Zero riportato nella fonte USDA per il nutriente; presenza analitica non esclusa sotto il limite di rilevazione. Registro del database, non assenza biologica assoluta."
+        },
+        "epa_dha": {
+          "value": 0.0,
+          "unit": "g",
+          "status": "calculated",
+          "method": "EPA + DHA",
+          "source": "USDA FoodData Central; FDC ID 170599; SR Legacy"
         },
         "calcium": {
           "value": 69.0,
@@ -8556,6 +8582,19 @@
           "source": "USDA FoodData Central; FDC ID 170599; SR Legacy; nutrient derivation ",
           "method": "Zero riportato nella fonte USDA per il nutriente; presenza analitica non esclusa sotto il limite di rilevazione. Registro del database, non assenza biologica assoluta."
         },
+        "vitamin_a_retinol_ug": {
+          "value": 0.0,
+          "unit": "µg",
+          "status": "measured",
+          "source": "USDA FoodData Central; FDC ID 170599; SR Legacy; nutrient derivation A"
+        },
+        "beta_carotene_ug": {
+          "value": 0.0,
+          "unit": "µg",
+          "status": "calculated",
+          "source": "USDA FoodData Central; FDC ID 170599; SR Legacy; nutrient derivation Z",
+          "method": "Zero riportato nella fonte USDA per il nutriente; presenza analitica non esclusa sotto il limite di rilevazione. Registro del database, non assenza biologica assoluta."
+        },
         "vitamin_d": {
           "value": 0.0,
           "unit": "IU",
@@ -8619,19 +8658,11 @@
           "status": "estimated",
           "source": "USDA FoodData Central; FDC ID 170599; SR Legacy; nutrient derivation NR"
         },
-        "epa": {
+        "vitamin_k": {
           "value": 0.0,
-          "unit": "g",
-          "status": "calculated",
-          "source": "USDA FoodData Central; FDC ID 170599; SR Legacy; nutrient derivation Z",
-          "method": "Zero riportato nella fonte USDA per il nutriente; presenza analitica non esclusa sotto il limite di rilevazione. Registro del database, non assenza biologica assoluta."
-        },
-        "dha": {
-          "value": 0.0,
-          "unit": "g",
-          "status": "calculated",
-          "source": "USDA FoodData Central; FDC ID 170599; SR Legacy; nutrient derivation Z",
-          "method": "Zero riportato nella fonte USDA per il nutriente; presenza analitica non esclusa sotto il limite di rilevazione. Registro del database, non assenza biologica assoluta."
+          "unit": "µg",
+          "status": "measured",
+          "source": "USDA FoodData Central; FDC ID 170599; SR Legacy; nutrient derivation A"
         },
         "vitamin_c": {
           "value": 0.0,
@@ -8640,36 +8671,12 @@
           "source": "USDA FoodData Central; FDC ID 170599; SR Legacy; nutrient derivation Z",
           "method": "Zero riportato nella fonte USDA per il nutriente; presenza analitica non esclusa sotto il limite di rilevazione. Registro del database, non assenza biologica assoluta."
         },
-        "vitamin_k": {
+        "fiber": {
           "value": 0.0,
-          "unit": "µg",
-          "status": "measured",
-          "source": "USDA FoodData Central; FDC ID 170599; SR Legacy; nutrient derivation A"
-        },
-        "beta_carotene_ug": {
-          "value": 0.0,
-          "unit": "µg",
+          "unit": "g",
           "status": "calculated",
           "source": "USDA FoodData Central; FDC ID 170599; SR Legacy; nutrient derivation Z",
           "method": "Zero riportato nella fonte USDA per il nutriente; presenza analitica non esclusa sotto il limite di rilevazione. Registro del database, non assenza biologica assoluta."
-        },
-        "vitamin_a_retinol_ug": {
-          "value": 0.0,
-          "unit": "µg",
-          "status": "measured",
-          "source": "USDA FoodData Central; FDC ID 170599; SR Legacy; nutrient derivation A"
-        },
-        "c18_2_undifferentiated": {
-          "value": 0.116,
-          "unit": "g",
-          "status": "measured",
-          "source": "USDA FoodData Central; FDC ID 170599; SR Legacy; nutrient derivation A"
-        },
-        "c20_4_undifferentiated": {
-          "value": 0.048,
-          "unit": "g",
-          "status": "measured",
-          "source": "USDA FoodData Central; FDC ID 170599; SR Legacy; nutrient derivation A"
         },
         "carbohydrate_available": {
           "value": 0,
@@ -8678,18 +8685,11 @@
           "method": "Zero riportato nella fonte USDA per il nutriente; presenza analitica non esclusa sotto il limite di rilevazione. Registro del database, non assenza biologica assoluta.",
           "source": "USDA FoodData Central; FDC ID 170599; SR Legacy"
         },
-        "epa_dha": {
-          "value": 0.0,
-          "unit": "g",
-          "status": "calculated",
-          "method": "EPA + DHA",
-          "source": "USDA FoodData Central; FDC ID 170599; SR Legacy"
-        },
-        "ala": {
-          "value": 0.007,
+        "moisture": {
+          "value": 84.2,
           "unit": "g",
           "status": "measured",
-          "source": "USDA FoodData Central FDC ID 170599; nutrient ID 1404"
+          "source": "USDA FoodData Central; FDC ID 170599; SR Legacy; nutrient derivation A"
         }
       },
       "kcal_me_per_100g": 81.61,
@@ -28694,12 +28694,12 @@
       "processing_state": "raw",
       "preparation": "100% fusti di anatra macinati, crudi e congelati; pesato allo stato crudo; ossa incluse",
       "edible_portion": "100% del prodotto, ossa incluse (non equivale a sola polpa)",
-      "source": "Analitici dichiarati Centro Distribuzione BARF (CDB), commercializzato anche da Igea; micronutrienti proxy USDA SR Legacy FDC 172408 (Duck, domesticated, meat and skin, raw)",
+      "source": "Analitici dichiarati Centro Distribuzione BARF (CDB), commercializzato anche da Igea; micronutrienti proxy USDA SR Legacy FDC 172408 (Duck, domesticated, meat and skin, raw); campi mancanti integrati da USDA SR Legacy FDC 172408",
       "source_url": "https://fdc.nal.usda.gov/food-details/172408/nutrients",
       "source_version": "USDA SR Legacy 2018-04 + analitici CDB forniti il 26/10/2026",
       "data_status": "review_required",
       "available_to_formulate": true,
-      "notes": "ANALITICI CDB (dichiarati): proteine 17%, grassi 18%, fibra grezza 0.5%, ceneri 4.5%, umidità 60%, energia 159 kcal/100g. USDA proxy della PARTE MOLLE: micronutrienti e aminoacidi indicativi, non misurati sul prodotto finito. CALCIO/FOSFORO SOLO STIMA MODELLATA DA CENERI (4.5%): Ca 1295 mg/100g, P 745 mg/100g; ipotesi ceneri molli 1%, frazione minerale ossea 37% Ca/17% P, P molle 150 mg/100g. Elevata incertezza: non prova della quota ossea. Analisi del prodotto richiesta per dosi affidabili. ENERGIA INCOERENTE: dichiarata 159 kcal, ma 3,5P+8,5G già 212.5 kcal/100g; richiedere chiarimento al produttore. Il produttore è CDB, Igea è rivenditore dello stesso prodotto. Nessun prezzo definito. Dati non riportati da USDA lasciati vuoti; 0 solo se documentato.",
+      "notes": "ANALITICI CDB (dichiarati): proteine 17%, grassi 18%, fibra grezza 0.5%, ceneri 4.5%, umidità 60%, energia 159 kcal/100g. USDA proxy della PARTE MOLLE: micronutrienti e aminoacidi indicativi, non misurati sul prodotto finito. CALCIO/FOSFORO SOLO STIMA MODELLATA DA CENERI (4.5%): Ca 1295 mg/100g, P 745 mg/100g; ipotesi ceneri molli 1%, frazione minerale ossea 37% Ca/17% P, P molle 150 mg/100g. Elevata incertezza: non prova della quota ossea. Analisi del prodotto richiesta per dosi affidabili. ENERGIA INCOERENTE: dichiarata 159 kcal, ma 3,5P+8,5G già 212.5 kcal/100g; richiedere chiarimento al produttore. Il produttore è CDB, Igea è rivenditore dello stesso prodotto. Nessun prezzo definito. Dati non riportati da USDA lasciati vuoti; 0 solo se documentato. | Integrazione di 1 campi mancanti via USDA di taglio analogo, valori NON analizzati da CDB.",
       "nutrients": {
         "protein": {
           "value": 17,
@@ -28898,6 +28898,12 @@
           "unit": "µg",
           "status": "estimated",
           "source": "Analitici dichiarati Centro Distribuzione BARF (CDB), commercializzato anche da Igea; micronutrienti proxy USDA SR Legacy FDC 172408 (Duck, domesticated, meat and skin, raw)"
+        },
+        "beta_carotene_ug": {
+          "value": 0,
+          "unit": "µg",
+          "status": "estimated",
+          "source": "Analitici dichiarati Centro Distribuzione BARF (CDB), commercializzato anche da Igea; micronutrienti proxy USDA SR Legacy FDC 172408 (Duck, domesticated, meat and skin, raw); campi mancanti integrati da USDA SR Legacy FDC 172408"
         },
         "vitamin_d": {
           "value": 26,
@@ -28996,12 +29002,12 @@
       "processing_state": "raw",
       "preparation": "100% fusti di anatra macinati, crudi e congelati; pesato allo stato crudo; ossa incluse",
       "edible_portion": "100% del prodotto, ossa incluse (non equivale a sola polpa)",
-      "source": "Analitici dichiarati Centro Distribuzione BARF (CDB), commercializzato anche da Igea; micronutrienti proxy USDA SR Legacy FDC 172408 (Duck, domesticated, meat and skin, raw)",
+      "source": "Analitici dichiarati Centro Distribuzione BARF (CDB), commercializzato anche da Igea; micronutrienti proxy USDA SR Legacy FDC 172408 (Duck, domesticated, meat and skin, raw); campi mancanti integrati da USDA SR Legacy FDC 172408",
       "source_url": "https://fdc.nal.usda.gov/food-details/172408/nutrients",
       "source_version": "USDA SR Legacy 2018-04 + analitici CDB forniti il 26/10/2026",
       "data_status": "review_required",
       "available_to_formulate": true,
-      "notes": "ANALITICI CDB (dichiarati): proteine 17%, grassi 18%, fibra grezza 0.5%, ceneri 4.5%, umidità 60%, energia 159 kcal/100g. USDA proxy della PARTE MOLLE: micronutrienti e aminoacidi indicativi, non misurati sul prodotto finito. CALCIO/FOSFORO SOLO STIMA MODELLATA DA CENERI (4.5%): Ca 1295 mg/100g, P 745 mg/100g; ipotesi ceneri molli 1%, frazione minerale ossea 37% Ca/17% P, P molle 150 mg/100g. Elevata incertezza: non prova della quota ossea. Analisi del prodotto richiesta per dosi affidabili. ENERGIA INCOERENTE: dichiarata 159 kcal, ma 3,5P+8,5G già 212.5 kcal/100g; richiedere chiarimento al produttore. Il produttore è CDB, Igea è rivenditore dello stesso prodotto. Nessun prezzo definito. Dati non riportati da USDA lasciati vuoti; 0 solo se documentato.",
+      "notes": "ANALITICI CDB (dichiarati): proteine 17%, grassi 18%, fibra grezza 0.5%, ceneri 4.5%, umidità 60%, energia 159 kcal/100g. USDA proxy della PARTE MOLLE: micronutrienti e aminoacidi indicativi, non misurati sul prodotto finito. CALCIO/FOSFORO SOLO STIMA MODELLATA DA CENERI (4.5%): Ca 1295 mg/100g, P 745 mg/100g; ipotesi ceneri molli 1%, frazione minerale ossea 37% Ca/17% P, P molle 150 mg/100g. Elevata incertezza: non prova della quota ossea. Analisi del prodotto richiesta per dosi affidabili. ENERGIA INCOERENTE: dichiarata 159 kcal, ma 3,5P+8,5G già 212.5 kcal/100g; richiedere chiarimento al produttore. Il produttore è CDB, Igea è rivenditore dello stesso prodotto. Nessun prezzo definito. Dati non riportati da USDA lasciati vuoti; 0 solo se documentato. | Integrazione di 1 campi mancanti via USDA di taglio analogo, valori NON analizzati da CDB.",
       "nutrients": {
         "protein": {
           "value": 17,
@@ -29201,6 +29207,12 @@
           "status": "estimated",
           "source": "Analitici dichiarati Centro Distribuzione BARF (CDB), commercializzato anche da Igea; micronutrienti proxy USDA SR Legacy FDC 172408 (Duck, domesticated, meat and skin, raw)"
         },
+        "beta_carotene_ug": {
+          "value": 0,
+          "unit": "µg",
+          "status": "estimated",
+          "source": "Analitici dichiarati Centro Distribuzione BARF (CDB), commercializzato anche da Igea; micronutrienti proxy USDA SR Legacy FDC 172408 (Duck, domesticated, meat and skin, raw); campi mancanti integrati da USDA SR Legacy FDC 172408"
+        },
         "vitamin_d": {
           "value": 26,
           "unit": "IU",
@@ -29298,12 +29310,12 @@
       "processing_state": "raw",
       "preparation": "100% cuore bovino tagliato a pezzi, crudo e congelato; pesato allo stato crudo",
       "edible_portion": "100% del prodotto dichiarato",
-      "source": "Analitici dichiarati Centro Distribuzione BARF (CDB), commercializzato anche da Igea; micronutrienti proxy USDA SR Legacy FDC 168625 (Beef, variety meats and by-products, heart, raw)",
+      "source": "Analitici dichiarati Centro Distribuzione BARF (CDB), commercializzato anche da Igea; micronutrienti proxy USDA SR Legacy FDC 168625 (Beef, variety meats and by-products, heart, raw); campi mancanti integrati da USDA SR Legacy FDC 168625",
       "source_url": "https://fdc.nal.usda.gov/food-details/168625/nutrients",
       "source_version": "USDA SR Legacy 2018-04 + analitici CDB forniti il 26/10/2026",
       "data_status": "review_required",
       "available_to_formulate": true,
-      "notes": "ANALITICI CDB (dichiarati): proteine 15.9%, grassi 8.9%, fibra grezza 0.1%, ceneri 1.2%, umidità 73.9%, energia 123 kcal/100g. USDA proxy della PARTE MOLLE: micronutrienti e aminoacidi indicativi, non misurati sul prodotto finito. Il produttore è CDB, Igea è rivenditore dello stesso prodotto. Nessun prezzo definito. Dati non riportati da USDA lasciati vuoti; 0 solo se documentato.",
+      "notes": "ANALITICI CDB (dichiarati): proteine 15.9%, grassi 8.9%, fibra grezza 0.1%, ceneri 1.2%, umidità 73.9%, energia 123 kcal/100g. USDA proxy della PARTE MOLLE: micronutrienti e aminoacidi indicativi, non misurati sul prodotto finito. Il produttore è CDB, Igea è rivenditore dello stesso prodotto. Nessun prezzo definito. Dati non riportati da USDA lasciati vuoti; 0 solo se documentato. | Integrazione di 1 campi mancanti via USDA di taglio analogo, valori NON analizzati da CDB.",
       "nutrients": {
         "protein": {
           "value": 15.9,
@@ -29418,6 +29430,12 @@
           "unit": "µg",
           "status": "estimated",
           "source": "Analitici dichiarati Centro Distribuzione BARF (CDB), commercializzato anche da Igea; micronutrienti proxy USDA SR Legacy FDC 168625 (Beef, variety meats and by-products, heart, raw)"
+        },
+        "beta_carotene_ug": {
+          "value": 0,
+          "unit": "µg",
+          "status": "estimated",
+          "source": "Analitici dichiarati Centro Distribuzione BARF (CDB), commercializzato anche da Igea; micronutrienti proxy USDA SR Legacy FDC 168625 (Beef, variety meats and by-products, heart, raw); campi mancanti integrati da USDA SR Legacy FDC 168625"
         },
         "vitamin_e": {
           "value": 0.22,
@@ -29504,12 +29522,12 @@
       "processing_state": "raw",
       "preparation": "100% cuore bovino tagliato a pezzi, crudo e congelato; pesato allo stato crudo",
       "edible_portion": "100% del prodotto dichiarato",
-      "source": "Analitici dichiarati Centro Distribuzione BARF (CDB), commercializzato anche da Igea; micronutrienti proxy USDA SR Legacy FDC 168625 (Beef, variety meats and by-products, heart, raw)",
+      "source": "Analitici dichiarati Centro Distribuzione BARF (CDB), commercializzato anche da Igea; micronutrienti proxy USDA SR Legacy FDC 168625 (Beef, variety meats and by-products, heart, raw); campi mancanti integrati da USDA SR Legacy FDC 168625",
       "source_url": "https://fdc.nal.usda.gov/food-details/168625/nutrients",
       "source_version": "USDA SR Legacy 2018-04 + analitici CDB forniti il 26/10/2026",
       "data_status": "review_required",
       "available_to_formulate": true,
-      "notes": "ANALITICI CDB (dichiarati): proteine 15.9%, grassi 8.9%, fibra grezza 0.1%, ceneri 1.2%, umidità 73.9%, energia 123 kcal/100g. USDA proxy della PARTE MOLLE: micronutrienti e aminoacidi indicativi, non misurati sul prodotto finito. Il produttore è CDB, Igea è rivenditore dello stesso prodotto. Nessun prezzo definito. Dati non riportati da USDA lasciati vuoti; 0 solo se documentato.",
+      "notes": "ANALITICI CDB (dichiarati): proteine 15.9%, grassi 8.9%, fibra grezza 0.1%, ceneri 1.2%, umidità 73.9%, energia 123 kcal/100g. USDA proxy della PARTE MOLLE: micronutrienti e aminoacidi indicativi, non misurati sul prodotto finito. Il produttore è CDB, Igea è rivenditore dello stesso prodotto. Nessun prezzo definito. Dati non riportati da USDA lasciati vuoti; 0 solo se documentato. | Integrazione di 1 campi mancanti via USDA di taglio analogo, valori NON analizzati da CDB.",
       "nutrients": {
         "protein": {
           "value": 15.9,
@@ -29624,6 +29642,12 @@
           "unit": "µg",
           "status": "estimated",
           "source": "Analitici dichiarati Centro Distribuzione BARF (CDB), commercializzato anche da Igea; micronutrienti proxy USDA SR Legacy FDC 168625 (Beef, variety meats and by-products, heart, raw)"
+        },
+        "beta_carotene_ug": {
+          "value": 0,
+          "unit": "µg",
+          "status": "estimated",
+          "source": "Analitici dichiarati Centro Distribuzione BARF (CDB), commercializzato anche da Igea; micronutrienti proxy USDA SR Legacy FDC 168625 (Beef, variety meats and by-products, heart, raw); campi mancanti integrati da USDA SR Legacy FDC 168625"
         },
         "vitamin_e": {
           "value": 0.22,
@@ -29710,12 +29734,12 @@
       "processing_state": "raw",
       "preparation": "100% cuore bovino macinato, crudo e congelato; pesato allo stato crudo",
       "edible_portion": "100% del prodotto dichiarato",
-      "source": "Analitici dichiarati Centro Distribuzione BARF (CDB), commercializzato anche da Igea; micronutrienti proxy USDA SR Legacy FDC 168625 (Beef, variety meats and by-products, heart, raw)",
+      "source": "Analitici dichiarati Centro Distribuzione BARF (CDB), commercializzato anche da Igea; micronutrienti proxy USDA SR Legacy FDC 168625 (Beef, variety meats and by-products, heart, raw); campi mancanti integrati da USDA SR Legacy FDC 168625",
       "source_url": "https://fdc.nal.usda.gov/food-details/168625/nutrients",
       "source_version": "USDA SR Legacy 2018-04 + analitici CDB forniti il 26/10/2026",
       "data_status": "review_required",
       "available_to_formulate": true,
-      "notes": "ANALITICI CDB (dichiarati): proteine 15.9%, grassi 8.9%, fibra grezza 0.1%, ceneri 1.2%, umidità 73.9%, energia 123 kcal/100g. USDA proxy della PARTE MOLLE: micronutrienti e aminoacidi indicativi, non misurati sul prodotto finito. Il produttore è CDB, Igea è rivenditore dello stesso prodotto. Nessun prezzo definito. Dati non riportati da USDA lasciati vuoti; 0 solo se documentato.",
+      "notes": "ANALITICI CDB (dichiarati): proteine 15.9%, grassi 8.9%, fibra grezza 0.1%, ceneri 1.2%, umidità 73.9%, energia 123 kcal/100g. USDA proxy della PARTE MOLLE: micronutrienti e aminoacidi indicativi, non misurati sul prodotto finito. Il produttore è CDB, Igea è rivenditore dello stesso prodotto. Nessun prezzo definito. Dati non riportati da USDA lasciati vuoti; 0 solo se documentato. | Integrazione di 1 campi mancanti via USDA di taglio analogo, valori NON analizzati da CDB.",
       "nutrients": {
         "protein": {
           "value": 15.9,
@@ -29830,6 +29854,12 @@
           "unit": "µg",
           "status": "estimated",
           "source": "Analitici dichiarati Centro Distribuzione BARF (CDB), commercializzato anche da Igea; micronutrienti proxy USDA SR Legacy FDC 168625 (Beef, variety meats and by-products, heart, raw)"
+        },
+        "beta_carotene_ug": {
+          "value": 0,
+          "unit": "µg",
+          "status": "estimated",
+          "source": "Analitici dichiarati Centro Distribuzione BARF (CDB), commercializzato anche da Igea; micronutrienti proxy USDA SR Legacy FDC 168625 (Beef, variety meats and by-products, heart, raw); campi mancanti integrati da USDA SR Legacy FDC 168625"
         },
         "vitamin_e": {
           "value": 0.22,
@@ -29916,12 +29946,12 @@
       "processing_state": "raw",
       "preparation": "100% cuore bovino macinato, crudo e congelato; pesato allo stato crudo",
       "edible_portion": "100% del prodotto dichiarato",
-      "source": "Analitici dichiarati Centro Distribuzione BARF (CDB), commercializzato anche da Igea; micronutrienti proxy USDA SR Legacy FDC 168625 (Beef, variety meats and by-products, heart, raw)",
+      "source": "Analitici dichiarati Centro Distribuzione BARF (CDB), commercializzato anche da Igea; micronutrienti proxy USDA SR Legacy FDC 168625 (Beef, variety meats and by-products, heart, raw); campi mancanti integrati da USDA SR Legacy FDC 168625",
       "source_url": "https://fdc.nal.usda.gov/food-details/168625/nutrients",
       "source_version": "USDA SR Legacy 2018-04 + analitici CDB forniti il 26/10/2026",
       "data_status": "review_required",
       "available_to_formulate": true,
-      "notes": "ANALITICI CDB (dichiarati): proteine 15.9%, grassi 8.9%, fibra grezza 0.1%, ceneri 1.2%, umidità 73.9%, energia 123 kcal/100g. USDA proxy della PARTE MOLLE: micronutrienti e aminoacidi indicativi, non misurati sul prodotto finito. Il produttore è CDB, Igea è rivenditore dello stesso prodotto. Nessun prezzo definito. Dati non riportati da USDA lasciati vuoti; 0 solo se documentato.",
+      "notes": "ANALITICI CDB (dichiarati): proteine 15.9%, grassi 8.9%, fibra grezza 0.1%, ceneri 1.2%, umidità 73.9%, energia 123 kcal/100g. USDA proxy della PARTE MOLLE: micronutrienti e aminoacidi indicativi, non misurati sul prodotto finito. Il produttore è CDB, Igea è rivenditore dello stesso prodotto. Nessun prezzo definito. Dati non riportati da USDA lasciati vuoti; 0 solo se documentato. | Integrazione di 1 campi mancanti via USDA di taglio analogo, valori NON analizzati da CDB.",
       "nutrients": {
         "protein": {
           "value": 15.9,
@@ -30037,6 +30067,12 @@
           "status": "estimated",
           "source": "Analitici dichiarati Centro Distribuzione BARF (CDB), commercializzato anche da Igea; micronutrienti proxy USDA SR Legacy FDC 168625 (Beef, variety meats and by-products, heart, raw)"
         },
+        "beta_carotene_ug": {
+          "value": 0,
+          "unit": "µg",
+          "status": "estimated",
+          "source": "Analitici dichiarati Centro Distribuzione BARF (CDB), commercializzato anche da Igea; micronutrienti proxy USDA SR Legacy FDC 168625 (Beef, variety meats and by-products, heart, raw); campi mancanti integrati da USDA SR Legacy FDC 168625"
+        },
         "vitamin_e": {
           "value": 0.22,
           "unit": "mg",
@@ -30122,12 +30158,12 @@
       "processing_state": "raw",
       "preparation": "100% carne di manzo macinata, cruda e congelata; senza ossa; pesato allo stato crudo",
       "edible_portion": "100% del prodotto dichiarato",
-      "source": "Analitici dichiarati Centro Distribuzione BARF (CDB), commercializzato anche da Igea; micronutrienti proxy USDA SR Legacy FDC 174030 (Beef, ground, 90% lean meat / 10% fat, raw)",
+      "source": "Analitici dichiarati Centro Distribuzione BARF (CDB), commercializzato anche da Igea; micronutrienti proxy USDA SR Legacy FDC 174030 (Beef, ground, 90% lean meat / 10% fat, raw); campi mancanti integrati da USDA SR Legacy FDC 174030",
       "source_url": "https://fdc.nal.usda.gov/food-details/174030/nutrients",
       "source_version": "USDA SR Legacy 2018-04 + analitici CDB forniti il 26/10/2026",
       "data_status": "review_required",
       "available_to_formulate": true,
-      "notes": "ANALITICI CDB (dichiarati): proteine 18.8%, grassi 13.6%, fibra grezza 0.7%, ceneri 0.8%, umidità 66.1%, energia 108 kcal/100g. USDA proxy della PARTE MOLLE: micronutrienti e aminoacidi indicativi, non misurati sul prodotto finito. ENERGIA INCOERENTE: dichiarata 108 kcal, ma 3,5P+8,5G già 181.4 kcal/100g; richiedere chiarimento al produttore. Il produttore è CDB, Igea è rivenditore dello stesso prodotto. Nessun prezzo definito. Dati non riportati da USDA lasciati vuoti; 0 solo se documentato.",
+      "notes": "ANALITICI CDB (dichiarati): proteine 18.8%, grassi 13.6%, fibra grezza 0.7%, ceneri 0.8%, umidità 66.1%, energia 108 kcal/100g. USDA proxy della PARTE MOLLE: micronutrienti e aminoacidi indicativi, non misurati sul prodotto finito. ENERGIA INCOERENTE: dichiarata 108 kcal, ma 3,5P+8,5G già 181.4 kcal/100g; richiedere chiarimento al produttore. Il produttore è CDB, Igea è rivenditore dello stesso prodotto. Nessun prezzo definito. Dati non riportati da USDA lasciati vuoti; 0 solo se documentato. | Integrazione di 1 campi mancanti via USDA di taglio analogo, valori NON analizzati da CDB.",
       "nutrients": {
         "protein": {
           "value": 18.8,
@@ -30326,6 +30362,12 @@
           "unit": "µg",
           "status": "estimated",
           "source": "Analitici dichiarati Centro Distribuzione BARF (CDB), commercializzato anche da Igea; micronutrienti proxy USDA SR Legacy FDC 174030 (Beef, ground, 90% lean meat / 10% fat, raw)"
+        },
+        "beta_carotene_ug": {
+          "value": 0,
+          "unit": "µg",
+          "status": "estimated",
+          "source": "Analitici dichiarati Centro Distribuzione BARF (CDB), commercializzato anche da Igea; micronutrienti proxy USDA SR Legacy FDC 174030 (Beef, ground, 90% lean meat / 10% fat, raw); campi mancanti integrati da USDA SR Legacy FDC 174030"
         },
         "vitamin_d": {
           "value": 3,
@@ -30424,12 +30466,12 @@
       "processing_state": "raw",
       "preparation": "100% carne di manzo macinata, cruda e congelata; senza ossa; pesato allo stato crudo",
       "edible_portion": "100% del prodotto dichiarato",
-      "source": "Analitici dichiarati Centro Distribuzione BARF (CDB), commercializzato anche da Igea; micronutrienti proxy USDA SR Legacy FDC 174030 (Beef, ground, 90% lean meat / 10% fat, raw)",
+      "source": "Analitici dichiarati Centro Distribuzione BARF (CDB), commercializzato anche da Igea; micronutrienti proxy USDA SR Legacy FDC 174030 (Beef, ground, 90% lean meat / 10% fat, raw); campi mancanti integrati da USDA SR Legacy FDC 174030",
       "source_url": "https://fdc.nal.usda.gov/food-details/174030/nutrients",
       "source_version": "USDA SR Legacy 2018-04 + analitici CDB forniti il 26/10/2026",
       "data_status": "review_required",
       "available_to_formulate": true,
-      "notes": "ANALITICI CDB (dichiarati): proteine 18.8%, grassi 13.6%, fibra grezza 0.7%, ceneri 0.8%, umidità 66.1%, energia 108 kcal/100g. USDA proxy della PARTE MOLLE: micronutrienti e aminoacidi indicativi, non misurati sul prodotto finito. ENERGIA INCOERENTE: dichiarata 108 kcal, ma 3,5P+8,5G già 181.4 kcal/100g; richiedere chiarimento al produttore. Il produttore è CDB, Igea è rivenditore dello stesso prodotto. Nessun prezzo definito. Dati non riportati da USDA lasciati vuoti; 0 solo se documentato.",
+      "notes": "ANALITICI CDB (dichiarati): proteine 18.8%, grassi 13.6%, fibra grezza 0.7%, ceneri 0.8%, umidità 66.1%, energia 108 kcal/100g. USDA proxy della PARTE MOLLE: micronutrienti e aminoacidi indicativi, non misurati sul prodotto finito. ENERGIA INCOERENTE: dichiarata 108 kcal, ma 3,5P+8,5G già 181.4 kcal/100g; richiedere chiarimento al produttore. Il produttore è CDB, Igea è rivenditore dello stesso prodotto. Nessun prezzo definito. Dati non riportati da USDA lasciati vuoti; 0 solo se documentato. | Integrazione di 1 campi mancanti via USDA di taglio analogo, valori NON analizzati da CDB.",
       "nutrients": {
         "protein": {
           "value": 18.8,
@@ -30629,6 +30671,12 @@
           "status": "estimated",
           "source": "Analitici dichiarati Centro Distribuzione BARF (CDB), commercializzato anche da Igea; micronutrienti proxy USDA SR Legacy FDC 174030 (Beef, ground, 90% lean meat / 10% fat, raw)"
         },
+        "beta_carotene_ug": {
+          "value": 0,
+          "unit": "µg",
+          "status": "estimated",
+          "source": "Analitici dichiarati Centro Distribuzione BARF (CDB), commercializzato anche da Igea; micronutrienti proxy USDA SR Legacy FDC 174030 (Beef, ground, 90% lean meat / 10% fat, raw); campi mancanti integrati da USDA SR Legacy FDC 174030"
+        },
         "vitamin_d": {
           "value": 3,
           "unit": "IU",
@@ -30726,12 +30774,12 @@
       "processing_state": "raw",
       "preparation": "100% schiene di pollo macinate, crude e congelate; pesato allo stato crudo; ossa incluse",
       "edible_portion": "100% del prodotto, ossa incluse (non equivale a sola polpa)",
-      "source": "Analitici dichiarati Centro Distribuzione BARF (CDB), commercializzato anche da Igea; micronutrienti proxy USDA SR Legacy FDC 171469 (Chicken, broilers or fryers, back, meat and skin, raw)",
+      "source": "Analitici dichiarati Centro Distribuzione BARF (CDB), commercializzato anche da Igea; micronutrienti proxy USDA SR Legacy FDC 171469 (Chicken, broilers or fryers, back, meat and skin, raw); campi mancanti integrati da USDA SR Legacy FDC 171469",
       "source_url": "https://fdc.nal.usda.gov/food-details/171469/nutrients",
       "source_version": "USDA SR Legacy 2018-04 + analitici CDB forniti il 26/10/2026",
       "data_status": "review_required",
       "available_to_formulate": true,
-      "notes": "ANALITICI CDB (dichiarati): proteine 15.2%, grassi 19.4%, fibra grezza 1.5%, ceneri 4.8%, umidità 59.1%, energia 125 kcal/100g. USDA proxy della PARTE MOLLE: micronutrienti e aminoacidi indicativi, non misurati sul prodotto finito. CALCIO/FOSFORO SOLO STIMA MODELLATA DA CENERI (4.8%): Ca 1406 mg/100g, P 796 mg/100g; ipotesi ceneri molli 1%, frazione minerale ossea 37% Ca/17% P, P molle 150 mg/100g. Elevata incertezza: non prova della quota ossea. Analisi del prodotto richiesta per dosi affidabili. ENERGIA INCOERENTE: dichiarata 125 kcal, ma 3,5P+8,5G già 218.1 kcal/100g; richiedere chiarimento al produttore. Il produttore è CDB, Igea è rivenditore dello stesso prodotto. Nessun prezzo definito. Dati non riportati da USDA lasciati vuoti; 0 solo se documentato.",
+      "notes": "ANALITICI CDB (dichiarati): proteine 15.2%, grassi 19.4%, fibra grezza 1.5%, ceneri 4.8%, umidità 59.1%, energia 125 kcal/100g. USDA proxy della PARTE MOLLE: micronutrienti e aminoacidi indicativi, non misurati sul prodotto finito. CALCIO/FOSFORO SOLO STIMA MODELLATA DA CENERI (4.8%): Ca 1406 mg/100g, P 796 mg/100g; ipotesi ceneri molli 1%, frazione minerale ossea 37% Ca/17% P, P molle 150 mg/100g. Elevata incertezza: non prova della quota ossea. Analisi del prodotto richiesta per dosi affidabili. ENERGIA INCOERENTE: dichiarata 125 kcal, ma 3,5P+8,5G già 218.1 kcal/100g; richiedere chiarimento al produttore. Il produttore è CDB, Igea è rivenditore dello stesso prodotto. Nessun prezzo definito. Dati non riportati da USDA lasciati vuoti; 0 solo se documentato. | Integrazione di 1 campi mancanti via USDA di taglio analogo, valori NON analizzati da CDB.",
       "nutrients": {
         "protein": {
           "value": 15.2,
@@ -30930,6 +30978,12 @@
           "unit": "µg",
           "status": "estimated",
           "source": "Analitici dichiarati Centro Distribuzione BARF (CDB), commercializzato anche da Igea; micronutrienti proxy USDA SR Legacy FDC 171469 (Chicken, broilers or fryers, back, meat and skin, raw)"
+        },
+        "beta_carotene_ug": {
+          "value": 0,
+          "unit": "µg",
+          "status": "estimated",
+          "source": "Analitici dichiarati Centro Distribuzione BARF (CDB), commercializzato anche da Igea; micronutrienti proxy USDA SR Legacy FDC 171469 (Chicken, broilers or fryers, back, meat and skin, raw); campi mancanti integrati da USDA SR Legacy FDC 171469"
         },
         "vitamin_e": {
           "value": 0.37,
@@ -31016,12 +31070,12 @@
       "processing_state": "raw",
       "preparation": "100% schiene di pollo macinate, crude e congelate; pesato allo stato crudo; ossa incluse",
       "edible_portion": "100% del prodotto, ossa incluse (non equivale a sola polpa)",
-      "source": "Analitici dichiarati Centro Distribuzione BARF (CDB), commercializzato anche da Igea; micronutrienti proxy USDA SR Legacy FDC 171469 (Chicken, broilers or fryers, back, meat and skin, raw)",
+      "source": "Analitici dichiarati Centro Distribuzione BARF (CDB), commercializzato anche da Igea; micronutrienti proxy USDA SR Legacy FDC 171469 (Chicken, broilers or fryers, back, meat and skin, raw); campi mancanti integrati da USDA SR Legacy FDC 171469",
       "source_url": "https://fdc.nal.usda.gov/food-details/171469/nutrients",
       "source_version": "USDA SR Legacy 2018-04 + analitici CDB forniti il 26/10/2026",
       "data_status": "review_required",
       "available_to_formulate": true,
-      "notes": "ANALITICI CDB (dichiarati): proteine 15.2%, grassi 19.4%, fibra grezza 1.5%, ceneri 4.8%, umidità 59.1%, energia 125 kcal/100g. USDA proxy della PARTE MOLLE: micronutrienti e aminoacidi indicativi, non misurati sul prodotto finito. CALCIO/FOSFORO SOLO STIMA MODELLATA DA CENERI (4.8%): Ca 1406 mg/100g, P 796 mg/100g; ipotesi ceneri molli 1%, frazione minerale ossea 37% Ca/17% P, P molle 150 mg/100g. Elevata incertezza: non prova della quota ossea. Analisi del prodotto richiesta per dosi affidabili. ENERGIA INCOERENTE: dichiarata 125 kcal, ma 3,5P+8,5G già 218.1 kcal/100g; richiedere chiarimento al produttore. Il produttore è CDB, Igea è rivenditore dello stesso prodotto. Nessun prezzo definito. Dati non riportati da USDA lasciati vuoti; 0 solo se documentato.",
+      "notes": "ANALITICI CDB (dichiarati): proteine 15.2%, grassi 19.4%, fibra grezza 1.5%, ceneri 4.8%, umidità 59.1%, energia 125 kcal/100g. USDA proxy della PARTE MOLLE: micronutrienti e aminoacidi indicativi, non misurati sul prodotto finito. CALCIO/FOSFORO SOLO STIMA MODELLATA DA CENERI (4.8%): Ca 1406 mg/100g, P 796 mg/100g; ipotesi ceneri molli 1%, frazione minerale ossea 37% Ca/17% P, P molle 150 mg/100g. Elevata incertezza: non prova della quota ossea. Analisi del prodotto richiesta per dosi affidabili. ENERGIA INCOERENTE: dichiarata 125 kcal, ma 3,5P+8,5G già 218.1 kcal/100g; richiedere chiarimento al produttore. Il produttore è CDB, Igea è rivenditore dello stesso prodotto. Nessun prezzo definito. Dati non riportati da USDA lasciati vuoti; 0 solo se documentato. | Integrazione di 1 campi mancanti via USDA di taglio analogo, valori NON analizzati da CDB.",
       "nutrients": {
         "protein": {
           "value": 15.2,
@@ -31221,6 +31275,12 @@
           "status": "estimated",
           "source": "Analitici dichiarati Centro Distribuzione BARF (CDB), commercializzato anche da Igea; micronutrienti proxy USDA SR Legacy FDC 171469 (Chicken, broilers or fryers, back, meat and skin, raw)"
         },
+        "beta_carotene_ug": {
+          "value": 0,
+          "unit": "µg",
+          "status": "estimated",
+          "source": "Analitici dichiarati Centro Distribuzione BARF (CDB), commercializzato anche da Igea; micronutrienti proxy USDA SR Legacy FDC 171469 (Chicken, broilers or fryers, back, meat and skin, raw); campi mancanti integrati da USDA SR Legacy FDC 171469"
+        },
         "vitamin_e": {
           "value": 0.37,
           "unit": "mg",
@@ -31306,12 +31366,12 @@
       "processing_state": "raw",
       "preparation": "100% carne di manzo macinata finemente, cruda e congelata; pesato allo stato crudo",
       "edible_portion": "100% del prodotto dichiarato",
-      "source": "Analitici dichiarati Centro Distribuzione BARF (CDB), commercializzato anche da Igea; micronutrienti proxy USDA SR Legacy FDC 174030 (Beef, ground, 90% lean meat / 10% fat, raw)",
+      "source": "Analitici dichiarati Centro Distribuzione BARF (CDB), commercializzato anche da Igea; micronutrienti proxy USDA SR Legacy FDC 174030 (Beef, ground, 90% lean meat / 10% fat, raw); campi mancanti integrati da USDA SR Legacy FDC 174030",
       "source_url": "https://fdc.nal.usda.gov/food-details/174030/nutrients",
       "source_version": "USDA SR Legacy 2018-04 + analitici CDB forniti il 26/10/2026",
       "data_status": "review_required",
       "available_to_formulate": true,
-      "notes": "ANALITICI CDB (dichiarati): proteine 21.1%, grassi 8.8%, fibra grezza 0.5%, ceneri 0.6%, umidità 69%, energia 147 kcal/100g. USDA proxy della PARTE MOLLE: micronutrienti e aminoacidi indicativi, non misurati sul prodotto finito. Il produttore è CDB, Igea è rivenditore dello stesso prodotto. Nessun prezzo definito. Dati non riportati da USDA lasciati vuoti; 0 solo se documentato.",
+      "notes": "ANALITICI CDB (dichiarati): proteine 21.1%, grassi 8.8%, fibra grezza 0.5%, ceneri 0.6%, umidità 69%, energia 147 kcal/100g. USDA proxy della PARTE MOLLE: micronutrienti e aminoacidi indicativi, non misurati sul prodotto finito. Il produttore è CDB, Igea è rivenditore dello stesso prodotto. Nessun prezzo definito. Dati non riportati da USDA lasciati vuoti; 0 solo se documentato. | Integrazione di 1 campi mancanti via USDA di taglio analogo, valori NON analizzati da CDB.",
       "nutrients": {
         "protein": {
           "value": 21.1,
@@ -31510,6 +31570,12 @@
           "unit": "µg",
           "status": "estimated",
           "source": "Analitici dichiarati Centro Distribuzione BARF (CDB), commercializzato anche da Igea; micronutrienti proxy USDA SR Legacy FDC 174030 (Beef, ground, 90% lean meat / 10% fat, raw)"
+        },
+        "beta_carotene_ug": {
+          "value": 0,
+          "unit": "µg",
+          "status": "estimated",
+          "source": "Analitici dichiarati Centro Distribuzione BARF (CDB), commercializzato anche da Igea; micronutrienti proxy USDA SR Legacy FDC 174030 (Beef, ground, 90% lean meat / 10% fat, raw); campi mancanti integrati da USDA SR Legacy FDC 174030"
         },
         "vitamin_d": {
           "value": 3,
@@ -31608,12 +31674,12 @@
       "processing_state": "raw",
       "preparation": "100% carne di manzo macinata finemente, cruda e congelata; pesato allo stato crudo",
       "edible_portion": "100% del prodotto dichiarato",
-      "source": "Analitici dichiarati Centro Distribuzione BARF (CDB), commercializzato anche da Igea; micronutrienti proxy USDA SR Legacy FDC 174030 (Beef, ground, 90% lean meat / 10% fat, raw)",
+      "source": "Analitici dichiarati Centro Distribuzione BARF (CDB), commercializzato anche da Igea; micronutrienti proxy USDA SR Legacy FDC 174030 (Beef, ground, 90% lean meat / 10% fat, raw); campi mancanti integrati da USDA SR Legacy FDC 174030",
       "source_url": "https://fdc.nal.usda.gov/food-details/174030/nutrients",
       "source_version": "USDA SR Legacy 2018-04 + analitici CDB forniti il 26/10/2026",
       "data_status": "review_required",
       "available_to_formulate": true,
-      "notes": "ANALITICI CDB (dichiarati): proteine 21.1%, grassi 8.8%, fibra grezza 0.5%, ceneri 0.6%, umidità 69%, energia 147 kcal/100g. USDA proxy della PARTE MOLLE: micronutrienti e aminoacidi indicativi, non misurati sul prodotto finito. Il produttore è CDB, Igea è rivenditore dello stesso prodotto. Nessun prezzo definito. Dati non riportati da USDA lasciati vuoti; 0 solo se documentato.",
+      "notes": "ANALITICI CDB (dichiarati): proteine 21.1%, grassi 8.8%, fibra grezza 0.5%, ceneri 0.6%, umidità 69%, energia 147 kcal/100g. USDA proxy della PARTE MOLLE: micronutrienti e aminoacidi indicativi, non misurati sul prodotto finito. Il produttore è CDB, Igea è rivenditore dello stesso prodotto. Nessun prezzo definito. Dati non riportati da USDA lasciati vuoti; 0 solo se documentato. | Integrazione di 1 campi mancanti via USDA di taglio analogo, valori NON analizzati da CDB.",
       "nutrients": {
         "protein": {
           "value": 21.1,
@@ -31813,6 +31879,12 @@
           "status": "estimated",
           "source": "Analitici dichiarati Centro Distribuzione BARF (CDB), commercializzato anche da Igea; micronutrienti proxy USDA SR Legacy FDC 174030 (Beef, ground, 90% lean meat / 10% fat, raw)"
         },
+        "beta_carotene_ug": {
+          "value": 0,
+          "unit": "µg",
+          "status": "estimated",
+          "source": "Analitici dichiarati Centro Distribuzione BARF (CDB), commercializzato anche da Igea; micronutrienti proxy USDA SR Legacy FDC 174030 (Beef, ground, 90% lean meat / 10% fat, raw); campi mancanti integrati da USDA SR Legacy FDC 174030"
+        },
         "vitamin_d": {
           "value": 3,
           "unit": "IU",
@@ -31910,12 +31982,12 @@
       "processing_state": "raw",
       "preparation": "100% fegato bovino a pezzi, crudo e congelato; pesato allo stato crudo",
       "edible_portion": "100% del prodotto dichiarato",
-      "source": "Analitici dichiarati Centro Distribuzione BARF (CDB), commercializzato anche da Igea; micronutrienti proxy USDA SR Legacy FDC 169451 (Beef, variety meats and by-products, liver, raw)",
+      "source": "Analitici dichiarati Centro Distribuzione BARF (CDB), commercializzato anche da Igea; micronutrienti proxy USDA SR Legacy FDC 169451 (Beef, variety meats and by-products, liver, raw); campi mancanti integrati da USDA SR Legacy FDC 169451",
       "source_url": "https://fdc.nal.usda.gov/food-details/169451/nutrients",
       "source_version": "USDA SR Legacy 2018-04 + analitici CDB forniti il 26/10/2026",
       "data_status": "review_required",
       "available_to_formulate": true,
-      "notes": "ANALITICI CDB (dichiarati): proteine 18.7%, grassi 3.7%, fibra grezza 0.8%, ceneri 2.8%, umidità 74%, energia 142 kcal/100g. USDA proxy della PARTE MOLLE: micronutrienti e aminoacidi indicativi, non misurati sul prodotto finito. Il produttore è CDB, Igea è rivenditore dello stesso prodotto. Nessun prezzo definito. Dati non riportati da USDA lasciati vuoti; 0 solo se documentato.",
+      "notes": "ANALITICI CDB (dichiarati): proteine 18.7%, grassi 3.7%, fibra grezza 0.8%, ceneri 2.8%, umidità 74%, energia 142 kcal/100g. USDA proxy della PARTE MOLLE: micronutrienti e aminoacidi indicativi, non misurati sul prodotto finito. Il produttore è CDB, Igea è rivenditore dello stesso prodotto. Nessun prezzo definito. Dati non riportati da USDA lasciati vuoti; 0 solo se documentato. | Integrazione di 1 campi mancanti via USDA di taglio analogo, valori NON analizzati da CDB.",
       "nutrients": {
         "protein": {
           "value": 18.7,
@@ -32114,6 +32186,12 @@
           "unit": "µg",
           "status": "estimated",
           "source": "Analitici dichiarati Centro Distribuzione BARF (CDB), commercializzato anche da Igea; micronutrienti proxy USDA SR Legacy FDC 169451 (Beef, variety meats and by-products, liver, raw)"
+        },
+        "beta_carotene_ug": {
+          "value": 232,
+          "unit": "µg",
+          "status": "estimated",
+          "source": "Analitici dichiarati Centro Distribuzione BARF (CDB), commercializzato anche da Igea; micronutrienti proxy USDA SR Legacy FDC 169451 (Beef, variety meats and by-products, liver, raw); campi mancanti integrati da USDA SR Legacy FDC 169451"
         },
         "vitamin_d": {
           "value": 49,
@@ -32212,12 +32290,12 @@
       "processing_state": "raw",
       "preparation": "100% fegato bovino a pezzi, crudo e congelato; pesato allo stato crudo",
       "edible_portion": "100% del prodotto dichiarato",
-      "source": "Analitici dichiarati Centro Distribuzione BARF (CDB), commercializzato anche da Igea; micronutrienti proxy USDA SR Legacy FDC 169451 (Beef, variety meats and by-products, liver, raw)",
+      "source": "Analitici dichiarati Centro Distribuzione BARF (CDB), commercializzato anche da Igea; micronutrienti proxy USDA SR Legacy FDC 169451 (Beef, variety meats and by-products, liver, raw); campi mancanti integrati da USDA SR Legacy FDC 169451",
       "source_url": "https://fdc.nal.usda.gov/food-details/169451/nutrients",
       "source_version": "USDA SR Legacy 2018-04 + analitici CDB forniti il 26/10/2026",
       "data_status": "review_required",
       "available_to_formulate": true,
-      "notes": "ANALITICI CDB (dichiarati): proteine 18.7%, grassi 3.7%, fibra grezza 0.8%, ceneri 2.8%, umidità 74%, energia 142 kcal/100g. USDA proxy della PARTE MOLLE: micronutrienti e aminoacidi indicativi, non misurati sul prodotto finito. Il produttore è CDB, Igea è rivenditore dello stesso prodotto. Nessun prezzo definito. Dati non riportati da USDA lasciati vuoti; 0 solo se documentato.",
+      "notes": "ANALITICI CDB (dichiarati): proteine 18.7%, grassi 3.7%, fibra grezza 0.8%, ceneri 2.8%, umidità 74%, energia 142 kcal/100g. USDA proxy della PARTE MOLLE: micronutrienti e aminoacidi indicativi, non misurati sul prodotto finito. Il produttore è CDB, Igea è rivenditore dello stesso prodotto. Nessun prezzo definito. Dati non riportati da USDA lasciati vuoti; 0 solo se documentato. | Integrazione di 1 campi mancanti via USDA di taglio analogo, valori NON analizzati da CDB.",
       "nutrients": {
         "protein": {
           "value": 18.7,
@@ -32417,6 +32495,12 @@
           "status": "estimated",
           "source": "Analitici dichiarati Centro Distribuzione BARF (CDB), commercializzato anche da Igea; micronutrienti proxy USDA SR Legacy FDC 169451 (Beef, variety meats and by-products, liver, raw)"
         },
+        "beta_carotene_ug": {
+          "value": 232,
+          "unit": "µg",
+          "status": "estimated",
+          "source": "Analitici dichiarati Centro Distribuzione BARF (CDB), commercializzato anche da Igea; micronutrienti proxy USDA SR Legacy FDC 169451 (Beef, variety meats and by-products, liver, raw); campi mancanti integrati da USDA SR Legacy FDC 169451"
+        },
         "vitamin_d": {
           "value": 49,
           "unit": "IU",
@@ -32514,12 +32598,12 @@
       "processing_state": "raw",
       "preparation": "100% reni bovini, crudi e congelati; pesato allo stato crudo",
       "edible_portion": "100% del prodotto dichiarato",
-      "source": "Analitici dichiarati Centro Distribuzione BARF (CDB), commercializzato anche da Igea; micronutrienti proxy USDA SR Legacy FDC 169449 (Beef, variety meats and by-products, kidneys, raw)",
+      "source": "Analitici dichiarati Centro Distribuzione BARF (CDB), commercializzato anche da Igea; micronutrienti proxy USDA SR Legacy FDC 169449 (Beef, variety meats and by-products, kidneys, raw); campi mancanti integrati da USDA SR Legacy FDC 169449",
       "source_url": "https://fdc.nal.usda.gov/food-details/169449/nutrients",
       "source_version": "USDA SR Legacy 2018-04 + analitici CDB forniti il 26/10/2026",
       "data_status": "review_required",
       "available_to_formulate": true,
-      "notes": "ANALITICI CDB (dichiarati): proteine 15.6%, grassi 8.9%, fibra grezza 0.1%, ceneri 1.3%, umidità 74.1%, energia 118 kcal/100g. USDA proxy della PARTE MOLLE: micronutrienti e aminoacidi indicativi, non misurati sul prodotto finito. ENERGIA INCOERENTE: dichiarata 118 kcal, ma 3,5P+8,5G già 130.2 kcal/100g; richiedere chiarimento al produttore. Il produttore è CDB, Igea è rivenditore dello stesso prodotto. Nessun prezzo definito. Dati non riportati da USDA lasciati vuoti; 0 solo se documentato.",
+      "notes": "ANALITICI CDB (dichiarati): proteine 15.6%, grassi 8.9%, fibra grezza 0.1%, ceneri 1.3%, umidità 74.1%, energia 118 kcal/100g. USDA proxy della PARTE MOLLE: micronutrienti e aminoacidi indicativi, non misurati sul prodotto finito. ENERGIA INCOERENTE: dichiarata 118 kcal, ma 3,5P+8,5G già 130.2 kcal/100g; richiedere chiarimento al produttore. Il produttore è CDB, Igea è rivenditore dello stesso prodotto. Nessun prezzo definito. Dati non riportati da USDA lasciati vuoti; 0 solo se documentato. | Integrazione di 1 campi mancanti via USDA di taglio analogo, valori NON analizzati da CDB.",
       "nutrients": {
         "protein": {
           "value": 15.6,
@@ -32634,6 +32718,12 @@
           "unit": "µg",
           "status": "estimated",
           "source": "Analitici dichiarati Centro Distribuzione BARF (CDB), commercializzato anche da Igea; micronutrienti proxy USDA SR Legacy FDC 169449 (Beef, variety meats and by-products, kidneys, raw)"
+        },
+        "beta_carotene_ug": {
+          "value": 0,
+          "unit": "µg",
+          "status": "estimated",
+          "source": "Analitici dichiarati Centro Distribuzione BARF (CDB), commercializzato anche da Igea; micronutrienti proxy USDA SR Legacy FDC 169449 (Beef, variety meats and by-products, kidneys, raw); campi mancanti integrati da USDA SR Legacy FDC 169449"
         },
         "vitamin_d": {
           "value": 45,
@@ -32726,12 +32816,12 @@
       "processing_state": "raw",
       "preparation": "100% reni bovini, crudi e congelati; pesato allo stato crudo",
       "edible_portion": "100% del prodotto dichiarato",
-      "source": "Analitici dichiarati Centro Distribuzione BARF (CDB), commercializzato anche da Igea; micronutrienti proxy USDA SR Legacy FDC 169449 (Beef, variety meats and by-products, kidneys, raw)",
+      "source": "Analitici dichiarati Centro Distribuzione BARF (CDB), commercializzato anche da Igea; micronutrienti proxy USDA SR Legacy FDC 169449 (Beef, variety meats and by-products, kidneys, raw); campi mancanti integrati da USDA SR Legacy FDC 169449",
       "source_url": "https://fdc.nal.usda.gov/food-details/169449/nutrients",
       "source_version": "USDA SR Legacy 2018-04 + analitici CDB forniti il 26/10/2026",
       "data_status": "review_required",
       "available_to_formulate": true,
-      "notes": "ANALITICI CDB (dichiarati): proteine 15.6%, grassi 8.9%, fibra grezza 0.1%, ceneri 1.3%, umidità 74.1%, energia 118 kcal/100g. USDA proxy della PARTE MOLLE: micronutrienti e aminoacidi indicativi, non misurati sul prodotto finito. ENERGIA INCOERENTE: dichiarata 118 kcal, ma 3,5P+8,5G già 130.2 kcal/100g; richiedere chiarimento al produttore. Il produttore è CDB, Igea è rivenditore dello stesso prodotto. Nessun prezzo definito. Dati non riportati da USDA lasciati vuoti; 0 solo se documentato.",
+      "notes": "ANALITICI CDB (dichiarati): proteine 15.6%, grassi 8.9%, fibra grezza 0.1%, ceneri 1.3%, umidità 74.1%, energia 118 kcal/100g. USDA proxy della PARTE MOLLE: micronutrienti e aminoacidi indicativi, non misurati sul prodotto finito. ENERGIA INCOERENTE: dichiarata 118 kcal, ma 3,5P+8,5G già 130.2 kcal/100g; richiedere chiarimento al produttore. Il produttore è CDB, Igea è rivenditore dello stesso prodotto. Nessun prezzo definito. Dati non riportati da USDA lasciati vuoti; 0 solo se documentato. | Integrazione di 1 campi mancanti via USDA di taglio analogo, valori NON analizzati da CDB.",
       "nutrients": {
         "protein": {
           "value": 15.6,
@@ -32847,6 +32937,12 @@
           "status": "estimated",
           "source": "Analitici dichiarati Centro Distribuzione BARF (CDB), commercializzato anche da Igea; micronutrienti proxy USDA SR Legacy FDC 169449 (Beef, variety meats and by-products, kidneys, raw)"
         },
+        "beta_carotene_ug": {
+          "value": 0,
+          "unit": "µg",
+          "status": "estimated",
+          "source": "Analitici dichiarati Centro Distribuzione BARF (CDB), commercializzato anche da Igea; micronutrienti proxy USDA SR Legacy FDC 169449 (Beef, variety meats and by-products, kidneys, raw); campi mancanti integrati da USDA SR Legacy FDC 169449"
+        },
         "vitamin_d": {
           "value": 45,
           "unit": "IU",
@@ -32938,12 +33034,12 @@
       "processing_state": "raw",
       "preparation": "100% fusti di tacchino macinati, crudi e congelati; pesato allo stato crudo; ossa incluse",
       "edible_portion": "100% del prodotto, ossa incluse (non equivale a sola polpa)",
-      "source": "Analitici dichiarati Centro Distribuzione BARF (CDB), commercializzato anche da Igea; micronutrienti proxy USDA SR Legacy FDC 171096 (Turkey, whole, back, meat only, raw)",
+      "source": "Analitici dichiarati Centro Distribuzione BARF (CDB), commercializzato anche da Igea; micronutrienti proxy USDA SR Legacy FDC 171096 (Turkey, whole, back, meat only, raw); campi mancanti integrati da USDA SR Legacy FDC 171096",
       "source_url": "https://fdc.nal.usda.gov/food-details/171096/nutrients",
       "source_version": "USDA SR Legacy 2018-04 + analitici CDB forniti il 26/10/2026",
       "data_status": "review_required",
       "available_to_formulate": true,
-      "notes": "ANALITICI CDB (dichiarati): proteine 17.5%, grassi 16.7%, fibra grezza 0.2%, ceneri 5.4%, umidità 59.2%, energia 125 kcal/100g. USDA proxy della PARTE MOLLE: micronutrienti e aminoacidi indicativi, non misurati sul prodotto finito. CALCIO/FOSFORO SOLO STIMA MODELLATA DA CENERI (5.4%): Ca 1628 mg/100g, P 898 mg/100g; ipotesi ceneri molli 1%, frazione minerale ossea 37% Ca/17% P, P molle 150 mg/100g. Elevata incertezza: non prova della quota ossea. Analisi del prodotto richiesta per dosi affidabili. ENERGIA INCOERENTE: dichiarata 125 kcal, ma 3,5P+8,5G già 203.2 kcal/100g; richiedere chiarimento al produttore. Il produttore è CDB, Igea è rivenditore dello stesso prodotto. Nessun prezzo definito. Dati non riportati da USDA lasciati vuoti; 0 solo se documentato.",
+      "notes": "ANALITICI CDB (dichiarati): proteine 17.5%, grassi 16.7%, fibra grezza 0.2%, ceneri 5.4%, umidità 59.2%, energia 125 kcal/100g. USDA proxy della PARTE MOLLE: micronutrienti e aminoacidi indicativi, non misurati sul prodotto finito. CALCIO/FOSFORO SOLO STIMA MODELLATA DA CENERI (5.4%): Ca 1628 mg/100g, P 898 mg/100g; ipotesi ceneri molli 1%, frazione minerale ossea 37% Ca/17% P, P molle 150 mg/100g. Elevata incertezza: non prova della quota ossea. Analisi del prodotto richiesta per dosi affidabili. ENERGIA INCOERENTE: dichiarata 125 kcal, ma 3,5P+8,5G già 203.2 kcal/100g; richiedere chiarimento al produttore. Il produttore è CDB, Igea è rivenditore dello stesso prodotto. Nessun prezzo definito. Dati non riportati da USDA lasciati vuoti; 0 solo se documentato. | Integrazione di 1 campi mancanti via USDA di taglio analogo, valori NON analizzati da CDB.",
       "nutrients": {
         "protein": {
           "value": 17.5,
@@ -33112,6 +33208,12 @@
           "unit": "µg",
           "status": "estimated",
           "source": "Analitici dichiarati Centro Distribuzione BARF (CDB), commercializzato anche da Igea; micronutrienti proxy USDA SR Legacy FDC 171096 (Turkey, whole, back, meat only, raw)"
+        },
+        "beta_carotene_ug": {
+          "value": 0,
+          "unit": "µg",
+          "status": "estimated",
+          "source": "Analitici dichiarati Centro Distribuzione BARF (CDB), commercializzato anche da Igea; micronutrienti proxy USDA SR Legacy FDC 171096 (Turkey, whole, back, meat only, raw); campi mancanti integrati da USDA SR Legacy FDC 171096"
         },
         "vitamin_d": {
           "value": 13,
@@ -33198,12 +33300,12 @@
       "processing_state": "raw",
       "preparation": "100% fusti di tacchino macinati, crudi e congelati; pesato allo stato crudo; ossa incluse",
       "edible_portion": "100% del prodotto, ossa incluse (non equivale a sola polpa)",
-      "source": "Analitici dichiarati Centro Distribuzione BARF (CDB), commercializzato anche da Igea; micronutrienti proxy USDA SR Legacy FDC 171096 (Turkey, whole, back, meat only, raw)",
+      "source": "Analitici dichiarati Centro Distribuzione BARF (CDB), commercializzato anche da Igea; micronutrienti proxy USDA SR Legacy FDC 171096 (Turkey, whole, back, meat only, raw); campi mancanti integrati da USDA SR Legacy FDC 171096",
       "source_url": "https://fdc.nal.usda.gov/food-details/171096/nutrients",
       "source_version": "USDA SR Legacy 2018-04 + analitici CDB forniti il 26/10/2026",
       "data_status": "review_required",
       "available_to_formulate": true,
-      "notes": "ANALITICI CDB (dichiarati): proteine 17.5%, grassi 16.7%, fibra grezza 0.2%, ceneri 5.4%, umidità 59.2%, energia 125 kcal/100g. USDA proxy della PARTE MOLLE: micronutrienti e aminoacidi indicativi, non misurati sul prodotto finito. CALCIO/FOSFORO SOLO STIMA MODELLATA DA CENERI (5.4%): Ca 1628 mg/100g, P 898 mg/100g; ipotesi ceneri molli 1%, frazione minerale ossea 37% Ca/17% P, P molle 150 mg/100g. Elevata incertezza: non prova della quota ossea. Analisi del prodotto richiesta per dosi affidabili. ENERGIA INCOERENTE: dichiarata 125 kcal, ma 3,5P+8,5G già 203.2 kcal/100g; richiedere chiarimento al produttore. Il produttore è CDB, Igea è rivenditore dello stesso prodotto. Nessun prezzo definito. Dati non riportati da USDA lasciati vuoti; 0 solo se documentato.",
+      "notes": "ANALITICI CDB (dichiarati): proteine 17.5%, grassi 16.7%, fibra grezza 0.2%, ceneri 5.4%, umidità 59.2%, energia 125 kcal/100g. USDA proxy della PARTE MOLLE: micronutrienti e aminoacidi indicativi, non misurati sul prodotto finito. CALCIO/FOSFORO SOLO STIMA MODELLATA DA CENERI (5.4%): Ca 1628 mg/100g, P 898 mg/100g; ipotesi ceneri molli 1%, frazione minerale ossea 37% Ca/17% P, P molle 150 mg/100g. Elevata incertezza: non prova della quota ossea. Analisi del prodotto richiesta per dosi affidabili. ENERGIA INCOERENTE: dichiarata 125 kcal, ma 3,5P+8,5G già 203.2 kcal/100g; richiedere chiarimento al produttore. Il produttore è CDB, Igea è rivenditore dello stesso prodotto. Nessun prezzo definito. Dati non riportati da USDA lasciati vuoti; 0 solo se documentato. | Integrazione di 1 campi mancanti via USDA di taglio analogo, valori NON analizzati da CDB.",
       "nutrients": {
         "protein": {
           "value": 17.5,
@@ -33372,6 +33474,12 @@
           "unit": "µg",
           "status": "estimated",
           "source": "Analitici dichiarati Centro Distribuzione BARF (CDB), commercializzato anche da Igea; micronutrienti proxy USDA SR Legacy FDC 171096 (Turkey, whole, back, meat only, raw)"
+        },
+        "beta_carotene_ug": {
+          "value": 0,
+          "unit": "µg",
+          "status": "estimated",
+          "source": "Analitici dichiarati Centro Distribuzione BARF (CDB), commercializzato anche da Igea; micronutrienti proxy USDA SR Legacy FDC 171096 (Turkey, whole, back, meat only, raw); campi mancanti integrati da USDA SR Legacy FDC 171096"
         },
         "vitamin_d": {
           "value": 13,
@@ -33990,12 +34098,12 @@
       "processing_state": "raw",
       "preparation": "ali di pollo intere, con ossa; prodotto crudo e congelato, pesare a crudo",
       "edible_portion": "Prodotto completo, ossa incluse: non equiparare alla carne disossata",
-      "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 172390 (proxy: Chicken, broilers or fryers, wing, meat and skin, raw)",
-      "source_url": "https://fdc.nal.usda.gov/food-details/172390/nutrients",
+      "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 172390 (proxy: Chicken, broilers or fryers, wing, meat and skin, raw); riferimento Ca/P parti ossee BARFLAB; campi mancanti integrati da USDA SR Legacy FDC 172390",
+      "source_url": "https://fdc.nal.usda.gov/food-details/172390/nutrients ; https://barflab.io/en/products/chicken-wing/",
       "source_version": "CDB forniti 28/10/2026; USDA SR Legacy 2018-04",
       "data_status": "review_required",
       "available_to_formulate": true,
-      "notes": "CDB è il produttore; Igea rivende lo stesso alimento. ANALITICI CDB per 100g: proteine 17.7, grassi 14.7, fibra 3.2, ceneri 0.9, umidità 63.5, kcal dichiarate 125. Microelementi, aminoacidi e vitamine da USDA SR Legacy FDC 172390 come PROXY, NON analisi di questo prodotto. CON OSSA: USDA si riferisce alla parte edibile SENZA OSSA. Ca/P sconosciuti: le ceneri dichiarate non consentono stima robusta. ATTENZIONE ENERGIA: venditore 125 kcal vs stima 4/9 203.1; differenza significativa, valore CDB conservato in nota.",
+      "notes": "CDB è il produttore; Igea rivende lo stesso alimento. ANALITICI CDB per 100g: proteine 17.7, grassi 14.7, fibra 3.2, ceneri 0.9, umidità 63.5, kcal dichiarate 125. Microelementi, aminoacidi e vitamine da USDA SR Legacy FDC 172390 come PROXY, NON analisi di questo prodotto. CON OSSA: USDA si riferisce alla parte edibile SENZA OSSA. Ca/P sconosciuti: le ceneri dichiarate non consentono stima robusta. ATTENZIONE ENERGIA: venditore 125 kcal vs stima 4/9 203.1; differenza significativa, valore CDB conservato in nota. | CALCIO/FOSFORO STIMATI (NON ANALISI CDB): profilo analogo ali di pollo intere con osso (100 g), Ca 2167.94 mg, P 1078.42 mg. Fonte: https://barflab.io/en/products/chicken-wing/. ATTENZIONE: ceneri dichiarate CDB incompatibili con un tenore osseo comparabile; grande incertezza, non validare equilibrio Ca:P come certo. | Integrazione di 2 campi mancanti via USDA di taglio analogo, valori NON analizzati da CDB.",
       "nutrients": {
         "protein": {
           "value": 17.7,
@@ -34045,6 +34153,12 @@
           "status": "estimated",
           "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 172390 (proxy: Chicken, broilers or fryers, wing, meat and skin, raw)"
         },
+        "methionine_cystine": {
+          "value": 0.639,
+          "unit": "g",
+          "status": "estimated",
+          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 172390 (proxy: Chicken, broilers or fryers, wing, meat and skin, raw); riferimento Ca/P parti ossee BARFLAB; campi mancanti integrati da USDA SR Legacy FDC 172390"
+        },
         "phenylalanine": {
           "value": 0.707,
           "unit": "g",
@@ -34056,6 +34170,12 @@
           "unit": "g",
           "status": "estimated",
           "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 172390 (proxy: Chicken, broilers or fryers, wing, meat and skin, raw)"
+        },
+        "phenylalanine_tyrosine": {
+          "value": 1.338,
+          "unit": "g",
+          "status": "estimated",
+          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 172390 (proxy: Chicken, broilers or fryers, wing, meat and skin, raw); riferimento Ca/P parti ossee BARFLAB; campi mancanti integrati da USDA SR Legacy FDC 172390"
         },
         "threonine": {
           "value": 0.786,
@@ -34110,6 +34230,18 @@
           "unit": "g",
           "status": "estimated",
           "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 172390 (proxy: Chicken, broilers or fryers, wing, meat and skin, raw)"
+        },
+        "calcium": {
+          "value": 2167.94,
+          "unit": "mg",
+          "status": "estimated",
+          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 172390 (proxy: Chicken, broilers or fryers, wing, meat and skin, raw); riferimento Ca/P parti ossee BARFLAB; campi mancanti integrati da USDA SR Legacy FDC 172390"
+        },
+        "phosphorus": {
+          "value": 1078.42,
+          "unit": "mg",
+          "status": "estimated",
+          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 172390 (proxy: Chicken, broilers or fryers, wing, meat and skin, raw); riferimento Ca/P parti ossee BARFLAB; campi mancanti integrati da USDA SR Legacy FDC 172390"
         },
         "potassium": {
           "value": 187,
@@ -34274,12 +34406,12 @@
       "processing_state": "raw",
       "preparation": "ali di pollo intere, con ossa; prodotto crudo e congelato, pesare a crudo",
       "edible_portion": "Prodotto completo, ossa incluse: non equiparare alla carne disossata",
-      "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 172390 (proxy: Chicken, broilers or fryers, wing, meat and skin, raw)",
-      "source_url": "https://fdc.nal.usda.gov/food-details/172390/nutrients",
+      "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 172390 (proxy: Chicken, broilers or fryers, wing, meat and skin, raw); riferimento Ca/P parti ossee BARFLAB; campi mancanti integrati da USDA SR Legacy FDC 172390",
+      "source_url": "https://fdc.nal.usda.gov/food-details/172390/nutrients ; https://barflab.io/en/products/chicken-wing/",
       "source_version": "CDB forniti 28/10/2026; USDA SR Legacy 2018-04",
       "data_status": "review_required",
       "available_to_formulate": true,
-      "notes": "CDB è il produttore; Igea rivende lo stesso alimento. ANALITICI CDB per 100g: proteine 17.7, grassi 14.7, fibra 3.2, ceneri 0.9, umidità 63.5, kcal dichiarate 125. Microelementi, aminoacidi e vitamine da USDA SR Legacy FDC 172390 come PROXY, NON analisi di questo prodotto. CON OSSA: USDA si riferisce alla parte edibile SENZA OSSA. Ca/P sconosciuti: le ceneri dichiarate non consentono stima robusta. ATTENZIONE ENERGIA: venditore 125 kcal vs stima 4/9 203.1; differenza significativa, valore CDB conservato in nota.",
+      "notes": "CDB è il produttore; Igea rivende lo stesso alimento. ANALITICI CDB per 100g: proteine 17.7, grassi 14.7, fibra 3.2, ceneri 0.9, umidità 63.5, kcal dichiarate 125. Microelementi, aminoacidi e vitamine da USDA SR Legacy FDC 172390 come PROXY, NON analisi di questo prodotto. CON OSSA: USDA si riferisce alla parte edibile SENZA OSSA. Ca/P sconosciuti: le ceneri dichiarate non consentono stima robusta. ATTENZIONE ENERGIA: venditore 125 kcal vs stima 4/9 203.1; differenza significativa, valore CDB conservato in nota. | CALCIO/FOSFORO STIMATI (NON ANALISI CDB): profilo analogo ali di pollo intere con osso (100 g), Ca 2167.94 mg, P 1078.42 mg. Fonte: https://barflab.io/en/products/chicken-wing/. ATTENZIONE: ceneri dichiarate CDB incompatibili con un tenore osseo comparabile; grande incertezza, non validare equilibrio Ca:P come certo. | Integrazione di 2 campi mancanti via USDA di taglio analogo, valori NON analizzati da CDB.",
       "nutrients": {
         "protein": {
           "value": 17.7,
@@ -34329,6 +34461,12 @@
           "status": "estimated",
           "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 172390 (proxy: Chicken, broilers or fryers, wing, meat and skin, raw)"
         },
+        "methionine_cystine": {
+          "value": 0.639,
+          "unit": "g",
+          "status": "estimated",
+          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 172390 (proxy: Chicken, broilers or fryers, wing, meat and skin, raw); riferimento Ca/P parti ossee BARFLAB; campi mancanti integrati da USDA SR Legacy FDC 172390"
+        },
         "phenylalanine": {
           "value": 0.707,
           "unit": "g",
@@ -34340,6 +34478,12 @@
           "unit": "g",
           "status": "estimated",
           "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 172390 (proxy: Chicken, broilers or fryers, wing, meat and skin, raw)"
+        },
+        "phenylalanine_tyrosine": {
+          "value": 1.338,
+          "unit": "g",
+          "status": "estimated",
+          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 172390 (proxy: Chicken, broilers or fryers, wing, meat and skin, raw); riferimento Ca/P parti ossee BARFLAB; campi mancanti integrati da USDA SR Legacy FDC 172390"
         },
         "threonine": {
           "value": 0.786,
@@ -34394,6 +34538,18 @@
           "unit": "g",
           "status": "estimated",
           "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 172390 (proxy: Chicken, broilers or fryers, wing, meat and skin, raw)"
+        },
+        "calcium": {
+          "value": 2167.94,
+          "unit": "mg",
+          "status": "estimated",
+          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 172390 (proxy: Chicken, broilers or fryers, wing, meat and skin, raw); riferimento Ca/P parti ossee BARFLAB; campi mancanti integrati da USDA SR Legacy FDC 172390"
+        },
+        "phosphorus": {
+          "value": 1078.42,
+          "unit": "mg",
+          "status": "estimated",
+          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 172390 (proxy: Chicken, broilers or fryers, wing, meat and skin, raw); riferimento Ca/P parti ossee BARFLAB; campi mancanti integrati da USDA SR Legacy FDC 172390"
         },
         "potassium": {
           "value": 187,
@@ -34558,12 +34714,12 @@
       "processing_state": "raw",
       "preparation": "colli di pollo interi, con ossa; prodotto crudo e congelato, pesare a crudo",
       "edible_portion": "Prodotto completo, ossa incluse: non equiparare alla carne disossata",
-      "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 172382 (proxy: Chicken, broilers or fryers, neck, meat and skin, raw)",
-      "source_url": "https://fdc.nal.usda.gov/food-details/172382/nutrients",
+      "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 172382 (proxy: Chicken, broilers or fryers, neck, meat and skin, raw); riferimento Ca/P parti ossee BARFLAB; campi mancanti integrati da USDA SR Legacy FDC 172382",
+      "source_url": "https://fdc.nal.usda.gov/food-details/172382/nutrients ; https://barflab.io/en/products/chicken-neck/",
       "source_version": "CDB forniti 28/10/2026; USDA SR Legacy 2018-04",
       "data_status": "review_required",
       "available_to_formulate": true,
-      "notes": "CDB è il produttore; Igea rivende lo stesso alimento. ANALITICI CDB per 100g: proteine 13.7, grassi 22.3, fibra 0.1, ceneri 0.7, umidità 63.2, kcal dichiarate 171. Microelementi, aminoacidi e vitamine da USDA SR Legacy FDC 172382 come PROXY, NON analisi di questo prodotto. CON OSSA: USDA si riferisce alla parte edibile SENZA OSSA. Ca/P sconosciuti: le ceneri dichiarate non consentono stima robusta. CORREZIONE REFUSI IPOTETICA: 137%→13,7%; 632%→63,2%; valori da confermare. ATTENZIONE ENERGIA: venditore 171 kcal vs stima 4/9 255.5; differenza significativa, valore CDB conservato in nota.",
+      "notes": "CDB è il produttore; Igea rivende lo stesso alimento. ANALITICI CDB per 100g: proteine 13.7, grassi 22.3, fibra 0.1, ceneri 0.7, umidità 63.2, kcal dichiarate 171. Microelementi, aminoacidi e vitamine da USDA SR Legacy FDC 172382 come PROXY, NON analisi di questo prodotto. CON OSSA: USDA si riferisce alla parte edibile SENZA OSSA. Ca/P sconosciuti: le ceneri dichiarate non consentono stima robusta. CORREZIONE REFUSI IPOTETICA: 137%→13,7%; 632%→63,2%; valori da confermare. ATTENZIONE ENERGIA: venditore 171 kcal vs stima 4/9 255.5; differenza significativa, valore CDB conservato in nota. | CALCIO/FOSFORO STIMATI (NON ANALISI CDB): profilo analogo collo di pollo intero con osso (100 g), Ca 1709.28 mg, P 864.32 mg. Fonte: https://barflab.io/en/products/chicken-neck/. ATTENZIONE: ceneri dichiarate CDB incompatibili con un tenore osseo comparabile; grande incertezza, non validare equilibrio Ca:P come certo. | Integrazione di 2 campi mancanti via USDA di taglio analogo, valori NON analizzati da CDB.",
       "nutrients": {
         "protein": {
           "value": 13.7,
@@ -34613,6 +34769,12 @@
           "status": "estimated",
           "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 172382 (proxy: Chicken, broilers or fryers, neck, meat and skin, raw)"
         },
+        "methionine_cystine": {
+          "value": 0.541,
+          "unit": "g",
+          "status": "estimated",
+          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 172382 (proxy: Chicken, broilers or fryers, neck, meat and skin, raw); riferimento Ca/P parti ossee BARFLAB; campi mancanti integrati da USDA SR Legacy FDC 172382"
+        },
         "phenylalanine": {
           "value": 0.514,
           "unit": "g",
@@ -34624,6 +34786,12 @@
           "unit": "g",
           "status": "estimated",
           "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 172382 (proxy: Chicken, broilers or fryers, neck, meat and skin, raw)"
+        },
+        "phenylalanine_tyrosine": {
+          "value": 0.906,
+          "unit": "g",
+          "status": "estimated",
+          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 172382 (proxy: Chicken, broilers or fryers, neck, meat and skin, raw); riferimento Ca/P parti ossee BARFLAB; campi mancanti integrati da USDA SR Legacy FDC 172382"
         },
         "threonine": {
           "value": 0.545,
@@ -34672,6 +34840,18 @@
           "unit": "g",
           "status": "estimated",
           "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 172382 (proxy: Chicken, broilers or fryers, neck, meat and skin, raw)"
+        },
+        "calcium": {
+          "value": 1709.28,
+          "unit": "mg",
+          "status": "estimated",
+          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 172382 (proxy: Chicken, broilers or fryers, neck, meat and skin, raw); riferimento Ca/P parti ossee BARFLAB; campi mancanti integrati da USDA SR Legacy FDC 172382"
+        },
+        "phosphorus": {
+          "value": 864.32,
+          "unit": "mg",
+          "status": "estimated",
+          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 172382 (proxy: Chicken, broilers or fryers, neck, meat and skin, raw); riferimento Ca/P parti ossee BARFLAB; campi mancanti integrati da USDA SR Legacy FDC 172382"
         },
         "potassium": {
           "value": 137,
@@ -34812,12 +34992,12 @@
       "processing_state": "raw",
       "preparation": "colli di pollo interi, con ossa; prodotto crudo e congelato, pesare a crudo",
       "edible_portion": "Prodotto completo, ossa incluse: non equiparare alla carne disossata",
-      "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 172382 (proxy: Chicken, broilers or fryers, neck, meat and skin, raw)",
-      "source_url": "https://fdc.nal.usda.gov/food-details/172382/nutrients",
+      "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 172382 (proxy: Chicken, broilers or fryers, neck, meat and skin, raw); riferimento Ca/P parti ossee BARFLAB; campi mancanti integrati da USDA SR Legacy FDC 172382",
+      "source_url": "https://fdc.nal.usda.gov/food-details/172382/nutrients ; https://barflab.io/en/products/chicken-neck/",
       "source_version": "CDB forniti 28/10/2026; USDA SR Legacy 2018-04",
       "data_status": "review_required",
       "available_to_formulate": true,
-      "notes": "CDB è il produttore; Igea rivende lo stesso alimento. ANALITICI CDB per 100g: proteine 13.7, grassi 22.3, fibra 0.1, ceneri 0.7, umidità 63.2, kcal dichiarate 171. Microelementi, aminoacidi e vitamine da USDA SR Legacy FDC 172382 come PROXY, NON analisi di questo prodotto. CON OSSA: USDA si riferisce alla parte edibile SENZA OSSA. Ca/P sconosciuti: le ceneri dichiarate non consentono stima robusta. CORREZIONE REFUSI IPOTETICA: 137%→13,7%; 632%→63,2%; valori da confermare. ATTENZIONE ENERGIA: venditore 171 kcal vs stima 4/9 255.5; differenza significativa, valore CDB conservato in nota.",
+      "notes": "CDB è il produttore; Igea rivende lo stesso alimento. ANALITICI CDB per 100g: proteine 13.7, grassi 22.3, fibra 0.1, ceneri 0.7, umidità 63.2, kcal dichiarate 171. Microelementi, aminoacidi e vitamine da USDA SR Legacy FDC 172382 come PROXY, NON analisi di questo prodotto. CON OSSA: USDA si riferisce alla parte edibile SENZA OSSA. Ca/P sconosciuti: le ceneri dichiarate non consentono stima robusta. CORREZIONE REFUSI IPOTETICA: 137%→13,7%; 632%→63,2%; valori da confermare. ATTENZIONE ENERGIA: venditore 171 kcal vs stima 4/9 255.5; differenza significativa, valore CDB conservato in nota. | CALCIO/FOSFORO STIMATI (NON ANALISI CDB): profilo analogo collo di pollo intero con osso (100 g), Ca 1709.28 mg, P 864.32 mg. Fonte: https://barflab.io/en/products/chicken-neck/. ATTENZIONE: ceneri dichiarate CDB incompatibili con un tenore osseo comparabile; grande incertezza, non validare equilibrio Ca:P come certo. | Integrazione di 2 campi mancanti via USDA di taglio analogo, valori NON analizzati da CDB.",
       "nutrients": {
         "protein": {
           "value": 13.7,
@@ -34867,6 +35047,12 @@
           "status": "estimated",
           "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 172382 (proxy: Chicken, broilers or fryers, neck, meat and skin, raw)"
         },
+        "methionine_cystine": {
+          "value": 0.541,
+          "unit": "g",
+          "status": "estimated",
+          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 172382 (proxy: Chicken, broilers or fryers, neck, meat and skin, raw); riferimento Ca/P parti ossee BARFLAB; campi mancanti integrati da USDA SR Legacy FDC 172382"
+        },
         "phenylalanine": {
           "value": 0.514,
           "unit": "g",
@@ -34878,6 +35064,12 @@
           "unit": "g",
           "status": "estimated",
           "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 172382 (proxy: Chicken, broilers or fryers, neck, meat and skin, raw)"
+        },
+        "phenylalanine_tyrosine": {
+          "value": 0.906,
+          "unit": "g",
+          "status": "estimated",
+          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 172382 (proxy: Chicken, broilers or fryers, neck, meat and skin, raw); riferimento Ca/P parti ossee BARFLAB; campi mancanti integrati da USDA SR Legacy FDC 172382"
         },
         "threonine": {
           "value": 0.545,
@@ -34926,6 +35118,18 @@
           "unit": "g",
           "status": "estimated",
           "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 172382 (proxy: Chicken, broilers or fryers, neck, meat and skin, raw)"
+        },
+        "calcium": {
+          "value": 1709.28,
+          "unit": "mg",
+          "status": "estimated",
+          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 172382 (proxy: Chicken, broilers or fryers, neck, meat and skin, raw); riferimento Ca/P parti ossee BARFLAB; campi mancanti integrati da USDA SR Legacy FDC 172382"
+        },
+        "phosphorus": {
+          "value": 864.32,
+          "unit": "mg",
+          "status": "estimated",
+          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 172382 (proxy: Chicken, broilers or fryers, neck, meat and skin, raw); riferimento Ca/P parti ossee BARFLAB; campi mancanti integrati da USDA SR Legacy FDC 172382"
         },
         "potassium": {
           "value": 137,
@@ -35066,12 +35270,12 @@
       "processing_state": "raw",
       "preparation": "colli di tacchino interi, con ossa; prodotto crudo e congelato, pesare a crudo",
       "edible_portion": "Prodotto completo, ossa incluse: non equiparare alla carne disossata",
-      "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171086 (proxy: Turkey, whole, neck, meat only, raw)",
-      "source_url": "https://fdc.nal.usda.gov/food-details/171086/nutrients",
+      "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171086 (proxy: Turkey, whole, neck, meat only, raw); riferimento Ca/P parti ossee BARFLAB; campi mancanti integrati da USDA SR Legacy FDC 171086",
+      "source_url": "https://fdc.nal.usda.gov/food-details/171086/nutrients ; https://barflab.io/en/products/turkey-neck/",
       "source_version": "CDB forniti 28/10/2026; USDA SR Legacy 2018-04",
       "data_status": "review_required",
       "available_to_formulate": true,
-      "notes": "CDB è il produttore; Igea rivende lo stesso alimento. ANALITICI CDB per 100g: proteine None, grassi None, fibra None, ceneri None, umidità None, kcal dichiarate None. Microelementi, aminoacidi e vitamine da USDA SR Legacy FDC 171086 come PROXY, NON analisi di questo prodotto. CON OSSA: USDA si riferisce alla parte edibile SENZA OSSA. Ca/P sconosciuti: le ceneri dichiarate non consentono stima robusta. MANCA intera analisi CDB: macro e calorie USDA non sono sostituti del prodotto specifico. Proteine/grassi/umidità stimati da USDA carne collo tacchino senza ossa; il prodotto intero con osso NON coincide.",
+      "notes": "CDB è il produttore; Igea rivende lo stesso alimento. ANALITICI CDB NON DISPONIBILI: valori di proteine, grassi, fibra, ceneri, umidità e kcal del prodotto non dichiarati. Microelementi, aminoacidi e vitamine da USDA SR Legacy FDC 171086 come PROXY, NON analisi di questo prodotto. CON OSSA: USDA si riferisce alla parte edibile SENZA OSSA. Calcio e fosforo stimati da riferimento analogo con osso; ceneri CDB non dichiarate. MANCA intera analisi CDB: macro e calorie USDA non sono sostituti del prodotto specifico. Proteine/grassi/umidità stimati da USDA carne collo tacchino senza ossa; il prodotto intero con osso NON coincide. | CALCIO/FOSFORO STIMATI (NON ANALISI CDB): profilo analogo collo di tacchino intero con osso (100 g), Ca 2128.2 mg, P 1078.0 mg. Fonte: https://barflab.io/en/products/turkey-neck/. ATTENZIONE: ceneri non dichiarate da CDB; grande incertezza, non validare equilibrio Ca:P come certo. | Integrazione di 2 campi mancanti via USDA di taglio analogo, valori NON analizzati da CDB.",
       "nutrients": {
         "protein": {
           "value": 16.5,
@@ -35121,6 +35325,12 @@
           "status": "estimated",
           "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171086 (proxy: Turkey, whole, neck, meat only, raw)"
         },
+        "methionine_cystine": {
+          "value": 0.588,
+          "unit": "g",
+          "status": "estimated",
+          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171086 (proxy: Turkey, whole, neck, meat only, raw); riferimento Ca/P parti ossee BARFLAB; campi mancanti integrati da USDA SR Legacy FDC 171086"
+        },
         "phenylalanine": {
           "value": 0.532,
           "unit": "g",
@@ -35132,6 +35342,12 @@
           "unit": "g",
           "status": "estimated",
           "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171086 (proxy: Turkey, whole, neck, meat only, raw)"
+        },
+        "phenylalanine_tyrosine": {
+          "value": 1.022,
+          "unit": "g",
+          "status": "estimated",
+          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171086 (proxy: Turkey, whole, neck, meat only, raw); riferimento Ca/P parti ossee BARFLAB; campi mancanti integrati da USDA SR Legacy FDC 171086"
         },
         "threonine": {
           "value": 0.6,
@@ -35180,6 +35396,18 @@
           "unit": "g",
           "status": "estimated",
           "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171086 (proxy: Turkey, whole, neck, meat only, raw)"
+        },
+        "calcium": {
+          "value": 2128.2,
+          "unit": "mg",
+          "status": "estimated",
+          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171086 (proxy: Turkey, whole, neck, meat only, raw); riferimento Ca/P parti ossee BARFLAB; campi mancanti integrati da USDA SR Legacy FDC 171086"
+        },
+        "phosphorus": {
+          "value": 1078,
+          "unit": "mg",
+          "status": "estimated",
+          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171086 (proxy: Turkey, whole, neck, meat only, raw); riferimento Ca/P parti ossee BARFLAB; campi mancanti integrati da USDA SR Legacy FDC 171086"
         },
         "potassium": {
           "value": 133,
@@ -35338,12 +35566,12 @@
       "processing_state": "raw",
       "preparation": "colli di tacchino interi, con ossa; prodotto crudo e congelato, pesare a crudo",
       "edible_portion": "Prodotto completo, ossa incluse: non equiparare alla carne disossata",
-      "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171086 (proxy: Turkey, whole, neck, meat only, raw)",
-      "source_url": "https://fdc.nal.usda.gov/food-details/171086/nutrients",
+      "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171086 (proxy: Turkey, whole, neck, meat only, raw); riferimento Ca/P parti ossee BARFLAB; campi mancanti integrati da USDA SR Legacy FDC 171086",
+      "source_url": "https://fdc.nal.usda.gov/food-details/171086/nutrients ; https://barflab.io/en/products/turkey-neck/",
       "source_version": "CDB forniti 28/10/2026; USDA SR Legacy 2018-04",
       "data_status": "review_required",
       "available_to_formulate": true,
-      "notes": "CDB è il produttore; Igea rivende lo stesso alimento. ANALITICI CDB per 100g: proteine None, grassi None, fibra None, ceneri None, umidità None, kcal dichiarate None. Microelementi, aminoacidi e vitamine da USDA SR Legacy FDC 171086 come PROXY, NON analisi di questo prodotto. CON OSSA: USDA si riferisce alla parte edibile SENZA OSSA. Ca/P sconosciuti: le ceneri dichiarate non consentono stima robusta. MANCA intera analisi CDB: macro e calorie USDA non sono sostituti del prodotto specifico. Proteine/grassi/umidità stimati da USDA carne collo tacchino senza ossa; il prodotto intero con osso NON coincide.",
+      "notes": "CDB è il produttore; Igea rivende lo stesso alimento. ANALITICI CDB NON DISPONIBILI: valori di proteine, grassi, fibra, ceneri, umidità e kcal del prodotto non dichiarati. Microelementi, aminoacidi e vitamine da USDA SR Legacy FDC 171086 come PROXY, NON analisi di questo prodotto. CON OSSA: USDA si riferisce alla parte edibile SENZA OSSA. Calcio e fosforo stimati da riferimento analogo con osso; ceneri CDB non dichiarate. MANCA intera analisi CDB: macro e calorie USDA non sono sostituti del prodotto specifico. Proteine/grassi/umidità stimati da USDA carne collo tacchino senza ossa; il prodotto intero con osso NON coincide. | CALCIO/FOSFORO STIMATI (NON ANALISI CDB): profilo analogo collo di tacchino intero con osso (100 g), Ca 2128.2 mg, P 1078.0 mg. Fonte: https://barflab.io/en/products/turkey-neck/. ATTENZIONE: ceneri non dichiarate da CDB; grande incertezza, non validare equilibrio Ca:P come certo. | Integrazione di 2 campi mancanti via USDA di taglio analogo, valori NON analizzati da CDB.",
       "nutrients": {
         "protein": {
           "value": 16.5,
@@ -35393,6 +35621,12 @@
           "status": "estimated",
           "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171086 (proxy: Turkey, whole, neck, meat only, raw)"
         },
+        "methionine_cystine": {
+          "value": 0.588,
+          "unit": "g",
+          "status": "estimated",
+          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171086 (proxy: Turkey, whole, neck, meat only, raw); riferimento Ca/P parti ossee BARFLAB; campi mancanti integrati da USDA SR Legacy FDC 171086"
+        },
         "phenylalanine": {
           "value": 0.532,
           "unit": "g",
@@ -35404,6 +35638,12 @@
           "unit": "g",
           "status": "estimated",
           "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171086 (proxy: Turkey, whole, neck, meat only, raw)"
+        },
+        "phenylalanine_tyrosine": {
+          "value": 1.022,
+          "unit": "g",
+          "status": "estimated",
+          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171086 (proxy: Turkey, whole, neck, meat only, raw); riferimento Ca/P parti ossee BARFLAB; campi mancanti integrati da USDA SR Legacy FDC 171086"
         },
         "threonine": {
           "value": 0.6,
@@ -35452,6 +35692,18 @@
           "unit": "g",
           "status": "estimated",
           "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171086 (proxy: Turkey, whole, neck, meat only, raw)"
+        },
+        "calcium": {
+          "value": 2128.2,
+          "unit": "mg",
+          "status": "estimated",
+          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171086 (proxy: Turkey, whole, neck, meat only, raw); riferimento Ca/P parti ossee BARFLAB; campi mancanti integrati da USDA SR Legacy FDC 171086"
+        },
+        "phosphorus": {
+          "value": 1078,
+          "unit": "mg",
+          "status": "estimated",
+          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171086 (proxy: Turkey, whole, neck, meat only, raw); riferimento Ca/P parti ossee BARFLAB; campi mancanti integrati da USDA SR Legacy FDC 171086"
         },
         "potassium": {
           "value": 133,
@@ -36257,6 +36509,12 @@
           "status": "estimated",
           "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 174030 (proxy: Beef, ground, 90% lean meat / 10% fat, raw)"
         },
+        "methionine_cystine": {
+          "value": 0.721,
+          "unit": "g",
+          "status": "estimated",
+          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 174030 (proxy: Beef, ground, 90% lean meat / 10% fat, raw)"
+        },
         "phenylalanine": {
           "value": 0.781,
           "unit": "g",
@@ -36265,6 +36523,12 @@
         },
         "tyrosine": {
           "value": 0.616,
+          "unit": "g",
+          "status": "estimated",
+          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 174030 (proxy: Beef, ground, 90% lean meat / 10% fat, raw)"
+        },
+        "phenylalanine_tyrosine": {
+          "value": 1.397,
           "unit": "g",
           "status": "estimated",
           "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 174030 (proxy: Beef, ground, 90% lean meat / 10% fat, raw)"
@@ -36553,6 +36817,12 @@
           "status": "estimated",
           "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 174030 (proxy: Beef, ground, 90% lean meat / 10% fat, raw)"
         },
+        "methionine_cystine": {
+          "value": 0.721,
+          "unit": "g",
+          "status": "estimated",
+          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 174030 (proxy: Beef, ground, 90% lean meat / 10% fat, raw)"
+        },
         "phenylalanine": {
           "value": 0.781,
           "unit": "g",
@@ -36561,6 +36831,12 @@
         },
         "tyrosine": {
           "value": 0.616,
+          "unit": "g",
+          "status": "estimated",
+          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 174030 (proxy: Beef, ground, 90% lean meat / 10% fat, raw)"
+        },
+        "phenylalanine_tyrosine": {
+          "value": 1.397,
           "unit": "g",
           "status": "estimated",
           "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 174030 (proxy: Beef, ground, 90% lean meat / 10% fat, raw)"
@@ -36794,12 +37070,12 @@
       "processing_state": "raw",
       "preparation": "polpa di merluzzo macinata, senza ossa dichiarate; prodotto crudo e congelato, pesare a crudo",
       "edible_portion": "Prodotto completo, ossa incluse: non equiparare alla carne disossata",
-      "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171955 (proxy: Fish, cod, Atlantic, raw)",
+      "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171955 (proxy: Fish, cod, Atlantic, raw); campi mancanti integrati da USDA SR Legacy FDC 171955",
       "source_url": "https://fdc.nal.usda.gov/food-details/171955/nutrients",
       "source_version": "CDB forniti 28/10/2026; USDA SR Legacy 2018-04",
       "data_status": "review_required",
       "available_to_formulate": true,
-      "notes": "CDB è il produttore; Igea rivende lo stesso alimento. ANALITICI CDB per 100g: proteine 13.6, grassi 0.6, fibra 0.1, ceneri 0.9, umidità 84.8, kcal dichiarate 91. Microelementi, aminoacidi e vitamine da USDA SR Legacy FDC 171955 come PROXY, NON analisi di questo prodotto. CON OSSA: USDA si riferisce alla parte edibile SENZA OSSA. Ca/P sconosciuti: le ceneri dichiarate non consentono stima robusta. ATTENZIONE ENERGIA: venditore 91 kcal vs stima 4/9 59.8; differenza significativa, valore CDB conservato in nota.",
+      "notes": "CDB è il produttore; Igea rivende lo stesso alimento. ANALITICI CDB per 100g: proteine 13.6, grassi 0.6, fibra 0.1, ceneri 0.9, umidità 84.8, kcal dichiarate 91. Microelementi, aminoacidi e vitamine da USDA SR Legacy FDC 171955 come PROXY, NON analisi di questo prodotto. CON OSSA: USDA si riferisce alla parte edibile SENZA OSSA. Ca/P sconosciuti: le ceneri dichiarate non consentono stima robusta. ATTENZIONE ENERGIA: venditore 91 kcal vs stima 4/9 59.8; differenza significativa, valore CDB conservato in nota. | Integrazione di 2 campi mancanti via USDA di taglio analogo, valori NON analizzati da CDB.",
       "nutrients": {
         "protein": {
           "value": 13.6,
@@ -36849,6 +37125,12 @@
           "status": "estimated",
           "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171955 (proxy: Fish, cod, Atlantic, raw)"
         },
+        "methionine_cystine": {
+          "value": 0.718,
+          "unit": "g",
+          "status": "estimated",
+          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171955 (proxy: Fish, cod, Atlantic, raw); campi mancanti integrati da USDA SR Legacy FDC 171955"
+        },
         "phenylalanine": {
           "value": 0.695,
           "unit": "g",
@@ -36860,6 +37142,12 @@
           "unit": "g",
           "status": "estimated",
           "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171955 (proxy: Fish, cod, Atlantic, raw)"
+        },
+        "phenylalanine_tyrosine": {
+          "value": 1.296,
+          "unit": "g",
+          "status": "estimated",
+          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171955 (proxy: Fish, cod, Atlantic, raw); campi mancanti integrati da USDA SR Legacy FDC 171955"
         },
         "threonine": {
           "value": 0.781,
@@ -36908,6 +37196,18 @@
           "unit": "g",
           "status": "estimated",
           "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171955 (proxy: Fish, cod, Atlantic, raw)"
+        },
+        "calcium": {
+          "value": 16,
+          "unit": "mg",
+          "status": "estimated",
+          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171955 (proxy: Fish, cod, Atlantic, raw); campi mancanti integrati da USDA SR Legacy FDC 171955"
+        },
+        "phosphorus": {
+          "value": 203,
+          "unit": "mg",
+          "status": "estimated",
+          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171955 (proxy: Fish, cod, Atlantic, raw); campi mancanti integrati da USDA SR Legacy FDC 171955"
         },
         "potassium": {
           "value": 413,
@@ -37072,12 +37372,12 @@
       "processing_state": "raw",
       "preparation": "polpa di merluzzo macinata, senza ossa dichiarate; prodotto crudo e congelato, pesare a crudo",
       "edible_portion": "Prodotto completo, ossa incluse: non equiparare alla carne disossata",
-      "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171955 (proxy: Fish, cod, Atlantic, raw)",
+      "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171955 (proxy: Fish, cod, Atlantic, raw); campi mancanti integrati da USDA SR Legacy FDC 171955",
       "source_url": "https://fdc.nal.usda.gov/food-details/171955/nutrients",
       "source_version": "CDB forniti 28/10/2026; USDA SR Legacy 2018-04",
       "data_status": "review_required",
       "available_to_formulate": true,
-      "notes": "CDB è il produttore; Igea rivende lo stesso alimento. ANALITICI CDB per 100g: proteine 13.6, grassi 0.6, fibra 0.1, ceneri 0.9, umidità 84.8, kcal dichiarate 91. Microelementi, aminoacidi e vitamine da USDA SR Legacy FDC 171955 come PROXY, NON analisi di questo prodotto. CON OSSA: USDA si riferisce alla parte edibile SENZA OSSA. Ca/P sconosciuti: le ceneri dichiarate non consentono stima robusta. ATTENZIONE ENERGIA: venditore 91 kcal vs stima 4/9 59.8; differenza significativa, valore CDB conservato in nota.",
+      "notes": "CDB è il produttore; Igea rivende lo stesso alimento. ANALITICI CDB per 100g: proteine 13.6, grassi 0.6, fibra 0.1, ceneri 0.9, umidità 84.8, kcal dichiarate 91. Microelementi, aminoacidi e vitamine da USDA SR Legacy FDC 171955 come PROXY, NON analisi di questo prodotto. CON OSSA: USDA si riferisce alla parte edibile SENZA OSSA. Ca/P sconosciuti: le ceneri dichiarate non consentono stima robusta. ATTENZIONE ENERGIA: venditore 91 kcal vs stima 4/9 59.8; differenza significativa, valore CDB conservato in nota. | Integrazione di 2 campi mancanti via USDA di taglio analogo, valori NON analizzati da CDB.",
       "nutrients": {
         "protein": {
           "value": 13.6,
@@ -37127,6 +37427,12 @@
           "status": "estimated",
           "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171955 (proxy: Fish, cod, Atlantic, raw)"
         },
+        "methionine_cystine": {
+          "value": 0.718,
+          "unit": "g",
+          "status": "estimated",
+          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171955 (proxy: Fish, cod, Atlantic, raw); campi mancanti integrati da USDA SR Legacy FDC 171955"
+        },
         "phenylalanine": {
           "value": 0.695,
           "unit": "g",
@@ -37138,6 +37444,12 @@
           "unit": "g",
           "status": "estimated",
           "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171955 (proxy: Fish, cod, Atlantic, raw)"
+        },
+        "phenylalanine_tyrosine": {
+          "value": 1.296,
+          "unit": "g",
+          "status": "estimated",
+          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171955 (proxy: Fish, cod, Atlantic, raw); campi mancanti integrati da USDA SR Legacy FDC 171955"
         },
         "threonine": {
           "value": 0.781,
@@ -37186,6 +37498,18 @@
           "unit": "g",
           "status": "estimated",
           "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171955 (proxy: Fish, cod, Atlantic, raw)"
+        },
+        "calcium": {
+          "value": 16,
+          "unit": "mg",
+          "status": "estimated",
+          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171955 (proxy: Fish, cod, Atlantic, raw); campi mancanti integrati da USDA SR Legacy FDC 171955"
+        },
+        "phosphorus": {
+          "value": 203,
+          "unit": "mg",
+          "status": "estimated",
+          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171955 (proxy: Fish, cod, Atlantic, raw); campi mancanti integrati da USDA SR Legacy FDC 171955"
         },
         "potassium": {
           "value": 413,
@@ -37405,6 +37729,12 @@
           "status": "estimated",
           "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171469 (proxy: Chicken, broilers or fryers, back, meat and skin, raw)"
         },
+        "methionine_cystine": {
+          "value": 0.555,
+          "unit": "g",
+          "status": "estimated",
+          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171469 (proxy: Chicken, broilers or fryers, back, meat and skin, raw)"
+        },
         "phenylalanine": {
           "value": 0.536,
           "unit": "g",
@@ -37413,6 +37743,12 @@
         },
         "tyrosine": {
           "value": 0.434,
+          "unit": "g",
+          "status": "estimated",
+          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171469 (proxy: Chicken, broilers or fryers, back, meat and skin, raw)"
+        },
+        "phenylalanine_tyrosine": {
+          "value": 0.97,
           "unit": "g",
           "status": "estimated",
           "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171469 (proxy: Chicken, broilers or fryers, back, meat and skin, raw)"
@@ -37683,6 +38019,12 @@
           "status": "estimated",
           "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171469 (proxy: Chicken, broilers or fryers, back, meat and skin, raw)"
         },
+        "methionine_cystine": {
+          "value": 0.555,
+          "unit": "g",
+          "status": "estimated",
+          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171469 (proxy: Chicken, broilers or fryers, back, meat and skin, raw)"
+        },
         "phenylalanine": {
           "value": 0.536,
           "unit": "g",
@@ -37691,6 +38033,12 @@
         },
         "tyrosine": {
           "value": 0.434,
+          "unit": "g",
+          "status": "estimated",
+          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171469 (proxy: Chicken, broilers or fryers, back, meat and skin, raw)"
+        },
+        "phenylalanine_tyrosine": {
+          "value": 0.97,
           "unit": "g",
           "status": "estimated",
           "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171469 (proxy: Chicken, broilers or fryers, back, meat and skin, raw)"
@@ -37961,6 +38309,12 @@
           "status": "estimated",
           "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 174481 (proxy: Ostrich, ground, raw)"
         },
+        "methionine_cystine": {
+          "value": 0.773,
+          "unit": "g",
+          "status": "estimated",
+          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 174481 (proxy: Ostrich, ground, raw)"
+        },
         "phenylalanine": {
           "value": 0.834,
           "unit": "g",
@@ -37969,6 +38323,12 @@
         },
         "tyrosine": {
           "value": 0.657,
+          "unit": "g",
+          "status": "estimated",
+          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 174481 (proxy: Ostrich, ground, raw)"
+        },
+        "phenylalanine_tyrosine": {
+          "value": 1.491,
           "unit": "g",
           "status": "estimated",
           "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 174481 (proxy: Ostrich, ground, raw)"
@@ -38221,6 +38581,12 @@
           "status": "estimated",
           "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 174481 (proxy: Ostrich, ground, raw)"
         },
+        "methionine_cystine": {
+          "value": 0.773,
+          "unit": "g",
+          "status": "estimated",
+          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 174481 (proxy: Ostrich, ground, raw)"
+        },
         "phenylalanine": {
           "value": 0.834,
           "unit": "g",
@@ -38229,6 +38595,12 @@
         },
         "tyrosine": {
           "value": 0.657,
+          "unit": "g",
+          "status": "estimated",
+          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 174481 (proxy: Ostrich, ground, raw)"
+        },
+        "phenylalanine_tyrosine": {
+          "value": 1.491,
           "unit": "g",
           "status": "estimated",
           "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 174481 (proxy: Ostrich, ground, raw)"
@@ -38431,7 +38803,7 @@
       "source_version": "CDB forniti 28/10/2026; USDA SR Legacy 2018-04",
       "data_status": "review_required",
       "available_to_formulate": true,
-      "notes": "CDB è il produttore; Igea rivende lo stesso alimento. ANALITICI CDB per 100g: proteine 13.7, grassi 11.2, fibra 0.9, ceneri 1.1, umidità 72.8, kcal dichiarate 93. Microelementi, aminoacidi e vitamine da USDA SR Legacy FDC 170599 come PROXY, NON analisi di questo prodotto. ATTENZIONE ENERGIA: venditore 93 kcal vs stima 4/9 155.6; differenza significativa, valore CDB conservato in nota.",
+      "notes": "CDB è il produttore; Igea rivende lo stesso alimento. ANALITICI CDB per 100g: proteine 13.7, grassi 11.2, fibra 0.9, ceneri 1.1, umidità 72.8, kcal dichiarate 93. Microelementi, aminoacidi e vitamine da USDA SR Legacy FDC 170599 come PROXY, NON analisi di questo prodotto. ATTENZIONE ENERGIA: venditore 93 kcal vs stima 4/9 155.6; differenza significativa, valore CDB conservato in nota. | CLASSIFICAZIONE: trippa = altre frattaglie; verificare se la regola quantitativa dell’app tratta trippa come frattaglia.",
       "nutrients": {
         "protein": {
           "value": 13.7,
@@ -38655,7 +39027,7 @@
       "source_version": "CDB forniti 28/10/2026; USDA SR Legacy 2018-04",
       "data_status": "review_required",
       "available_to_formulate": true,
-      "notes": "CDB è il produttore; Igea rivende lo stesso alimento. ANALITICI CDB per 100g: proteine 13.7, grassi 11.2, fibra 0.9, ceneri 1.1, umidità 72.8, kcal dichiarate 93. Microelementi, aminoacidi e vitamine da USDA SR Legacy FDC 170599 come PROXY, NON analisi di questo prodotto. ATTENZIONE ENERGIA: venditore 93 kcal vs stima 4/9 155.6; differenza significativa, valore CDB conservato in nota.",
+      "notes": "CDB è il produttore; Igea rivende lo stesso alimento. ANALITICI CDB per 100g: proteine 13.7, grassi 11.2, fibra 0.9, ceneri 1.1, umidità 72.8, kcal dichiarate 93. Microelementi, aminoacidi e vitamine da USDA SR Legacy FDC 170599 come PROXY, NON analisi di questo prodotto. ATTENZIONE ENERGIA: venditore 93 kcal vs stima 4/9 155.6; differenza significativa, valore CDB conservato in nota. | CLASSIFICAZIONE: trippa = altre frattaglie; verificare se la regola quantitativa dell’app tratta trippa come frattaglia.",
       "nutrients": {
         "protein": {
           "value": 13.7,
@@ -38929,6 +39301,12 @@
           "status": "estimated",
           "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 172521 (proxy: Game meat, rabbit, domesticated, composite of cuts, raw)"
         },
+        "methionine_cystine": {
+          "value": 0.754,
+          "unit": "g",
+          "status": "estimated",
+          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 172521 (proxy: Game meat, rabbit, domesticated, composite of cuts, raw)"
+        },
         "phenylalanine": {
           "value": 0.823,
           "unit": "g",
@@ -38937,6 +39315,12 @@
         },
         "tyrosine": {
           "value": 0.714,
+          "unit": "g",
+          "status": "estimated",
+          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 172521 (proxy: Game meat, rabbit, domesticated, composite of cuts, raw)"
+        },
+        "phenylalanine_tyrosine": {
+          "value": 1.537,
           "unit": "g",
           "status": "estimated",
           "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 172521 (proxy: Game meat, rabbit, domesticated, composite of cuts, raw)"
@@ -39176,6 +39560,12 @@
           "status": "estimated",
           "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 172521 (proxy: Game meat, rabbit, domesticated, composite of cuts, raw)"
         },
+        "methionine_cystine": {
+          "value": 0.754,
+          "unit": "g",
+          "status": "estimated",
+          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 172521 (proxy: Game meat, rabbit, domesticated, composite of cuts, raw)"
+        },
         "phenylalanine": {
           "value": 0.823,
           "unit": "g",
@@ -39184,6 +39574,12 @@
         },
         "tyrosine": {
           "value": 0.714,
+          "unit": "g",
+          "status": "estimated",
+          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 172521 (proxy: Game meat, rabbit, domesticated, composite of cuts, raw)"
+        },
+        "phenylalanine_tyrosine": {
+          "value": 1.537,
           "unit": "g",
           "status": "estimated",
           "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 172521 (proxy: Game meat, rabbit, domesticated, composite of cuts, raw)"
@@ -39423,6 +39819,12 @@
           "status": "estimated",
           "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171484 (proxy: Turkey, all classes, heart, raw)"
         },
+        "methionine_cystine": {
+          "value": 0.615,
+          "unit": "g",
+          "status": "estimated",
+          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171484 (proxy: Turkey, all classes, heart, raw)"
+        },
         "phenylalanine": {
           "value": 0.615,
           "unit": "g",
@@ -39431,6 +39833,12 @@
         },
         "tyrosine": {
           "value": 0.528,
+          "unit": "g",
+          "status": "estimated",
+          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171484 (proxy: Turkey, all classes, heart, raw)"
+        },
+        "phenylalanine_tyrosine": {
+          "value": 1.143,
           "unit": "g",
           "status": "estimated",
           "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171484 (proxy: Turkey, all classes, heart, raw)"
@@ -39713,6 +40121,12 @@
           "status": "estimated",
           "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171484 (proxy: Turkey, all classes, heart, raw)"
         },
+        "methionine_cystine": {
+          "value": 0.615,
+          "unit": "g",
+          "status": "estimated",
+          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171484 (proxy: Turkey, all classes, heart, raw)"
+        },
         "phenylalanine": {
           "value": 0.615,
           "unit": "g",
@@ -39721,6 +40135,12 @@
         },
         "tyrosine": {
           "value": 0.528,
+          "unit": "g",
+          "status": "estimated",
+          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171484 (proxy: Turkey, all classes, heart, raw)"
+        },
+        "phenylalanine_tyrosine": {
+          "value": 1.143,
           "unit": "g",
           "status": "estimated",
           "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171484 (proxy: Turkey, all classes, heart, raw)"
@@ -39953,7 +40373,7 @@
       "source_version": "CDB forniti 28/10/2026; USDA SR Legacy 2018-04",
       "data_status": "review_required",
       "available_to_formulate": true,
-      "notes": "CDB è il produttore; Igea rivende lo stesso alimento. ANALITICI CDB per 100g: proteine 16.4, grassi 1.9, fibra 0.1, ceneri 0.9, umidità 80.7, kcal dichiarate 94. Microelementi, aminoacidi e vitamine da USDA SR Legacy FDC 171456 come PROXY, NON analisi di questo prodotto.",
+      "notes": "CDB è il produttore; Igea rivende lo stesso alimento. ANALITICI CDB per 100g: proteine 16.4, grassi 1.9, fibra 0.1, ceneri 0.9, umidità 80.7, kcal dichiarate 94. Microelementi, aminoacidi e vitamine da USDA SR Legacy FDC 171456 come PROXY, NON analisi di questo prodotto. | REVISIONE 28/10: durello = stomaco muscolare; classificato fra fonti proteiche, senza tetto frattaglie 5%.",
       "nutrients": {
         "protein": {
           "value": 16.4,
@@ -40165,7 +40585,7 @@
       "source_version": "CDB forniti 28/10/2026; USDA SR Legacy 2018-04",
       "data_status": "review_required",
       "available_to_formulate": true,
-      "notes": "CDB è il produttore; Igea rivende lo stesso alimento. ANALITICI CDB per 100g: proteine 16.4, grassi 1.9, fibra 0.1, ceneri 0.9, umidità 80.7, kcal dichiarate 94. Microelementi, aminoacidi e vitamine da USDA SR Legacy FDC 171456 come PROXY, NON analisi di questo prodotto.",
+      "notes": "CDB è il produttore; Igea rivende lo stesso alimento. ANALITICI CDB per 100g: proteine 16.4, grassi 1.9, fibra 0.1, ceneri 0.9, umidità 80.7, kcal dichiarate 94. Microelementi, aminoacidi e vitamine da USDA SR Legacy FDC 171456 come PROXY, NON analisi di questo prodotto. | REVISIONE 28/10: durello = stomaco muscolare; classificato fra fonti proteiche, senza tetto frattaglie 5%.",
       "nutrients": {
         "protein": {
           "value": 16.4,
@@ -40427,6 +40847,12 @@
           "status": "estimated",
           "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 172418 (proxy: Quail, meat and skin, raw)"
         },
+        "methionine_cystine": {
+          "value": 0.931,
+          "unit": "g",
+          "status": "estimated",
+          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 172418 (proxy: Quail, meat and skin, raw)"
+        },
         "phenylalanine": {
           "value": 0.826,
           "unit": "g",
@@ -40435,6 +40861,12 @@
         },
         "tyrosine": {
           "value": 0.849,
+          "unit": "g",
+          "status": "estimated",
+          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 172418 (proxy: Quail, meat and skin, raw)"
+        },
+        "phenylalanine_tyrosine": {
+          "value": 1.675,
           "unit": "g",
           "status": "estimated",
           "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 172418 (proxy: Quail, meat and skin, raw)"
@@ -40686,6 +41118,12 @@
           "status": "estimated",
           "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 172418 (proxy: Quail, meat and skin, raw)"
         },
+        "methionine_cystine": {
+          "value": 0.931,
+          "unit": "g",
+          "status": "estimated",
+          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 172418 (proxy: Quail, meat and skin, raw)"
+        },
         "phenylalanine": {
           "value": 0.826,
           "unit": "g",
@@ -40694,6 +41132,12 @@
         },
         "tyrosine": {
           "value": 0.849,
+          "unit": "g",
+          "status": "estimated",
+          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 172418 (proxy: Quail, meat and skin, raw)"
+        },
+        "phenylalanine_tyrosine": {
+          "value": 1.675,
           "unit": "g",
           "status": "estimated",
           "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 172418 (proxy: Quail, meat and skin, raw)"
@@ -40886,7 +41330,7 @@
       "id": "beef_spleen_cdb",
       "name_it": "Milza di bovino (CDB)",
       "category": "animal",
-      "subcategory": "muscle",
+      "subcategory": "secreting_offal_spleen",
       "processing_state": "raw",
       "preparation": "milza bovina a pezzi; prodotto crudo e congelato, pesare a crudo",
       "edible_portion": "100% prodotto dichiarato",
@@ -40895,7 +41339,7 @@
       "source_version": "CDB forniti 28/10/2026; USDA SR Legacy 2018-04",
       "data_status": "review_required",
       "available_to_formulate": true,
-      "notes": "CDB è il produttore; Igea rivende lo stesso alimento. ANALITICI CDB per 100g: proteine 18, grassi 3.2, fibra 0.4, ceneri 1.4, umidità 77, kcal dichiarate 107. Microelementi, aminoacidi e vitamine da USDA SR Legacy FDC 169454 come PROXY, NON analisi di questo prodotto.",
+      "notes": "CDB è il produttore; Igea rivende lo stesso alimento. ANALITICI CDB per 100g: proteine 18, grassi 3.2, fibra 0.4, ceneri 1.4, umidità 77, kcal dichiarate 107. Microelementi, aminoacidi e vitamine da USDA SR Legacy FDC 169454 come PROXY, NON analisi di questo prodotto. | CORREZIONE TIPO: Milza (frattaglia, non muscolo): applicare tetto per frattaglie previsto dal generatore.",
       "nutrients": {
         "protein": {
           "value": 18,
@@ -40945,6 +41389,12 @@
           "status": "estimated",
           "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 169454 (proxy: Beef, variety meats and by-products, spleen, raw)"
         },
+        "methionine_cystine": {
+          "value": 0.867,
+          "unit": "g",
+          "status": "estimated",
+          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 169454 (proxy: Beef, variety meats and by-products, spleen, raw)"
+        },
         "phenylalanine": {
           "value": 0.735,
           "unit": "g",
@@ -40953,6 +41403,12 @@
         },
         "tyrosine": {
           "value": 0.521,
+          "unit": "g",
+          "status": "estimated",
+          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 169454 (proxy: Beef, variety meats and by-products, spleen, raw)"
+        },
+        "phenylalanine_tyrosine": {
+          "value": 1.256,
           "unit": "g",
           "status": "estimated",
           "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 169454 (proxy: Beef, variety meats and by-products, spleen, raw)"
@@ -41145,7 +41601,7 @@
       "id": "beef_spleen_igea",
       "name_it": "Milza di bovino (Igea)",
       "category": "animal",
-      "subcategory": "muscle",
+      "subcategory": "secreting_offal_spleen",
       "processing_state": "raw",
       "preparation": "milza bovina a pezzi; prodotto crudo e congelato, pesare a crudo",
       "edible_portion": "100% prodotto dichiarato",
@@ -41154,7 +41610,7 @@
       "source_version": "CDB forniti 28/10/2026; USDA SR Legacy 2018-04",
       "data_status": "review_required",
       "available_to_formulate": true,
-      "notes": "CDB è il produttore; Igea rivende lo stesso alimento. ANALITICI CDB per 100g: proteine 18, grassi 3.2, fibra 0.4, ceneri 1.4, umidità 77, kcal dichiarate 107. Microelementi, aminoacidi e vitamine da USDA SR Legacy FDC 169454 come PROXY, NON analisi di questo prodotto.",
+      "notes": "CDB è il produttore; Igea rivende lo stesso alimento. ANALITICI CDB per 100g: proteine 18, grassi 3.2, fibra 0.4, ceneri 1.4, umidità 77, kcal dichiarate 107. Microelementi, aminoacidi e vitamine da USDA SR Legacy FDC 169454 come PROXY, NON analisi di questo prodotto. | CORREZIONE TIPO: Milza (frattaglia, non muscolo): applicare tetto per frattaglie previsto dal generatore.",
       "nutrients": {
         "protein": {
           "value": 18,
@@ -41204,6 +41660,12 @@
           "status": "estimated",
           "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 169454 (proxy: Beef, variety meats and by-products, spleen, raw)"
         },
+        "methionine_cystine": {
+          "value": 0.867,
+          "unit": "g",
+          "status": "estimated",
+          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 169454 (proxy: Beef, variety meats and by-products, spleen, raw)"
+        },
         "phenylalanine": {
           "value": 0.735,
           "unit": "g",
@@ -41212,6 +41674,12 @@
         },
         "tyrosine": {
           "value": 0.521,
+          "unit": "g",
+          "status": "estimated",
+          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 169454 (proxy: Beef, variety meats and by-products, spleen, raw)"
+        },
+        "phenylalanine_tyrosine": {
+          "value": 1.256,
           "unit": "g",
           "status": "estimated",
           "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 169454 (proxy: Beef, variety meats and by-products, spleen, raw)"
@@ -41407,13 +41875,13 @@
       "subcategory": "muscle",
       "processing_state": "raw",
       "preparation": "carne di tacchino senza ossa a pezzi; prodotto crudo e congelato, pesare a crudo",
-      "edible_portion": "Prodotto completo, ossa incluse: non equiparare alla carne disossata",
-      "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171091 (proxy: Turkey, whole, dark meat, cooked, roasted)",
-      "source_url": "https://fdc.nal.usda.gov/food-details/171091/nutrients",
-      "source_version": "CDB forniti 28/10/2026; USDA SR Legacy 2018-04",
+      "edible_portion": "100% polpa disossata, pesata cruda",
+      "source": "Analitici CDB dichiarati dall’utente + micronutrienti e aminoacidi USDA SR Legacy FDC 171088 (Turkey, whole, light meat, meat and skin, raw), riferimento CRUDO indicativo",
+      "source_url": "https://fdc.nal.usda.gov/food-details/171088/nutrients",
+      "source_version": "Analitici CDB 28/10/2026; USDA SR Legacy 2018-04",
       "data_status": "review_required",
       "available_to_formulate": true,
-      "notes": "CDB è il produttore; Igea rivende lo stesso alimento. ANALITICI CDB per 100g: proteine 22, grassi 7, fibra 0.1, ceneri 0.8, umidità 70.1, kcal dichiarate 107. Microelementi, aminoacidi e vitamine da USDA SR Legacy FDC 171091 come PROXY, NON analisi di questo prodotto. CON OSSA: USDA si riferisce alla parte edibile SENZA OSSA. Ca/P sconosciuti: le ceneri dichiarate non consentono stima robusta. ATTENZIONE ENERGIA: venditore 107 kcal vs stima 4/9 151; differenza significativa, valore CDB conservato in nota.",
+      "notes": "CDB produttore; Igea rivenditore. ANALITICI CDB/100 g: proteine 22 g, grassi 7 g, fibra 0,1 g, ceneri 0,8 g, umidità 70,1 g, 107 kcal dichiarate. Energia catalogo 151 kcal da metodo 4/9 concordato, invariata. Micronutrienti e aminoacidi da USDA FDC 171088: carne chiara di tacchino CON PELLE CRUDA (22 g proteine, 7,43 g grassi), analogo molto vicino ma non analisi del prodotto CDB. Solo valori esplicitamente identificati dal database; campi non misurati restano sconosciuti. Nessun osso nel prodotto.",
       "nutrients": {
         "protein": {
           "value": 22,
@@ -41422,76 +41890,88 @@
           "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171091 (proxy: Turkey, whole, dark meat, cooked, roasted)"
         },
         "arginine": {
-          "value": 0.886,
+          "value": 1.26,
           "unit": "g",
           "status": "estimated",
-          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171091 (proxy: Turkey, whole, dark meat, cooked, roasted)"
+          "source": "Analitici CDB dichiarati dall’utente + micronutrienti e aminoacidi USDA SR Legacy FDC 171088 (Turkey, whole, light meat, meat and skin, raw), riferimento CRUDO indicativo"
         },
         "histidine": {
-          "value": 0.751,
+          "value": 0.574,
           "unit": "g",
           "status": "estimated",
-          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171091 (proxy: Turkey, whole, dark meat, cooked, roasted)"
+          "source": "Analitici CDB dichiarati dall’utente + micronutrienti e aminoacidi USDA SR Legacy FDC 171088 (Turkey, whole, light meat, meat and skin, raw), riferimento CRUDO indicativo"
         },
         "isoleucine": {
-          "value": 0.794,
+          "value": 0.61,
           "unit": "g",
           "status": "estimated",
-          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171091 (proxy: Turkey, whole, dark meat, cooked, roasted)"
+          "source": "Analitici CDB dichiarati dall’utente + micronutrienti e aminoacidi USDA SR Legacy FDC 171088 (Turkey, whole, light meat, meat and skin, raw), riferimento CRUDO indicativo"
         },
         "leucine": {
-          "value": 1.92,
+          "value": 1.48,
           "unit": "g",
           "status": "estimated",
-          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171091 (proxy: Turkey, whole, dark meat, cooked, roasted)"
+          "source": "Analitici CDB dichiarati dall’utente + micronutrienti e aminoacidi USDA SR Legacy FDC 171088 (Turkey, whole, light meat, meat and skin, raw), riferimento CRUDO indicativo"
         },
         "lysine": {
-          "value": 2.29,
+          "value": 1.75,
           "unit": "g",
           "status": "estimated",
-          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171091 (proxy: Turkey, whole, dark meat, cooked, roasted)"
+          "source": "Analitici CDB dichiarati dall’utente + micronutrienti e aminoacidi USDA SR Legacy FDC 171088 (Turkey, whole, light meat, meat and skin, raw), riferimento CRUDO indicativo"
         },
         "methionine": {
-          "value": 0.725,
+          "value": 0.555,
           "unit": "g",
           "status": "estimated",
-          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171091 (proxy: Turkey, whole, dark meat, cooked, roasted)"
+          "source": "Analitici CDB dichiarati dall’utente + micronutrienti e aminoacidi USDA SR Legacy FDC 171088 (Turkey, whole, light meat, meat and skin, raw), riferimento CRUDO indicativo"
         },
         "cystine": {
-          "value": 0.262,
+          "value": 0.203,
           "unit": "g",
           "status": "estimated",
-          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171091 (proxy: Turkey, whole, dark meat, cooked, roasted)"
+          "source": "Analitici CDB dichiarati dall’utente + micronutrienti e aminoacidi USDA SR Legacy FDC 171088 (Turkey, whole, light meat, meat and skin, raw), riferimento CRUDO indicativo"
+        },
+        "methionine_cystine": {
+          "value": 0.758,
+          "unit": "g",
+          "status": "estimated",
+          "source": "Analitici CDB dichiarati dall’utente + micronutrienti e aminoacidi USDA SR Legacy FDC 171088 (Turkey, whole, light meat, meat and skin, raw), riferimento CRUDO indicativo"
         },
         "phenylalanine": {
-          "value": 0.893,
+          "value": 0.693,
           "unit": "g",
           "status": "estimated",
-          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171091 (proxy: Turkey, whole, dark meat, cooked, roasted)"
+          "source": "Analitici CDB dichiarati dall’utente + micronutrienti e aminoacidi USDA SR Legacy FDC 171088 (Turkey, whole, light meat, meat and skin, raw), riferimento CRUDO indicativo"
         },
         "tyrosine": {
-          "value": 0.823,
+          "value": 0.627,
           "unit": "g",
           "status": "estimated",
-          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171091 (proxy: Turkey, whole, dark meat, cooked, roasted)"
+          "source": "Analitici CDB dichiarati dall’utente + micronutrienti e aminoacidi USDA SR Legacy FDC 171088 (Turkey, whole, light meat, meat and skin, raw), riferimento CRUDO indicativo"
+        },
+        "phenylalanine_tyrosine": {
+          "value": 1.32,
+          "unit": "g",
+          "status": "estimated",
+          "source": "Analitici CDB dichiarati dall’utente + micronutrienti e aminoacidi USDA SR Legacy FDC 171088 (Turkey, whole, light meat, meat and skin, raw), riferimento CRUDO indicativo"
         },
         "threonine": {
-          "value": 1.01,
+          "value": 0.769,
           "unit": "g",
           "status": "estimated",
-          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171091 (proxy: Turkey, whole, dark meat, cooked, roasted)"
+          "source": "Analitici CDB dichiarati dall’utente + micronutrienti e aminoacidi USDA SR Legacy FDC 171088 (Turkey, whole, light meat, meat and skin, raw), riferimento CRUDO indicativo"
         },
         "tryptophan": {
-          "value": 0.295,
+          "value": 0.222,
           "unit": "g",
           "status": "estimated",
-          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171091 (proxy: Turkey, whole, dark meat, cooked, roasted)"
+          "source": "Analitici CDB dichiarati dall’utente + micronutrienti e aminoacidi USDA SR Legacy FDC 171088 (Turkey, whole, light meat, meat and skin, raw), riferimento CRUDO indicativo"
         },
         "valine": {
-          "value": 1.57,
+          "value": 0.693,
           "unit": "g",
           "status": "estimated",
-          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171091 (proxy: Turkey, whole, dark meat, cooked, roasted)"
+          "source": "Analitici CDB dichiarati dall’utente + micronutrienti e aminoacidi USDA SR Legacy FDC 171088 (Turkey, whole, light meat, meat and skin, raw), riferimento CRUDO indicativo"
         },
         "fat": {
           "value": 7,
@@ -41500,10 +41980,10 @@
           "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171091 (proxy: Turkey, whole, dark meat, cooked, roasted)"
         },
         "c18_2_undifferentiated": {
-          "value": 1.44,
+          "value": 1.75,
           "unit": "g",
           "status": "estimated",
-          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171091 (proxy: Turkey, whole, dark meat, cooked, roasted)"
+          "source": "Analitici CDB dichiarati dall’utente + micronutrienti e aminoacidi USDA SR Legacy FDC 171088 (Turkey, whole, light meat, meat and skin, raw), riferimento CRUDO indicativo"
         },
         "c20_4_undifferentiated": {
           "value": 0.187,
@@ -41518,76 +41998,94 @@
           "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171091 (proxy: Turkey, whole, dark meat, cooked, roasted)"
         },
         "epa": {
-          "value": 0.012,
+          "value": 0.002,
           "unit": "g",
           "status": "estimated",
-          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171091 (proxy: Turkey, whole, dark meat, cooked, roasted)"
+          "source": "Analitici CDB dichiarati dall’utente + micronutrienti e aminoacidi USDA SR Legacy FDC 171088 (Turkey, whole, light meat, meat and skin, raw), riferimento CRUDO indicativo"
         },
         "dha": {
+          "value": 0.003,
+          "unit": "g",
+          "status": "estimated",
+          "source": "Analitici CDB dichiarati dall’utente + micronutrienti e aminoacidi USDA SR Legacy FDC 171088 (Turkey, whole, light meat, meat and skin, raw), riferimento CRUDO indicativo"
+        },
+        "epa_dha": {
           "value": 0.005,
           "unit": "g",
           "status": "estimated",
-          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171091 (proxy: Turkey, whole, dark meat, cooked, roasted)"
+          "source": "Analitici CDB dichiarati dall’utente + micronutrienti e aminoacidi USDA SR Legacy FDC 171088 (Turkey, whole, light meat, meat and skin, raw), riferimento CRUDO indicativo"
+        },
+        "calcium": {
+          "value": 11,
+          "unit": "mg",
+          "status": "estimated",
+          "source": "Analitici CDB dichiarati dall’utente + micronutrienti e aminoacidi USDA SR Legacy FDC 171088 (Turkey, whole, light meat, meat and skin, raw), riferimento CRUDO indicativo"
+        },
+        "phosphorus": {
+          "value": 188,
+          "unit": "mg",
+          "status": "estimated",
+          "source": "Analitici CDB dichiarati dall’utente + micronutrienti e aminoacidi USDA SR Legacy FDC 171088 (Turkey, whole, light meat, meat and skin, raw), riferimento CRUDO indicativo"
         },
         "potassium": {
-          "value": 227,
+          "value": 223,
           "unit": "mg",
           "status": "estimated",
-          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171091 (proxy: Turkey, whole, dark meat, cooked, roasted)"
+          "source": "Analitici CDB dichiarati dall’utente + micronutrienti e aminoacidi USDA SR Legacy FDC 171088 (Turkey, whole, light meat, meat and skin, raw), riferimento CRUDO indicativo"
         },
         "sodium": {
-          "value": 104,
+          "value": 105,
           "unit": "mg",
           "status": "estimated",
-          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171091 (proxy: Turkey, whole, dark meat, cooked, roasted)"
+          "source": "Analitici CDB dichiarati dall’utente + micronutrienti e aminoacidi USDA SR Legacy FDC 171088 (Turkey, whole, light meat, meat and skin, raw), riferimento CRUDO indicativo"
         },
         "magnesium": {
-          "value": 27,
+          "value": 25,
           "unit": "mg",
           "status": "estimated",
-          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171091 (proxy: Turkey, whole, dark meat, cooked, roasted)"
+          "source": "Analitici CDB dichiarati dall’utente + micronutrienti e aminoacidi USDA SR Legacy FDC 171088 (Turkey, whole, light meat, meat and skin, raw), riferimento CRUDO indicativo"
         },
         "copper": {
-          "value": 0.127,
+          "value": 0.067,
           "unit": "mg",
           "status": "estimated",
-          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171091 (proxy: Turkey, whole, dark meat, cooked, roasted)"
+          "source": "Analitici CDB dichiarati dall’utente + micronutrienti e aminoacidi USDA SR Legacy FDC 171088 (Turkey, whole, light meat, meat and skin, raw), riferimento CRUDO indicativo"
         },
         "iron": {
-          "value": 1.43,
+          "value": 0.75,
           "unit": "mg",
           "status": "estimated",
-          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171091 (proxy: Turkey, whole, dark meat, cooked, roasted)"
+          "source": "Analitici CDB dichiarati dall’utente + micronutrienti e aminoacidi USDA SR Legacy FDC 171088 (Turkey, whole, light meat, meat and skin, raw), riferimento CRUDO indicativo"
         },
         "manganese": {
-          "value": 0.016,
+          "value": 0.011,
           "unit": "mg",
           "status": "estimated",
-          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171091 (proxy: Turkey, whole, dark meat, cooked, roasted)"
+          "source": "Analitici CDB dichiarati dall’utente + micronutrienti e aminoacidi USDA SR Legacy FDC 171088 (Turkey, whole, light meat, meat and skin, raw), riferimento CRUDO indicativo"
         },
         "selenium_wet": {
-          "value": 31.4,
+          "value": 20.7,
           "unit": "µg",
           "status": "estimated",
-          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171091 (proxy: Turkey, whole, dark meat, cooked, roasted)"
+          "source": "Analitici CDB dichiarati dall’utente + micronutrienti e aminoacidi USDA SR Legacy FDC 171088 (Turkey, whole, light meat, meat and skin, raw), riferimento CRUDO indicativo"
         },
         "zinc": {
-          "value": 3.51,
+          "value": 1.25,
           "unit": "mg",
           "status": "estimated",
-          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171091 (proxy: Turkey, whole, dark meat, cooked, roasted)"
+          "source": "Analitici CDB dichiarati dall’utente + micronutrienti e aminoacidi USDA SR Legacy FDC 171088 (Turkey, whole, light meat, meat and skin, raw), riferimento CRUDO indicativo"
         },
         "vitamin_a": {
-          "value": 5,
+          "value": 62,
           "unit": "IU",
           "status": "estimated",
-          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171091 (proxy: Turkey, whole, dark meat, cooked, roasted)"
+          "source": "Analitici CDB dichiarati dall’utente + micronutrienti e aminoacidi USDA SR Legacy FDC 171088 (Turkey, whole, light meat, meat and skin, raw), riferimento CRUDO indicativo"
         },
         "vitamin_a_retinol_ug": {
-          "value": 5,
+          "value": 19,
           "unit": "µg",
           "status": "estimated",
-          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171091 (proxy: Turkey, whole, dark meat, cooked, roasted)"
+          "source": "Analitici CDB dichiarati dall’utente + micronutrienti e aminoacidi USDA SR Legacy FDC 171088 (Turkey, whole, light meat, meat and skin, raw), riferimento CRUDO indicativo"
         },
         "beta_carotene_ug": {
           "value": 0,
@@ -41596,10 +42094,10 @@
           "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171091 (proxy: Turkey, whole, dark meat, cooked, roasted)"
         },
         "vitamin_d": {
-          "value": 12,
+          "value": 11,
           "unit": "IU",
           "status": "estimated",
-          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171091 (proxy: Turkey, whole, dark meat, cooked, roasted)"
+          "source": "Analitici CDB dichiarati dall’utente + micronutrienti e aminoacidi USDA SR Legacy FDC 171088 (Turkey, whole, light meat, meat and skin, raw), riferimento CRUDO indicativo"
         },
         "vitamin_e": {
           "value": 0.07,
@@ -41609,52 +42107,52 @@
           "form": "d_alpha_tocopherol"
         },
         "vitamin_b1": {
-          "value": 0.06,
+          "value": 0.038,
           "unit": "mg",
           "status": "estimated",
-          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171091 (proxy: Turkey, whole, dark meat, cooked, roasted)"
+          "source": "Analitici CDB dichiarati dall’utente + micronutrienti e aminoacidi USDA SR Legacy FDC 171088 (Turkey, whole, light meat, meat and skin, raw), riferimento CRUDO indicativo"
         },
         "vitamin_b2": {
-          "value": 0.375,
+          "value": 0.139,
           "unit": "mg",
           "status": "estimated",
-          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171091 (proxy: Turkey, whole, dark meat, cooked, roasted)"
+          "source": "Analitici CDB dichiarati dall’utente + micronutrienti e aminoacidi USDA SR Legacy FDC 171088 (Turkey, whole, light meat, meat and skin, raw), riferimento CRUDO indicativo"
         },
         "vitamin_b3": {
-          "value": 6.68,
+          "value": 8.97,
           "unit": "mg",
           "status": "estimated",
-          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171091 (proxy: Turkey, whole, dark meat, cooked, roasted)"
+          "source": "Analitici CDB dichiarati dall’utente + micronutrienti e aminoacidi USDA SR Legacy FDC 171088 (Turkey, whole, light meat, meat and skin, raw), riferimento CRUDO indicativo"
         },
         "vitamin_b5": {
-          "value": 1.02,
+          "value": 0.73,
           "unit": "mg",
           "status": "estimated",
-          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171091 (proxy: Turkey, whole, dark meat, cooked, roasted)"
+          "source": "Analitici CDB dichiarati dall’utente + micronutrienti e aminoacidi USDA SR Legacy FDC 171088 (Turkey, whole, light meat, meat and skin, raw), riferimento CRUDO indicativo"
         },
         "vitamin_b6": {
-          "value": 0.438,
+          "value": 0.711,
           "unit": "mg",
           "status": "estimated",
-          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171091 (proxy: Turkey, whole, dark meat, cooked, roasted)"
+          "source": "Analitici CDB dichiarati dall’utente + micronutrienti e aminoacidi USDA SR Legacy FDC 171088 (Turkey, whole, light meat, meat and skin, raw), riferimento CRUDO indicativo"
         },
         "vitamin_b9": {
-          "value": 9,
+          "value": 7,
           "unit": "µg",
           "status": "estimated",
-          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171091 (proxy: Turkey, whole, dark meat, cooked, roasted)"
+          "source": "Analitici CDB dichiarati dall’utente + micronutrienti e aminoacidi USDA SR Legacy FDC 171088 (Turkey, whole, light meat, meat and skin, raw), riferimento CRUDO indicativo"
         },
         "vitamin_b12": {
-          "value": 1.65,
+          "value": 0.67,
           "unit": "µg",
           "status": "estimated",
-          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171091 (proxy: Turkey, whole, dark meat, cooked, roasted)"
+          "source": "Analitici CDB dichiarati dall’utente + micronutrienti e aminoacidi USDA SR Legacy FDC 171088 (Turkey, whole, light meat, meat and skin, raw), riferimento CRUDO indicativo"
         },
         "choline": {
-          "value": 95.8,
+          "value": 50.4,
           "unit": "mg",
           "status": "estimated",
-          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171091 (proxy: Turkey, whole, dark meat, cooked, roasted)"
+          "source": "Analitici CDB dichiarati dall’utente + micronutrienti e aminoacidi USDA SR Legacy FDC 171088 (Turkey, whole, light meat, meat and skin, raw), riferimento CRUDO indicativo"
         },
         "vitamin_k": {
           "value": 0,
@@ -41691,13 +42189,13 @@
       "subcategory": "muscle",
       "processing_state": "raw",
       "preparation": "carne di tacchino senza ossa a pezzi; prodotto crudo e congelato, pesare a crudo",
-      "edible_portion": "Prodotto completo, ossa incluse: non equiparare alla carne disossata",
-      "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171091 (proxy: Turkey, whole, dark meat, cooked, roasted)",
-      "source_url": "https://fdc.nal.usda.gov/food-details/171091/nutrients",
-      "source_version": "CDB forniti 28/10/2026; USDA SR Legacy 2018-04",
+      "edible_portion": "100% polpa disossata, pesata cruda",
+      "source": "Analitici CDB dichiarati dall’utente + micronutrienti e aminoacidi USDA SR Legacy FDC 171088 (Turkey, whole, light meat, meat and skin, raw), riferimento CRUDO indicativo",
+      "source_url": "https://fdc.nal.usda.gov/food-details/171088/nutrients",
+      "source_version": "Analitici CDB 28/10/2026; USDA SR Legacy 2018-04",
       "data_status": "review_required",
       "available_to_formulate": true,
-      "notes": "CDB è il produttore; Igea rivende lo stesso alimento. ANALITICI CDB per 100g: proteine 22, grassi 7, fibra 0.1, ceneri 0.8, umidità 70.1, kcal dichiarate 107. Microelementi, aminoacidi e vitamine da USDA SR Legacy FDC 171091 come PROXY, NON analisi di questo prodotto. CON OSSA: USDA si riferisce alla parte edibile SENZA OSSA. Ca/P sconosciuti: le ceneri dichiarate non consentono stima robusta. ATTENZIONE ENERGIA: venditore 107 kcal vs stima 4/9 151; differenza significativa, valore CDB conservato in nota.",
+      "notes": "CDB produttore; Igea rivenditore. ANALITICI CDB/100 g: proteine 22 g, grassi 7 g, fibra 0,1 g, ceneri 0,8 g, umidità 70,1 g, 107 kcal dichiarate. Energia catalogo 151 kcal da metodo 4/9 concordato, invariata. Micronutrienti e aminoacidi da USDA FDC 171088: carne chiara di tacchino CON PELLE CRUDA (22 g proteine, 7,43 g grassi), analogo molto vicino ma non analisi del prodotto CDB. Solo valori esplicitamente identificati dal database; campi non misurati restano sconosciuti. Nessun osso nel prodotto.",
       "nutrients": {
         "protein": {
           "value": 22,
@@ -41706,76 +42204,88 @@
           "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171091 (proxy: Turkey, whole, dark meat, cooked, roasted)"
         },
         "arginine": {
-          "value": 0.886,
+          "value": 1.26,
           "unit": "g",
           "status": "estimated",
-          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171091 (proxy: Turkey, whole, dark meat, cooked, roasted)"
+          "source": "Analitici CDB dichiarati dall’utente + micronutrienti e aminoacidi USDA SR Legacy FDC 171088 (Turkey, whole, light meat, meat and skin, raw), riferimento CRUDO indicativo"
         },
         "histidine": {
-          "value": 0.751,
+          "value": 0.574,
           "unit": "g",
           "status": "estimated",
-          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171091 (proxy: Turkey, whole, dark meat, cooked, roasted)"
+          "source": "Analitici CDB dichiarati dall’utente + micronutrienti e aminoacidi USDA SR Legacy FDC 171088 (Turkey, whole, light meat, meat and skin, raw), riferimento CRUDO indicativo"
         },
         "isoleucine": {
-          "value": 0.794,
+          "value": 0.61,
           "unit": "g",
           "status": "estimated",
-          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171091 (proxy: Turkey, whole, dark meat, cooked, roasted)"
+          "source": "Analitici CDB dichiarati dall’utente + micronutrienti e aminoacidi USDA SR Legacy FDC 171088 (Turkey, whole, light meat, meat and skin, raw), riferimento CRUDO indicativo"
         },
         "leucine": {
-          "value": 1.92,
+          "value": 1.48,
           "unit": "g",
           "status": "estimated",
-          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171091 (proxy: Turkey, whole, dark meat, cooked, roasted)"
+          "source": "Analitici CDB dichiarati dall’utente + micronutrienti e aminoacidi USDA SR Legacy FDC 171088 (Turkey, whole, light meat, meat and skin, raw), riferimento CRUDO indicativo"
         },
         "lysine": {
-          "value": 2.29,
+          "value": 1.75,
           "unit": "g",
           "status": "estimated",
-          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171091 (proxy: Turkey, whole, dark meat, cooked, roasted)"
+          "source": "Analitici CDB dichiarati dall’utente + micronutrienti e aminoacidi USDA SR Legacy FDC 171088 (Turkey, whole, light meat, meat and skin, raw), riferimento CRUDO indicativo"
         },
         "methionine": {
-          "value": 0.725,
+          "value": 0.555,
           "unit": "g",
           "status": "estimated",
-          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171091 (proxy: Turkey, whole, dark meat, cooked, roasted)"
+          "source": "Analitici CDB dichiarati dall’utente + micronutrienti e aminoacidi USDA SR Legacy FDC 171088 (Turkey, whole, light meat, meat and skin, raw), riferimento CRUDO indicativo"
         },
         "cystine": {
-          "value": 0.262,
+          "value": 0.203,
           "unit": "g",
           "status": "estimated",
-          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171091 (proxy: Turkey, whole, dark meat, cooked, roasted)"
+          "source": "Analitici CDB dichiarati dall’utente + micronutrienti e aminoacidi USDA SR Legacy FDC 171088 (Turkey, whole, light meat, meat and skin, raw), riferimento CRUDO indicativo"
+        },
+        "methionine_cystine": {
+          "value": 0.758,
+          "unit": "g",
+          "status": "estimated",
+          "source": "Analitici CDB dichiarati dall’utente + micronutrienti e aminoacidi USDA SR Legacy FDC 171088 (Turkey, whole, light meat, meat and skin, raw), riferimento CRUDO indicativo"
         },
         "phenylalanine": {
-          "value": 0.893,
+          "value": 0.693,
           "unit": "g",
           "status": "estimated",
-          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171091 (proxy: Turkey, whole, dark meat, cooked, roasted)"
+          "source": "Analitici CDB dichiarati dall’utente + micronutrienti e aminoacidi USDA SR Legacy FDC 171088 (Turkey, whole, light meat, meat and skin, raw), riferimento CRUDO indicativo"
         },
         "tyrosine": {
-          "value": 0.823,
+          "value": 0.627,
           "unit": "g",
           "status": "estimated",
-          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171091 (proxy: Turkey, whole, dark meat, cooked, roasted)"
+          "source": "Analitici CDB dichiarati dall’utente + micronutrienti e aminoacidi USDA SR Legacy FDC 171088 (Turkey, whole, light meat, meat and skin, raw), riferimento CRUDO indicativo"
+        },
+        "phenylalanine_tyrosine": {
+          "value": 1.32,
+          "unit": "g",
+          "status": "estimated",
+          "source": "Analitici CDB dichiarati dall’utente + micronutrienti e aminoacidi USDA SR Legacy FDC 171088 (Turkey, whole, light meat, meat and skin, raw), riferimento CRUDO indicativo"
         },
         "threonine": {
-          "value": 1.01,
+          "value": 0.769,
           "unit": "g",
           "status": "estimated",
-          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171091 (proxy: Turkey, whole, dark meat, cooked, roasted)"
+          "source": "Analitici CDB dichiarati dall’utente + micronutrienti e aminoacidi USDA SR Legacy FDC 171088 (Turkey, whole, light meat, meat and skin, raw), riferimento CRUDO indicativo"
         },
         "tryptophan": {
-          "value": 0.295,
+          "value": 0.222,
           "unit": "g",
           "status": "estimated",
-          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171091 (proxy: Turkey, whole, dark meat, cooked, roasted)"
+          "source": "Analitici CDB dichiarati dall’utente + micronutrienti e aminoacidi USDA SR Legacy FDC 171088 (Turkey, whole, light meat, meat and skin, raw), riferimento CRUDO indicativo"
         },
         "valine": {
-          "value": 1.57,
+          "value": 0.693,
           "unit": "g",
           "status": "estimated",
-          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171091 (proxy: Turkey, whole, dark meat, cooked, roasted)"
+          "source": "Analitici CDB dichiarati dall’utente + micronutrienti e aminoacidi USDA SR Legacy FDC 171088 (Turkey, whole, light meat, meat and skin, raw), riferimento CRUDO indicativo"
         },
         "fat": {
           "value": 7,
@@ -41784,10 +42294,10 @@
           "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171091 (proxy: Turkey, whole, dark meat, cooked, roasted)"
         },
         "c18_2_undifferentiated": {
-          "value": 1.44,
+          "value": 1.75,
           "unit": "g",
           "status": "estimated",
-          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171091 (proxy: Turkey, whole, dark meat, cooked, roasted)"
+          "source": "Analitici CDB dichiarati dall’utente + micronutrienti e aminoacidi USDA SR Legacy FDC 171088 (Turkey, whole, light meat, meat and skin, raw), riferimento CRUDO indicativo"
         },
         "c20_4_undifferentiated": {
           "value": 0.187,
@@ -41802,76 +42312,94 @@
           "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171091 (proxy: Turkey, whole, dark meat, cooked, roasted)"
         },
         "epa": {
-          "value": 0.012,
+          "value": 0.002,
           "unit": "g",
           "status": "estimated",
-          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171091 (proxy: Turkey, whole, dark meat, cooked, roasted)"
+          "source": "Analitici CDB dichiarati dall’utente + micronutrienti e aminoacidi USDA SR Legacy FDC 171088 (Turkey, whole, light meat, meat and skin, raw), riferimento CRUDO indicativo"
         },
         "dha": {
+          "value": 0.003,
+          "unit": "g",
+          "status": "estimated",
+          "source": "Analitici CDB dichiarati dall’utente + micronutrienti e aminoacidi USDA SR Legacy FDC 171088 (Turkey, whole, light meat, meat and skin, raw), riferimento CRUDO indicativo"
+        },
+        "epa_dha": {
           "value": 0.005,
           "unit": "g",
           "status": "estimated",
-          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171091 (proxy: Turkey, whole, dark meat, cooked, roasted)"
+          "source": "Analitici CDB dichiarati dall’utente + micronutrienti e aminoacidi USDA SR Legacy FDC 171088 (Turkey, whole, light meat, meat and skin, raw), riferimento CRUDO indicativo"
+        },
+        "calcium": {
+          "value": 11,
+          "unit": "mg",
+          "status": "estimated",
+          "source": "Analitici CDB dichiarati dall’utente + micronutrienti e aminoacidi USDA SR Legacy FDC 171088 (Turkey, whole, light meat, meat and skin, raw), riferimento CRUDO indicativo"
+        },
+        "phosphorus": {
+          "value": 188,
+          "unit": "mg",
+          "status": "estimated",
+          "source": "Analitici CDB dichiarati dall’utente + micronutrienti e aminoacidi USDA SR Legacy FDC 171088 (Turkey, whole, light meat, meat and skin, raw), riferimento CRUDO indicativo"
         },
         "potassium": {
-          "value": 227,
+          "value": 223,
           "unit": "mg",
           "status": "estimated",
-          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171091 (proxy: Turkey, whole, dark meat, cooked, roasted)"
+          "source": "Analitici CDB dichiarati dall’utente + micronutrienti e aminoacidi USDA SR Legacy FDC 171088 (Turkey, whole, light meat, meat and skin, raw), riferimento CRUDO indicativo"
         },
         "sodium": {
-          "value": 104,
+          "value": 105,
           "unit": "mg",
           "status": "estimated",
-          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171091 (proxy: Turkey, whole, dark meat, cooked, roasted)"
+          "source": "Analitici CDB dichiarati dall’utente + micronutrienti e aminoacidi USDA SR Legacy FDC 171088 (Turkey, whole, light meat, meat and skin, raw), riferimento CRUDO indicativo"
         },
         "magnesium": {
-          "value": 27,
+          "value": 25,
           "unit": "mg",
           "status": "estimated",
-          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171091 (proxy: Turkey, whole, dark meat, cooked, roasted)"
+          "source": "Analitici CDB dichiarati dall’utente + micronutrienti e aminoacidi USDA SR Legacy FDC 171088 (Turkey, whole, light meat, meat and skin, raw), riferimento CRUDO indicativo"
         },
         "copper": {
-          "value": 0.127,
+          "value": 0.067,
           "unit": "mg",
           "status": "estimated",
-          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171091 (proxy: Turkey, whole, dark meat, cooked, roasted)"
+          "source": "Analitici CDB dichiarati dall’utente + micronutrienti e aminoacidi USDA SR Legacy FDC 171088 (Turkey, whole, light meat, meat and skin, raw), riferimento CRUDO indicativo"
         },
         "iron": {
-          "value": 1.43,
+          "value": 0.75,
           "unit": "mg",
           "status": "estimated",
-          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171091 (proxy: Turkey, whole, dark meat, cooked, roasted)"
+          "source": "Analitici CDB dichiarati dall’utente + micronutrienti e aminoacidi USDA SR Legacy FDC 171088 (Turkey, whole, light meat, meat and skin, raw), riferimento CRUDO indicativo"
         },
         "manganese": {
-          "value": 0.016,
+          "value": 0.011,
           "unit": "mg",
           "status": "estimated",
-          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171091 (proxy: Turkey, whole, dark meat, cooked, roasted)"
+          "source": "Analitici CDB dichiarati dall’utente + micronutrienti e aminoacidi USDA SR Legacy FDC 171088 (Turkey, whole, light meat, meat and skin, raw), riferimento CRUDO indicativo"
         },
         "selenium_wet": {
-          "value": 31.4,
+          "value": 20.7,
           "unit": "µg",
           "status": "estimated",
-          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171091 (proxy: Turkey, whole, dark meat, cooked, roasted)"
+          "source": "Analitici CDB dichiarati dall’utente + micronutrienti e aminoacidi USDA SR Legacy FDC 171088 (Turkey, whole, light meat, meat and skin, raw), riferimento CRUDO indicativo"
         },
         "zinc": {
-          "value": 3.51,
+          "value": 1.25,
           "unit": "mg",
           "status": "estimated",
-          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171091 (proxy: Turkey, whole, dark meat, cooked, roasted)"
+          "source": "Analitici CDB dichiarati dall’utente + micronutrienti e aminoacidi USDA SR Legacy FDC 171088 (Turkey, whole, light meat, meat and skin, raw), riferimento CRUDO indicativo"
         },
         "vitamin_a": {
-          "value": 5,
+          "value": 62,
           "unit": "IU",
           "status": "estimated",
-          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171091 (proxy: Turkey, whole, dark meat, cooked, roasted)"
+          "source": "Analitici CDB dichiarati dall’utente + micronutrienti e aminoacidi USDA SR Legacy FDC 171088 (Turkey, whole, light meat, meat and skin, raw), riferimento CRUDO indicativo"
         },
         "vitamin_a_retinol_ug": {
-          "value": 5,
+          "value": 19,
           "unit": "µg",
           "status": "estimated",
-          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171091 (proxy: Turkey, whole, dark meat, cooked, roasted)"
+          "source": "Analitici CDB dichiarati dall’utente + micronutrienti e aminoacidi USDA SR Legacy FDC 171088 (Turkey, whole, light meat, meat and skin, raw), riferimento CRUDO indicativo"
         },
         "beta_carotene_ug": {
           "value": 0,
@@ -41880,10 +42408,10 @@
           "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171091 (proxy: Turkey, whole, dark meat, cooked, roasted)"
         },
         "vitamin_d": {
-          "value": 12,
+          "value": 11,
           "unit": "IU",
           "status": "estimated",
-          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171091 (proxy: Turkey, whole, dark meat, cooked, roasted)"
+          "source": "Analitici CDB dichiarati dall’utente + micronutrienti e aminoacidi USDA SR Legacy FDC 171088 (Turkey, whole, light meat, meat and skin, raw), riferimento CRUDO indicativo"
         },
         "vitamin_e": {
           "value": 0.07,
@@ -41893,52 +42421,52 @@
           "form": "d_alpha_tocopherol"
         },
         "vitamin_b1": {
-          "value": 0.06,
+          "value": 0.038,
           "unit": "mg",
           "status": "estimated",
-          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171091 (proxy: Turkey, whole, dark meat, cooked, roasted)"
+          "source": "Analitici CDB dichiarati dall’utente + micronutrienti e aminoacidi USDA SR Legacy FDC 171088 (Turkey, whole, light meat, meat and skin, raw), riferimento CRUDO indicativo"
         },
         "vitamin_b2": {
-          "value": 0.375,
+          "value": 0.139,
           "unit": "mg",
           "status": "estimated",
-          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171091 (proxy: Turkey, whole, dark meat, cooked, roasted)"
+          "source": "Analitici CDB dichiarati dall’utente + micronutrienti e aminoacidi USDA SR Legacy FDC 171088 (Turkey, whole, light meat, meat and skin, raw), riferimento CRUDO indicativo"
         },
         "vitamin_b3": {
-          "value": 6.68,
+          "value": 8.97,
           "unit": "mg",
           "status": "estimated",
-          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171091 (proxy: Turkey, whole, dark meat, cooked, roasted)"
+          "source": "Analitici CDB dichiarati dall’utente + micronutrienti e aminoacidi USDA SR Legacy FDC 171088 (Turkey, whole, light meat, meat and skin, raw), riferimento CRUDO indicativo"
         },
         "vitamin_b5": {
-          "value": 1.02,
+          "value": 0.73,
           "unit": "mg",
           "status": "estimated",
-          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171091 (proxy: Turkey, whole, dark meat, cooked, roasted)"
+          "source": "Analitici CDB dichiarati dall’utente + micronutrienti e aminoacidi USDA SR Legacy FDC 171088 (Turkey, whole, light meat, meat and skin, raw), riferimento CRUDO indicativo"
         },
         "vitamin_b6": {
-          "value": 0.438,
+          "value": 0.711,
           "unit": "mg",
           "status": "estimated",
-          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171091 (proxy: Turkey, whole, dark meat, cooked, roasted)"
+          "source": "Analitici CDB dichiarati dall’utente + micronutrienti e aminoacidi USDA SR Legacy FDC 171088 (Turkey, whole, light meat, meat and skin, raw), riferimento CRUDO indicativo"
         },
         "vitamin_b9": {
-          "value": 9,
+          "value": 7,
           "unit": "µg",
           "status": "estimated",
-          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171091 (proxy: Turkey, whole, dark meat, cooked, roasted)"
+          "source": "Analitici CDB dichiarati dall’utente + micronutrienti e aminoacidi USDA SR Legacy FDC 171088 (Turkey, whole, light meat, meat and skin, raw), riferimento CRUDO indicativo"
         },
         "vitamin_b12": {
-          "value": 1.65,
+          "value": 0.67,
           "unit": "µg",
           "status": "estimated",
-          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171091 (proxy: Turkey, whole, dark meat, cooked, roasted)"
+          "source": "Analitici CDB dichiarati dall’utente + micronutrienti e aminoacidi USDA SR Legacy FDC 171088 (Turkey, whole, light meat, meat and skin, raw), riferimento CRUDO indicativo"
         },
         "choline": {
-          "value": 95.8,
+          "value": 50.4,
           "unit": "mg",
           "status": "estimated",
-          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 171091 (proxy: Turkey, whole, dark meat, cooked, roasted)"
+          "source": "Analitici CDB dichiarati dall’utente + micronutrienti e aminoacidi USDA SR Legacy FDC 171088 (Turkey, whole, light meat, meat and skin, raw), riferimento CRUDO indicativo"
         },
         "vitamin_k": {
           "value": 0,
@@ -42031,6 +42559,12 @@
           "status": "estimated",
           "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 175167 (proxy: Fish, salmon, Atlantic, farmed, raw)"
         },
+        "methionine_cystine": {
+          "value": 0.845,
+          "unit": "g",
+          "status": "estimated",
+          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 175167 (proxy: Fish, salmon, Atlantic, farmed, raw)"
+        },
         "phenylalanine": {
           "value": 0.845,
           "unit": "g",
@@ -42039,6 +42573,12 @@
         },
         "tyrosine": {
           "value": 0.759,
+          "unit": "g",
+          "status": "estimated",
+          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 175167 (proxy: Fish, salmon, Atlantic, farmed, raw)"
+        },
+        "phenylalanine_tyrosine": {
+          "value": 1.604,
           "unit": "g",
           "status": "estimated",
           "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 175167 (proxy: Fish, salmon, Atlantic, farmed, raw)"
@@ -42327,6 +42867,12 @@
           "status": "estimated",
           "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 175167 (proxy: Fish, salmon, Atlantic, farmed, raw)"
         },
+        "methionine_cystine": {
+          "value": 0.845,
+          "unit": "g",
+          "status": "estimated",
+          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 175167 (proxy: Fish, salmon, Atlantic, farmed, raw)"
+        },
         "phenylalanine": {
           "value": 0.845,
           "unit": "g",
@@ -42335,6 +42881,12 @@
         },
         "tyrosine": {
           "value": 0.759,
+          "unit": "g",
+          "status": "estimated",
+          "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 175167 (proxy: Fish, salmon, Atlantic, farmed, raw)"
+        },
+        "phenylalanine_tyrosine": {
+          "value": 1.604,
           "unit": "g",
           "status": "estimated",
           "source": "Analitici dichiarati CDB dall’utente + USDA SR Legacy FDC 175167 (proxy: Fish, salmon, Atlantic, farmed, raw)"
@@ -42573,7 +43125,7 @@
       "source_version": "CDB forniti 28/10/2026; USDA SR Legacy 2018-04",
       "data_status": "review_required",
       "available_to_formulate": true,
-      "notes": "CDB è il produttore; Igea rivende lo stesso alimento. ANALITICI CDB per 100g: proteine 15.3, grassi 5.1, fibra 0.2, ceneri 1.3, umidità 78.1, kcal dichiarate 225. Microelementi, aminoacidi e vitamine da USDA SR Legacy FDC 170599 come PROXY, NON analisi di questo prodotto. ATTENZIONE ENERGIA: venditore 225 kcal vs stima 4/9 107.1; differenza significativa, valore CDB conservato in nota. ENERGIA CDB 225 kcal particolarmente discordante rispetto ai macro: verificare refuso.",
+      "notes": "CDB è il produttore; Igea rivende lo stesso alimento. ANALITICI CDB per 100g: proteine 15.3, grassi 5.1, fibra 0.2, ceneri 1.3, umidità 78.1, kcal dichiarate 225. Microelementi, aminoacidi e vitamine da USDA SR Legacy FDC 170599 come PROXY, NON analisi di questo prodotto. ATTENZIONE ENERGIA: venditore 225 kcal vs stima 4/9 107.1; differenza significativa, valore CDB conservato in nota. ENERGIA CDB 225 kcal particolarmente discordante rispetto ai macro: verificare refuso. | CLASSIFICAZIONE: trippa = altre frattaglie; verificare se la regola quantitativa dell’app tratta trippa come frattaglia.",
       "nutrients": {
         "protein": {
           "value": 15.3,
@@ -42797,7 +43349,7 @@
       "source_version": "CDB forniti 28/10/2026; USDA SR Legacy 2018-04",
       "data_status": "review_required",
       "available_to_formulate": true,
-      "notes": "CDB è il produttore; Igea rivende lo stesso alimento. ANALITICI CDB per 100g: proteine 15.3, grassi 5.1, fibra 0.2, ceneri 1.3, umidità 78.1, kcal dichiarate 225. Microelementi, aminoacidi e vitamine da USDA SR Legacy FDC 170599 come PROXY, NON analisi di questo prodotto. ATTENZIONE ENERGIA: venditore 225 kcal vs stima 4/9 107.1; differenza significativa, valore CDB conservato in nota. ENERGIA CDB 225 kcal particolarmente discordante rispetto ai macro: verificare refuso.",
+      "notes": "CDB è il produttore; Igea rivende lo stesso alimento. ANALITICI CDB per 100g: proteine 15.3, grassi 5.1, fibra 0.2, ceneri 1.3, umidità 78.1, kcal dichiarate 225. Microelementi, aminoacidi e vitamine da USDA SR Legacy FDC 170599 come PROXY, NON analisi di questo prodotto. ATTENZIONE ENERGIA: venditore 225 kcal vs stima 4/9 107.1; differenza significativa, valore CDB conservato in nota. ENERGIA CDB 225 kcal particolarmente discordante rispetto ai macro: verificare refuso. | CLASSIFICAZIONE: trippa = altre frattaglie; verificare se la regola quantitativa dell’app tratta trippa come frattaglia.",
       "nutrients": {
         "protein": {
           "value": 15.3,

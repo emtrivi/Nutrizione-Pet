@@ -5,10 +5,15 @@
 //   capra    4 × 9   + 9 × 11   + 4 × 5   = 36   + 99    + 20   = 155    (produttore 155)
 import { describe, expect, it } from 'vitest';
 import { buildCatalog, type RawFood } from '../catalog';
-import { getCatalog, rawSupplements, SUPPLEMENTS_FILE } from '../bundledData';
+import { rawSupplements, SUPPLEMENTS_FILE } from '../bundledData';
+import afterImport from '../../../data/catalog/archivio/CATALOGO_CANI_REVISIONATO_2026-10-27.json';
 import before115 from '../../../data/catalog/archivio/CATALOGO_CANI_REVISIONATO_2026-10-26.json';
 
-const catalog = getCatalog();
+// Catalogo come uscito da questa importazione (archiviato): le modifiche successive non cambiano questi controlli.
+const catalog = buildCatalog({
+  foods: { fileName: 'CATALOGO_CANI_REVISIONATO_2026-10-27.json', data: afterImport as unknown as { foods: RawFood[] } },
+  supplements: { fileName: SUPPLEMENTS_FILE, data: rawSupplements },
+});
 const food = (id: string) => catalog.get(`food:${id}`)!;
 const before = buildCatalog({
   foods: { fileName: 'CATALOGO_CANI_REVISIONATO_2026-10-26.json', data: before115 as unknown as { foods: RawFood[] } },

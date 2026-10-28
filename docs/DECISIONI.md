@@ -190,3 +190,20 @@ proteica e non conta nel controllo "altre frattaglie oltre il 5%" (la milza già
 pollo e colli di tacchino contengono osso ma hanno calcio e fosforo vuoti (grigi), come scelto nel foglio.
 
 I test dei suggerimenti usano il catalogo fisso del 27/10, così i calcoli a mano non cambiano quando si aggiungono alimenti.
+
+## 28/10/2026 — revisione delle voci CDB / Igea (foglio "TRIPPA_FONTE_PROTEICA")
+
+Foglio `data/catalog/fonti/Catalogo_Nutrizione_Pet_152_TRIPPA_FONTE_PROTEICA_2026-10-28.xlsx`, mostrato all'utente
+come elenco "prima → dopo" e applicato con `--applica-modifiche` (lo script ora confronta anche tipo, testi e fonti
+delle voci esistenti; un nutriente con lo stesso valore tiene fonte e note di prima). 101 voci identiche, 51 modificate,
+kcal tutte invariate; catalogo della 0.5.2 in `archivio/CATALOGO_CANI_REVISIONATO_2026-10-28_v0.5.2.json`.
+
+- Milza CDB/Igea → tipo Milza (frattaglie).
+- Trippa di bovino (anche la voce USDA già presente), trippa di agnello e durelli → fonte proteica (nome del file e celle
+  del foglio; il foglio "Decisioni 28-10 finali" diceva invece trippa tra le frattaglie: segnalato all'utente).
+- Ali e colli di pollo, colli di tacchino: calcio e fosforo da BARFLAB (stime molto incerte, scritte nelle note).
+- Polpa di tacchino: micronutrienti da carne cruda (USDA 171088) invece che cotta.
+- Altri dati USDA aggiunti (metionina + cistina, fenilalanina + tirosina, beta-carotene, calcio e fosforo di merluzzo).
+
+Le ricette con questi alimenti diventano "da rivedere" solo se cambiano i valori (non il solo cambio di sezione).
+I test delle importazioni precedenti usano i cataloghi archiviati di quel momento.
