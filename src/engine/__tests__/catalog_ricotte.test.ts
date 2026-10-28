@@ -20,8 +20,8 @@ describe('le 115 voci di prima non cambiano', () => {
     expect(before.foods).toHaveLength(115);
     for (const old of before.foods) expect(food(old.id)).toEqual(old);
   });
-  it('3 ricotte in fondo', () => {
-    expect(catalog.foods.slice(115).map((f) => f.id)).toEqual(['ricotta_vaccina', 'ricotta_pecora', 'ricotta_capra']);
+  it('3 ricotte dopo le 115', () => {
+    expect(catalog.foods.slice(115, 118).map((f) => f.id)).toEqual(['ricotta_vaccina', 'ricotta_pecora', 'ricotta_capra']);
   });
 });
 

@@ -1,5 +1,7 @@
 // Suggerimenti di alimenti del catalogo per un nutriente in carenza (i 5 più ricchi). Calcoli fatti a mano.
 //
+// Catalogo fisso: quello del 27/10/2026 (118 voci), così i conti non cambiano quando si aggiungono alimenti.
+//
 // Ricetta "manzo e avena" (cane d'esempio, tabella 95): manzo 12,8% 400 g + avena secca 100 g
 //   kcal K = 752 + 341,88 = 1.093,88
 //   acido linoleico T = 2,2 g (dall'avena) · minimo m = 3,82 g/1.000 kcal
@@ -12,11 +14,16 @@
 //     anatra con ossa CDB n 0,0469  k 2,3   → 1,97862 ÷ 0,038114 = 51,91 → 52 g (Igea: stessi valori)
 import { describe, expect, it } from 'vitest';
 import { DEFAULT_SETTINGS } from '../backup';
-import { fediaf, getCatalog } from '../bundledData';
+import { buildCatalog, type RawFood } from '../catalog';
+import { fediaf, rawSupplements, SUPPLEMENTS_FILE } from '../bundledData';
+import foods118 from '../../../data/catalog/archivio/CATALOGO_CANI_REVISIONATO_2026-10-27.json';
 import { evaluateRecipe } from '../recipes';
 import { FOOD_SUGGESTION_COUNT, foodSuggestions } from '../suggestions';
 
-const catalog = getCatalog();
+const catalog = buildCatalog({
+  foods: { fileName: 'CATALOGO_CANI_REVISIONATO_2026-10-27.json', data: foods118 as unknown as { foods: RawFood[] } },
+  supplements: { fileName: SUPPLEMENTS_FILE, data: rawSupplements },
+});
 const ctx = { catalog, fediaf, settings: DEFAULT_SETTINGS, prices: {} };
 const lines = [
   { key: 'food:beef_mid_10', amount: 400 },

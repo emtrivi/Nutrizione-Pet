@@ -177,3 +177,16 @@ identici (es. lo stesso prodotto CDB e Igea) contano una volta ("Stessi valori a
 Grammi: i minimi che portano il nutriente al minimo ogni 1.000 kcal contando le calorie aggiunte (stessa formula del
 26/10). Se l'alimento da solo non può arrivarci (porta troppe calorie rispetto al nutriente) o servirebbero più di 500 g,
 l'anteprima mostra l'effetto di 100 g con l'avviso "Da solo non basta". Anteprima e "Aggiungi" come per gli integratori.
+
+## 28/10/2026 — 34 voci CDB / Igea (17 prodotti)
+
+Foglio `data/catalog/fonti/Catalogo_Nutrizione_Pet_152_ALIMENTI_CDB_IGEA_2026-10-28.xlsx`. Importate **solo le 34 voci
+nuove**: le 118 voci già presenti restano identiche (lo script riconosce le kcal di CDB e ricotte già ricalcolate e non le
+considera modifiche); catalogo precedente in `archivio/`. Tutte "dato indicativo", kcal 4/9 già nel foglio (valori del
+venditore nelle note), interpretazioni dei refusi e proxy USDA descritti nel foglio "Nuove voci 28-10".
+
+Da far guardare alla nutrizionista: la **milza di bovino** è nel foglio come "Carne (muscolo)", quindi sta nella fonte
+proteica e non conta nel controllo "altre frattaglie oltre il 5%" (la milza già presente è tra le frattaglie). Ali e colli di
+pollo e colli di tacchino contengono osso ma hanno calcio e fosforo vuoti (grigi), come scelto nel foglio.
+
+I test dei suggerimenti usano il catalogo fisso del 27/10, così i calcoli a mano non cambiano quando si aggiungono alimenti.
