@@ -207,3 +207,12 @@ kcal tutte invariate; catalogo della 0.5.2 in `archivio/CATALOGO_CANI_REVISIONAT
 
 Le ricette con questi alimenti diventano "da rivedere" solo se cambiano i valori (non il solo cambio di sezione).
 I test delle importazioni precedenti usano i cataloghi archiviati di quel momento.
+
+## 30/10/2026 — dati aggiunti dal foglio "VERIFICA_APPROFONDITA" (importato il 02/11/2026)
+
+Foglio `data/catalog/fonti/Catalogo_Nutrizione_Pet_152_VERIFICA_APPROFONDITA_2026-10-30.xlsx`: solo celle vuote riempite,
+come dichiarato nel foglio "Metodo e limiti II" e verificato confrontando tutte le voci: 254 valori aggiunti in 48 voci
+(aminoacidi di cuore, rene, trippe e durelli; somme metionina + cistina, fenilalanina + tirosina e EPA + DHA, controllate
+uguali alla somma delle parti; acido linoleico e ALA del cuore di pollo), nessun valore già presente cambiato, nessun
+cambio di sezione, kcal invariate. 104 voci identiche. Catalogo della 0.5.3 in `archivio/CATALOGO_CANI_REVISIONATO_2026-10-28.json`.
+Alcuni valori (trippa, cuore di pollo) vengono da una copia secondaria dell'archivio USDA (cooks.com), come scritto nelle note.

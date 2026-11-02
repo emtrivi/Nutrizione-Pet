@@ -2,11 +2,16 @@
 // Confronto con il catalogo pubblicato nella versione 0.5.2.
 import { describe, expect, it } from 'vitest';
 import { buildCatalog, type RawFood } from '../catalog';
-import { getCatalog, rawSupplements, SUPPLEMENTS_FILE } from '../bundledData';
+import { rawSupplements, SUPPLEMENTS_FILE } from '../bundledData';
+import afterImport from '../../../data/catalog/archivio/CATALOGO_CANI_REVISIONATO_2026-10-28.json';
 import { sanityWarnings } from '../recipes';
 import v052 from '../../../data/catalog/archivio/CATALOGO_CANI_REVISIONATO_2026-10-28_v0.5.2.json';
 
-const catalog = getCatalog();
+// Catalogo come uscito da questa revisione (versione 0.5.3, archiviato).
+const catalog = buildCatalog({
+  foods: { fileName: 'CATALOGO_CANI_REVISIONATO_2026-10-28.json', data: afterImport as unknown as { foods: RawFood[] } },
+  supplements: { fileName: SUPPLEMENTS_FILE, data: rawSupplements },
+});
 const food = (id: string) => catalog.get(`food:${id}`)!;
 const before = buildCatalog({
   foods: { fileName: 'CATALOGO_CANI_REVISIONATO_2026-10-28.json', data: v052 as unknown as { foods: RawFood[] } },

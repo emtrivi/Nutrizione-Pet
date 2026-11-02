@@ -1,5 +1,5 @@
 {
-  "versione": "0.5.3",
-  "data": "2026-10-28",
-  "note": "Catalogo alimenti rivisto dalla nutrizionista: milza CDB/Igea tra le frattaglie, trippe e durelli nella fonte proteica, calcio e fosforo per ali e colli, polpa di tacchino con dati del crudo. Calorie invariate."
+  "versione": "0.5.4",
+  "data": "2026-11-02",
+  "note": "Catalogo alimenti del 30/10/2026: aggiunti dati che mancavano in 48 voci (soprattutto aminoacidi di cuore, rene, trippe e durelli; acido linoleico e ALA del cuore di pollo). Nessun valore già presente cambiato, calorie invariate."
 }

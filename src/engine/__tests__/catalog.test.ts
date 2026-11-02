@@ -22,9 +22,9 @@ describe('catalogo: contenuto e versione', () => {
   });
 
   it('versione ricavata dal nome del file (decisione A7)', () => {
-    expect(catalog.version.foods.label).toBe('28/10/2026');
+    expect(catalog.version.foods.label).toBe('30/10/2026');
     expect(catalog.version.supplements.label).toBe('24/10/2026');
-    expect(catalog.version.label).toBe('Alimenti v. 28/10/2026 · Integratori v. 24/10/2026');
+    expect(catalog.version.label).toBe('Alimenti v. 30/10/2026 · Integratori v. 24/10/2026');
     expect(versionFromFileName('senza_data.json').date).toBeNull();
   });
 
