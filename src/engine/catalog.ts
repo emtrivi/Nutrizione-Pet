@@ -89,6 +89,7 @@ export const PROCESSING_LABELS: Record<string, string> = {
   raw: 'peso a crudo',
   cooked_boiled: 'peso a cotto (bollito)',
   cooked_steamed: 'peso a cotto (al vapore)',
+  cooked_roasted: 'peso a cotto (al forno)',
   dried: 'peso a secco (non cotto)',
   canned: 'peso sgocciolato (in scatola)',
 };

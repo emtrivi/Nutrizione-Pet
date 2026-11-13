@@ -1,5 +1,5 @@
 {
-  "versione": "0.5.4",
-  "data": "2026-11-02",
-  "note": "Catalogo alimenti del 30/10/2026: aggiunti dati che mancavano in 48 voci (soprattutto aminoacidi di cuore, rene, trippe e durelli; acido linoleico e ALA del cuore di pollo). Nessun valore già presente cambiato, calorie invariate."
+  "versione": "0.5.5",
+  "data": "2026-11-13",
+  "note": "Catalogo alimenti del 12/11/2026: aggiunti 8 tagli di pollo disossati (petto, sovracoscia, fuso, coscia intera; con e senza pelle; crudi e cotti al forno). Le altre 152 voci non cambiano."
 }

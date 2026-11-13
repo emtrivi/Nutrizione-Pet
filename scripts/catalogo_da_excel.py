@@ -36,7 +36,7 @@ TIPI = {
     'Verdura': ('vegetable', 'vegetable_generic'), 'Olio o grasso': ('other', 'fat_oil'),
     'Latticini': ('animal', 'dairy'),
 }
-STATI = {'Crudo': 'raw', 'Bollito': 'cooked_boiled', 'Cotto al vapore': 'cooked_steamed', 'Secco': 'dried', 'In scatola': 'canned'}
+STATI = {'Crudo': 'raw', 'Bollito': 'cooked_boiled', 'Cotto al vapore': 'cooked_steamed', 'Cotto al forno': 'cooked_roasted', 'Secco': 'dried', 'In scatola': 'canned'}
 AFFIDABILITA = {'Normale': 'estimated', 'Indicativo (da rivedere)': 'review_required', 'Indicativo': 'review_required'}
 SI_NO = {'Sì': True, 'Si': True, 'No': False}
 FORME_VIT_E = {

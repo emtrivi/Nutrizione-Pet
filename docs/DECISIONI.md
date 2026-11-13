@@ -216,3 +216,11 @@ come dichiarato nel foglio "Metodo e limiti II" e verificato confrontando tutte 
 uguali alla somma delle parti; acido linoleico e ALA del cuore di pollo), nessun valore già presente cambiato, nessun
 cambio di sezione, kcal invariate. 104 voci identiche. Catalogo della 0.5.3 in `archivio/CATALOGO_CANI_REVISIONATO_2026-10-28.json`.
 Alcuni valori (trippa, cuore di pollo) vengono da una copia secondaria dell'archivio USDA (cooks.com), come scritto nelle note.
+
+## 12/11/2026 — 8 tagli di pollo (importati il 13/11/2026)
+
+Foglio `data/catalog/fonti/Catalogo_Nutrizione_Pet_160_ALIMENTI_POLLO_2026-11-12.xlsx`: petto, sovracoscia, fuso e coscia
+intera disossati, con e senza pelle, crudi e cotti al forno, da USDA SR Legacy (affidabilità normale, kcal 4/9/4 già nel
+foglio e ricontrollate). Le 152 voci di prima sono identiche; catalogo della 0.5.4 in `archivio/`.
+Nuovo stato "Cotto al forno" (`cooked_roasted`, nell'app "peso a cotto (al forno)"): i valori sono per 100 g di carne
+cotta, quindi si pesa dopo la cottura.
