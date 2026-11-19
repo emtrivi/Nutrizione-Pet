@@ -234,3 +234,10 @@ cotta, quindi si pesa dopo la cottura.
   diario salvate prima non hanno il viola: il loro riepilogo si legge come allora ("… grigi").
 - Calcoli invariati. Suggerimenti e avvisi nel tempo trattano il viola in carenza come prima il rosso/arancione;
   il dato mancante (viola senza valore) non fa scattare avvisi, come prima il grigio.
+
+## 19/11/2026 — omega-3 totali (richiesta dell'utente)
+
+Per ogni ingrediente: il più alto tra il totale dichiarato nel catalogo e la somma degli omega-3 noti, ALA + EPA + DHA
+(EPA + DHA dichiarato insieme o come somma di EPA e DHA separati, contato una volta sola: si prende il più alto dei due).
+Poi la somma della ricetta. Sempre "almeno" (altri omega-3 non sono nel catalogo). Calcolato all'apertura del catalogo,
+i file e le impronte non cambiano; il rapporto omega-6/omega-3 resta acido linoleico ÷ (ALA + EPA + DHA).

@@ -1,5 +1,5 @@
 {
-  "versione": "0.6.0",
+  "versione": "0.6.1",
   "data": "2026-11-19",
-  "note": "Colori: viola «da verificare» per i dati mancanti o parziali già sotto il minimo; grigio solo per i nutrienti informativi. Riepilogo con verdi, arancioni, rossi, da verificare e informativi (anche nel PDF). Calcoli invariati."
+  "note": "Omega-3 totali: per ogni ingrediente il più alto tra il totale dichiarato e ALA + EPA + DHA (senza contare due volte EPA e DHA), sempre «almeno». Rapporto omega-6/omega-3 invariato."
 }
