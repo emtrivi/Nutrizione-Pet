@@ -82,7 +82,10 @@ export const NUTRIENTS: NutrientDef[] = [
   d('epa_dha', 'EPA + DHA (omega-3)', 'g', 'grassi', 'epa_dha', true),
   d('epa', 'EPA', 'g', 'grassi', 'epa', false, { informative: true }),
   d('dha', 'DHA', 'g', 'grassi', 'dha', false, { informative: true }),
-  d('omega3_total', 'Omega-3 totali', 'g', 'grassi', 'omega3_total', false, { informative: true }),
+  d('omega3_total', 'Omega-3 totali', 'g', 'grassi', 'omega3_total', false, {
+    informative: true,
+    note: 'Per ogni ingrediente il più alto tra il totale dichiarato e ALA + EPA + DHA: è sempre un “almeno”.',
+  }),
 
   // 3. Minerali
   d('calcium', 'Calcio', 'g', 'minerali', 'calcium', true),
@@ -151,6 +154,7 @@ export const SPECIAL_CATALOG_KEYS = new Set([
   'vitamin_e',
   'linoleic_acid',
   'c18_2_undifferentiated',
+  'omega3_total',
 ]);
 
 // ---------------------------------------------------------------------------

@@ -299,6 +299,36 @@ export function normalizeNutrients(
     ], { status: 'estimated' });
   }
 
+  // Omega-3 totali (19/11/2026): il più alto tra il totale dichiarato e la somma degli omega-3 noti
+  // dell'ingrediente, ALA + EPA + DHA (EPA + DHA dichiarato insieme o come somma dei due, mai entrambi).
+  // Altri omega-3 non sono nel catalogo: il valore resta sempre "almeno". I file del catalogo non cambiano.
+  const g = (k: string) => {
+    const r = raw[k];
+    return isKnown(r) ? convertUnit(r.value, r.unit, 'g') : null;
+  };
+  const ala = g('ala');
+  const epaDha = g('epa_dha');
+  const epa = g('epa');
+  const dha = g('dha');
+  const separate = epa === null && dha === null ? null : (epa ?? 0) + (dha ?? 0);
+  const marine = epaDha === null && separate === null ? null : Math.max(epaDha ?? 0, separate ?? 0);
+  const known = ala === null && marine === null ? null : (ala ?? 0) + (marine ?? 0);
+  const declared = g('omega3_total');
+  if (known !== null || declared !== null) {
+    const source = (raw.omega3_total ?? raw.ala ?? raw.epa_dha ?? raw.epa ?? raw.dha) as RawNutrient;
+    const fromSum = known !== null && (declared === null || known > declared);
+    out.omega3_total = nutrientFrom(
+      Math.max(declared ?? 0, known ?? 0) / scale,
+      source,
+      [
+        fromSum
+          ? 'Somma degli omega-3 noti dell’ingrediente (ALA + EPA + DHA); altri omega-3 non sono contati.'
+          : 'Totale dichiarato nel catalogo (non inferiore ad ALA + EPA + DHA noti).',
+      ],
+      { partial: true, status: fromSum ? 'calculated' : source.status },
+    );
+  }
+
   // Regole dell'utente: note e "da verificare".
   for (const [key, o] of Object.entries(overrides)) {
     const def = NUTRIENTS.find((n) => n.catalogKey === key);

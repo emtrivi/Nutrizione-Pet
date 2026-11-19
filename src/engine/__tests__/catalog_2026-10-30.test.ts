@@ -26,7 +26,8 @@ describe('solo aggiunte', () => {
     for (const old of before.foods) {
       const now = food(old.id);
       expect(now.kcalPerUnit).toBe(old.kcalPerUnit);
-      for (const [id, n] of Object.entries(old.nutrients)) expect(now.nutrients[id]?.value).toBe(n.value);
+      // omega-3 totali sono calcolati da ALA + EPA + DHA: cambiano se si aggiunge uno di questi
+      for (const [id, n] of Object.entries(old.nutrients)) if (id !== 'omega3_total') expect(now.nutrients[id]?.value).toBe(n.value);
     }
   });
 });
