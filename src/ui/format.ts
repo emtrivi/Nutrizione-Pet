@@ -50,6 +50,11 @@ export function formatFixedUnit(value: number, unit: Unit | string): string {
   return `${formatSmart(value)} ${unitLabel(unit)}`;
 }
 
+/** Grammi per la spesa: "850 g", "21 kg", "5,83 kg". */
+export function formatGrams(g: number): string {
+  return g >= 1000 ? `${formatSmart(g / 1000)} kg` : `${formatNumber(g)} g`;
+}
+
 /** Frase del segno "max?" (dettaglio del nutriente e PDF). */
 export function maxUnverifiedText(share: number): string {
   return `con i dati noti sei al ${formatNumber(share * 100)}% del massimo, il resto non è verificabile`;

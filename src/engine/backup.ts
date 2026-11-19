@@ -5,6 +5,7 @@ import { migrateData } from './migrations';
 import type { PriceBook } from './prices';
 import type { DiaryEntry } from './diary';
 import type { Recipe } from './recipes';
+import { DEFAULT_SHOPPING, sanitizeShopping, type ShoppingData } from './shopping';
 import type { LegalMaxMode } from './status';
 import type { ActivityLevel, Dog } from './types';
 
@@ -71,6 +72,8 @@ export interface PersonalData {
   diary: DiaryEntry[];
   prices: PriceBook;
   settings: Settings;
+  /** Spesa: previsione per i prossimi giorni (19/11/2026). Manca nei dati e nei backup di prima. */
+  shopping: ShoppingData;
   lastBackupAt: string | null;
 }
 
@@ -91,7 +94,15 @@ export function mergeSettings(saved: Partial<Settings> | Record<string, unknown>
 }
 
 export function emptyPersonalData(): PersonalData {
-  return { dogs: [], recipes: [], diary: [], prices: {}, settings: { ...DEFAULT_SETTINGS }, lastBackupAt: null };
+  return {
+    dogs: [],
+    recipes: [],
+    diary: [],
+    prices: {},
+    settings: { ...DEFAULT_SETTINGS },
+    shopping: { ...DEFAULT_SHOPPING, plans: [], extras: [] },
+    lastBackupAt: null,
+  };
 }
 
 export interface BackupFile {
@@ -196,6 +207,8 @@ export function parseBackup(text: string, now: Date): RestoreResult {
       diary: Array.isArray(data.diary) ? (data.diary as DiaryEntry[]) : [],
       prices: isObject(data.prices) ? (data.prices as PriceBook) : {},
       settings: mergeSettings(isObject(data.settings) ? data.settings : undefined),
+      // Backup di prima della Spesa: spesa vuota.
+      shopping: sanitizeShopping(data.shopping),
       // Dopo un ripristino, l'ultimo backup è quello appena letto.
       lastBackupAt: typeof parsed.exportedAt === 'string' ? parsed.exportedAt : null,
     },
