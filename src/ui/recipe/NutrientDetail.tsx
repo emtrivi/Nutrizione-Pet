@@ -5,7 +5,7 @@ import { getCatalog, isDeficit, shortName, type Color, type EvaluateInput, type 
 import { SuggestionsPanel } from './Suggestions';
 import { Bar } from '../NutrientBar';
 import { Button, Card, Hint, Notice, Row } from '../components';
-import { formatFixedUnit, formatSmart, unitLabel } from '../format';
+import { formatFixedUnit, formatSmart, maxUnverifiedText, unitLabel } from '../format';
 import { colors } from '../theme';
 
 const catalog = getCatalog();
@@ -58,6 +58,12 @@ export function NutrientDetail({
         <Bar bar={view.bar} partial={total.partial} toVerify={ev.color === 'viola'} />
         <Text style={{ fontSize: 15, color: colors.text }}>Colore {COLOR_WORD[ev.color]}.</Text>
         {greyReason ? <Notice tone="info">{greyReason}</Notice> : null}
+        {ev.maxUnverified !== null ? (
+          <Notice tone="warning">
+            Massimo non verificabile («max?»): {maxUnverifiedText(ev.maxUnverified)}, perché il dato manca in {total.missingIn.length}{' '}
+            {total.missingIn.length === 1 ? 'ingrediente' : 'ingredienti'}. Il colore resta verde.
+          </Notice>
+        ) : null}
         {total.partial && total.value !== null ? (
           <Notice tone="warning">
             Valore parziale: il dato manca in {total.missingIn.length} ingredienti, quindi il valore vero è “almeno” questo.

@@ -56,9 +56,12 @@ export function NutrientBarRow({
   partial,
   subtitle,
   onPress,
+  maxHint = false,
 }: {
   name: string;
   valueText: string;
+  /** Segno "max?": massimo non verificabile con i dati parziali (il colore resta verde). */
+  maxHint?: boolean;
   color: Color;
   bar: BarGeometry;
   partial: boolean;
@@ -70,13 +73,21 @@ export function NutrientBarRow({
       onPress={onPress}
       disabled={!onPress}
       accessibilityRole={onPress ? 'button' : undefined}
-      accessibilityLabel={`${name}: ${valueText}, ${color === 'viola' ? 'da verificare' : color}${partial ? ', valore parziale' : ''}`}
+      accessibilityLabel={`${name}: ${valueText}, ${color === 'viola' ? 'da verificare' : color}${partial ? ', valore parziale' : ''}${maxHint ? ', massimo non verificabile' : ''}`}
       style={({ pressed }) => ({ paddingVertical: 6, gap: 2, opacity: pressed ? 0.6 : 1 })}
     >
       <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
         <View style={{ width: 10, height: 10, borderRadius: 5, backgroundColor: DOT[color] }} />
         <Text style={{ flex: 1, fontSize: 15, color: colors.text }}>{name}</Text>
         <Text style={{ fontSize: 15, color: colors.text }}>{valueText}</Text>
+        {maxHint ? (
+          <Text
+            accessibilityLabel="massimo non verificabile"
+            style={{ fontSize: 11, fontWeight: '700', color: colors.warningText, backgroundColor: colors.warningBg, paddingHorizontal: 5, paddingVertical: 1, borderRadius: 6, overflow: 'hidden' }}
+          >
+            max?
+          </Text>
+        ) : null}
       </View>
       <Bar bar={bar} partial={partial} toVerify={color === 'viola'} />
       {subtitle ? <Text style={{ fontSize: 12, color: colors.muted }}>{subtitle}</Text> : null}

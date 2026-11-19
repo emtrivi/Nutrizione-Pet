@@ -44,6 +44,11 @@ export interface Settings {
   sanity: SanityThresholds;
   /** Massimo di legge (L) quando il nutriente arriva solo da alimenti naturali (punto aperto). */
   legalMaxNaturalMode: LegalMaxMode;
+  /**
+   * Segno "max?" (19/11/2026): nutriente con un massimo e dato parziale, verde, il cui valore noto arriva
+   * almeno a questa percentuale del massimo (all'inizio 70).
+   */
+  maxUnverifiedPct: number;
 }
 
 export const DEFAULT_SETTINGS: Settings = {
@@ -56,6 +61,7 @@ export const DEFAULT_SETTINGS: Settings = {
   calorieSplit: { proteica: 55, energetica: 30, verdure: 2, grassi: 8, frattaglie: 5 },
   sanity: { mealPctOfBodyWeight: 6, vegetablesPctOfFood: 30, liverPctOfFood: 5, otherOffalPctOfFood: 5 },
   legalMaxNaturalMode: 'avviso',
+  maxUnverifiedPct: 70,
 };
 
 export interface PersonalData {
@@ -76,6 +82,11 @@ export function mergeSettings(saved: Partial<Settings> | Record<string, unknown>
     ...s,
     calorieSplit: { ...DEFAULT_SETTINGS.calorieSplit, ...s.calorieSplit },
     sanity: { ...DEFAULT_SETTINGS.sanity, ...s.sanity },
+    // Backup di versioni precedenti: il campo manca (o non è valido) → valore iniziale.
+    maxUnverifiedPct:
+      typeof s.maxUnverifiedPct === 'number' && s.maxUnverifiedPct >= 1 && s.maxUnverifiedPct <= 100
+        ? s.maxUnverifiedPct
+        : DEFAULT_SETTINGS.maxUnverifiedPct,
   };
 }
 

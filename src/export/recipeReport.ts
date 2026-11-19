@@ -20,7 +20,7 @@ import {
   type Settings,
 } from '../engine';
 import { describeDose } from '../ui/recipe/doseText';
-import { formatEuro, formatFixedUnit, formatNumber, formatSmart, priceRateText, unitLabel } from '../ui/format';
+import { formatEuro, formatFixedUnit, formatNumber, formatSmart, maxUnverifiedText, priceRateText, unitLabel } from '../ui/format';
 
 export interface RecipeReportInput {
   recipeName: string;
@@ -201,6 +201,7 @@ function nutrientNotes(v: NutrientView, catalog: Catalog): string {
   if (v.total.value === null) notes.push(v.evaluation.color === 'viola' ? 'dato mancante, da verificare' : 'dato non disponibile negli ingredienti');
   else if (v.total.partial) notes.push(`valore parziale: manca in ${v.total.missingIn.map(name).join(', ')}`);
   if (v.evaluation.reason === 'parziale_sotto_minimo') notes.push('già sotto il minimo con i dati noti: da verificare');
+  if (v.evaluation.maxUnverified !== null) notes.push(`max?: ${maxUnverifiedText(v.evaluation.maxUnverified)}`);
   if (v.total.toVerify) notes.push('un valore è da verificare');
   if (v.evaluation.legalMaxWarning) notes.push(v.evaluation.legalMaxWarning);
   if (!v.def.inFediaf) notes.push('solo informativo');
@@ -268,6 +269,7 @@ function settingsSection(input: RecipeReportInput): string {
 ${row('Zona arancione', `fino al ${formatNumber(settings.tolerance * 100)}% fuori dal limite`)}
 ${row('Aumento del 10% degli aminoacidi', settings.aminoAcidDigestibilityIncrease ? 'acceso' : 'spento')}
 ${row('Massimo di legge (L) su alimenti naturali', settings.legalMaxNaturalMode === 'avviso' ? 'solo avviso' : 'rosso')}
+${row('Segno «max?»', `dal ${formatNumber(settings.maxUnverifiedPct)}% del massimo, con dati parziali`)}
 ${mods || row('Fabbisogni modificati', 'nessuno: valori FEDIAF')}
 </table>`;
 }

@@ -50,6 +50,11 @@ export function formatFixedUnit(value: number, unit: Unit | string): string {
   return `${formatSmart(value)} ${unitLabel(unit)}`;
 }
 
+/** Frase del segno "max?" (dettaglio del nutriente e PDF). */
+export function maxUnverifiedText(share: number): string {
+  return `con i dati noti sei al ${formatNumber(share * 100)}% del massimo, il resto non è verificabile`;
+}
+
 /** Testo accanto al pallino viola. */
 export const TO_VERIFY_TEXT = 'dato mancante, da verificare';
 

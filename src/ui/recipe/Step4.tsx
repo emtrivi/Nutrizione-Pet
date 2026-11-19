@@ -291,6 +291,7 @@ export function Step4({
                     bar={v.bar}
                     partial={v.total.partial}
                     subtitle={subtitle(v)}
+                    maxHint={v.evaluation.maxUnverified !== null}
                     onPress={() => setDetail(v)}
                   />
                 ))

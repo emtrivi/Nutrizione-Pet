@@ -97,6 +97,7 @@ export const INFO: Record<string, InfoTopic> = {
       { label: 'Viola, “da verificare”', text: 'C’è un riferimento FEDIAF ma nessun ingrediente porta il dato (dato mancante), oppure il dato è parziale e il valore noto è già sotto il minimo: non si sa se manca davvero. Un dato mancante non è mai zero e non è mai verde.' },
       { label: 'Grigio, “informativo”', text: 'FEDIAF non dà un riferimento per questo nutriente: si mostra solo il valore.' },
       { label: 'A righe, “almeno X”', text: 'Valore parziale: il nutriente manca in alcuni ingredienti. Un rosso per eccesso resta valido; un verde o una carenza possono cambiare.' },
+      { label: '«max?»', text: 'Nutriente verde con un massimo e dati parziali, il cui valore noto è già vicino al massimo (all’inizio dal 70%, modificabile in Impostazioni): il massimo non si può verificare finché mancano dati. Il colore resta verde.' },
       { label: 'Massimo N', text: 'Massimo nutrizionale FEDIAF.' },
       { label: 'Massimo L', text: 'Massimo di legge FEDIAF, per i nutrienti aggiunti come additivi; si controlla sulla sostanza secca della ricetta.' },
       { label: '“Dato indicativo”', text: 'Alimento del catalogo da rivedere (spesso verdure al vapore con dati di bollitura).' },

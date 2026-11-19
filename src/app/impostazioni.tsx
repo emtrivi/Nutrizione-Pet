@@ -29,6 +29,7 @@ function toTexts(s: Settings): Texts {
   const m = s.multipliers ?? DEFAULT_MULTIPLIERS;
   const t: Texts = {
     tolerance: decimalToText(Math.round(s.tolerance * 1000) / 10),
+    maxUnverifiedPct: decimalToText(s.maxUnverifiedPct),
     backupReminderDays: String(s.backupReminderDays),
     diaryAverageDays: String(s.diaryAverageDays),
     diaryAlertDays: String(s.diaryAlertDays),
@@ -78,6 +79,7 @@ export default function ImpostazioniScreen() {
         sanity,
         multipliers: same ? null : multipliers,
         tolerance: num('tolerance', 'Zona arancione', 1, 50) / 100,
+        maxUnverifiedPct: num('maxUnverifiedPct', 'Segno «max?»', 1, 100),
         backupReminderDays: Math.round(num('backupReminderDays', 'Promemoria backup', 1, 365)),
         diaryAverageDays: [5, 7, 14, 21, 30].includes(Math.round(num('diaryAverageDays', 'Media del diario', 5, 30)))
           ? Math.round(num('diaryAverageDays', 'Media del diario', 5, 30))
@@ -119,6 +121,11 @@ export default function ImpostazioniScreen() {
 
       <Card title="Colori">
         <Field label="Zona arancione: fuori dal limite fino al (%)" {...f('tolerance')} hint="Confermato dall’utente: 10%." />
+        <Field
+          label="Segno «max?» quando il valore noto arriva al (% del massimo)"
+          {...f('maxUnverifiedPct')}
+          hint="All’inizio 70%. Solo per nutrienti con un massimo e dati parziali; il colore resta verde."
+        />
         <Segmented
           label="Massimo di legge (L) se il nutriente arriva solo da alimenti naturali"
           options={[

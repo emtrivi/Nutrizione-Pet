@@ -311,6 +311,7 @@ export function evaluateRecipe(
             supplementKeys,
             legalMaxMode: settings.legalMaxNaturalMode,
             tolerance,
+            maxUnverifiedShare: settings.maxUnverifiedPct / 100,
           })
         : {
             ...classify(null, true, { min: req.minPer1000, max: req.maxNPer1000 }, tolerance),
@@ -318,6 +319,7 @@ export function evaluateRecipe(
             limitsPer1000: { min: req.minPer1000, max: req.maxNPer1000 },
             maxKind: null,
             legalMaxWarning: null,
+            maxUnverified: null,
           };
     nutrients[def.id] = { def, req, total, evaluation, bar: barGeometry(evaluation.valuePer1000, evaluation.limitsPer1000, tolerance) };
   }

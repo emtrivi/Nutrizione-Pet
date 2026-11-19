@@ -82,6 +82,12 @@ export interface NutrientEvaluation extends Classification {
   maxKind: 'N' | 'L' | 'modificato' | null;
   /** Massimo di legge superato solo da alimenti naturali: avviso, senza colore rosso. */
   legalMaxWarning: string | null;
+  /**
+   * Segno "max?": verde con dato parziale e un massimo, e il valore noto arriva già almeno alla soglia
+   * (all'inizio il 70%) del massimo. Quota del massimo raggiunta (0,9 = 90%), altrimenti null.
+   * Il colore non cambia: il massimo non si può verificare finché mancano dati.
+   */
+  maxUnverified: number | null;
 }
 
 export interface EvaluateContext {
@@ -91,6 +97,8 @@ export interface EvaluateContext {
   supplementKeys: string[];
   legalMaxMode: LegalMaxMode;
   tolerance?: number;
+  /** Soglia del segno "max?" come quota del massimo (0,7 = 70%). */
+  maxUnverifiedShare?: number;
 }
 
 /** Valuta un nutriente della ricetta rispetto ai fabbisogni, per 1.000 kcal. */
@@ -125,7 +133,13 @@ export function evaluateNutrient(
 
   const limitsPer1000: Limits = { min: req.minPer1000, max: chosen?.value ?? null };
   const c = classify(valuePer1000, total.partial, limitsPer1000, ctx.tolerance);
-  return { ...c, valuePer1000, limitsPer1000, maxKind: chosen?.kind ?? null, legalMaxWarning };
+  const share = ctx.maxUnverifiedShare ?? 0.7;
+  const maxUnverified =
+    c.color === 'verde' && total.partial && valuePer1000 !== null && limitsPer1000.max !== null && limitsPer1000.max > 0 &&
+    valuePer1000 >= share * limitsPer1000.max - EPS
+      ? valuePer1000 / limitsPer1000.max
+      : null;
+  return { ...c, valuePer1000, limitsPer1000, maxKind: chosen?.kind ?? null, legalMaxWarning, maxUnverified };
 }
 
 /** Riepilogo in alto, es. "37 verdi, 0 arancioni, 2 rossi, 3 da verificare, 1 informativo". */
