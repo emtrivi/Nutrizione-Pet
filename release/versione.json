@@ -1,5 +1,5 @@
 {
-  "versione": "0.5.5",
-  "data": "2026-11-13",
-  "note": "Catalogo alimenti del 12/11/2026: aggiunti 8 tagli di pollo disossati (petto, sovracoscia, fuso, coscia intera; con e senza pelle; crudi e cotti al forno). Le altre 152 voci non cambiano."
+  "versione": "0.6.0",
+  "data": "2026-11-19",
+  "note": "Colori: viola «da verificare» per i dati mancanti o parziali già sotto il minimo; grigio solo per i nutrienti informativi. Riepilogo con verdi, arancioni, rossi, da verificare e informativi (anche nel PDF). Calcoli invariati."
 }

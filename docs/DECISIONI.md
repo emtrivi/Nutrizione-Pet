@@ -224,3 +224,13 @@ intera disossati, con e senza pelle, crudi e cotti al forno, da USDA SR Legacy (
 foglio e ricontrollate). Le 152 voci di prima sono identiche; catalogo della 0.5.4 in `archivio/`.
 Nuovo stato "Cotto al forno" (`cooked_roasted`, nell'app "peso a cotto (al forno)"): i valori sono per 100 g di carne
 cotta, quindi si pesa dopo la cottura.
+
+## 19/11/2026 — colore viola "da verificare" (richiesta dell'utente)
+
+- **Grigio** = solo informativo: FEDIAF non dà un riferimento.
+- **Viola** = da verificare: c'è un riferimento ma nessun ingrediente porta il dato ("dato mancante, da verificare"),
+  oppure il dato è parziale e il valore noto è già sotto il minimo (non si sa se manca davvero).
+- Riepilogo: "X verdi, Y arancioni, Z rossi, N da verificare, M informativi" (passo 4, PDF, diario). Le copie del
+  diario salvate prima non hanno il viola: il loro riepilogo si legge come allora ("… grigi").
+- Calcoli invariati. Suggerimenti e avvisi nel tempo trattano il viola in carenza come prima il rosso/arancione;
+  il dato mancante (viola senza valore) non fa scattare avvisi, come prima il grigio.
