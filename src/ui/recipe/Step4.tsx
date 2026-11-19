@@ -9,6 +9,7 @@ import { parseDecimal } from '../../data/dogForm';
 import {
   fediaf,
   getCatalog,
+  isDeficit,
   RECIPE_CATEGORY_LABELS,
   substituteGrams,
   shortName,
@@ -16,6 +17,7 @@ import {
   summaryText,
   unitPrice,
   type CatalogItem,
+  type Color,
   type NutrientView,
   type PriceBook,
   type RecipeCategory,
@@ -23,7 +25,7 @@ import {
 } from '../../engine';
 import { NutrientBarRow, Bar } from '../NutrientBar';
 import { Badge, Button, Card, Hint, InfoButton, Notice, Row, styles } from '../components';
-import { formatEuro, formatFixedUnit, formatNumber, formatSmart, priceRateText } from '../format';
+import { TO_VERIFY_TEXT, formatEuro, formatFixedUnit, formatNumber, formatSmart, priceRateText } from '../format';
 import { colors } from '../theme';
 import { draftLines, type Draft, type DraftLine } from './draft';
 import { NutrientDetail } from './NutrientDetail';
@@ -31,7 +33,7 @@ import { describeDose } from './doseText';
 import { CatalogPicker } from './Pickers';
 
 const catalog = getCatalog();
-const DOT = { verde: colors.green, arancione: colors.orange, rosso: colors.red, grigio: colors.grey };
+const DOT: Record<Color, string> = { verde: colors.green, arancione: colors.orange, rosso: colors.red, viola: colors.violet, grigio: colors.grey };
 
 const SLIDER_DEFAULT_MAX: Record<string, number> = { proteica: 1000, energetica: 800, verdure: 300, grassi: 60, frattaglie: 200, altro: 300 };
 
@@ -120,8 +122,8 @@ function DoseBar({ dose, max }: { dose: number; max: number }) {
 
 function valueText(v: NutrientView): string {
   const ev = v.evaluation;
-  if (ev.valuePer1000 === null) return v.total.value === null ? 'non disponibile' : '—';
-  return `${v.total.partial ? 'almeno ' : ''}${formatFixedUnit(ev.valuePer1000, v.def.unit)}`;
+  if (ev.valuePer1000 === null) return v.total.value === null ? (ev.color === 'viola' ? TO_VERIFY_TEXT : 'non disponibile') : '—';
+  return `${v.total.partial ? 'almeno ' : ''}${formatFixedUnit(ev.valuePer1000, v.def.unit)}${ev.color === 'viola' ? ' · da verificare' : ''}`;
 }
 
 function subtitle(v: NutrientView): string | undefined {
@@ -163,7 +165,7 @@ export function Step4({
   const suggestCtx = useMemo(() => ({ catalog, fediaf, settings: data.settings, prices }), [data.settings, prices]);
   const deficits = ev.groups
     .flatMap((g) => g.items)
-    .filter((v) => v.def.inFediaf && v.evaluation.direction === 'carenza' && (v.evaluation.color === 'rosso' || v.evaluation.color === 'arancione'));
+    .filter((v) => v.def.inFediaf && isDeficit(v.evaluation));
 
   const addSupplement = (key: string, dose: number) => {
     const exists = draft.supplements.some((x) => x.key === key);
@@ -247,7 +249,7 @@ export function Step4({
                 key={v.def.id}
                 accessibilityRole="button"
                 onPress={() => setDetail(v)}
-                style={[styles.segment, { borderColor: v.evaluation.color === 'rosso' ? colors.red : colors.orange }]}
+                style={[styles.segment, { borderColor: DOT[v.evaluation.color] }]}
               >
                 <Text style={styles.segmentText}>{v.def.nameIt}</Text>
               </Pressable>
@@ -265,7 +267,7 @@ export function Step4({
       <Text style={{ fontSize: 20, fontWeight: '700', color: colors.text }}>Nutrienti</Text>
       <Hint>Valori ogni 1.000 kcal della ricetta, confrontati con la tabella FEDIAF {ev.requirements.table}. Tocca un nutriente per i dettagli.</Hint>
       {ev.groups.map((g) => {
-        const problems = g.items.filter((v) => v.def.inFediaf && (v.evaluation.color === 'rosso' || v.evaluation.color === 'arancione')).length;
+        const problems = g.items.filter((v) => v.def.inFediaf && (v.evaluation.color === 'rosso' || v.evaluation.color === 'arancione' || isDeficit(v.evaluation))).length;
         const isOpen = open[g.group] ?? problems > 0;
         return (
           <Card key={g.group}>

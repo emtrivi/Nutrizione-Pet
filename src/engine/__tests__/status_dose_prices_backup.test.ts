@@ -13,7 +13,7 @@ import { getCatalog } from '../bundledData';
 import { doseStatus, interpolate, suggestDose } from '../dose';
 import { computeCost, formatEuro, unitPrice } from '../prices';
 import type { Requirement } from '../requirements';
-import { classify, evaluateNutrient, summarize } from '../status';
+import { classify, evaluateNutrient, isDeficit, summarize } from '../status';
 import type { NutrientTotal } from '../totals';
 import type { Dog } from '../types';
 
@@ -42,9 +42,35 @@ describe('colori: verde, arancione entro il 10%, rosso oltre', () => {
     expect(classify(1e9, false, { min: 100, max: null }).color).toBe('verde');
   });
 
-  it('grigio: nessun riferimento o dato mancante', () => {
+  it('grigio: nessun riferimento (solo informativo)', () => {
     expect(classify(5, false, { min: null, max: null })).toMatchObject({ color: 'grigio', reason: 'nessun_riferimento' });
-    expect(classify(null, true, lim)).toMatchObject({ color: 'grigio', reason: 'dato_mancante' });
+    expect(classify(null, true, { min: null, max: null })).toMatchObject({ color: 'grigio', reason: 'nessun_riferimento' });
+  });
+
+  it('viola, da verificare: c’è un riferimento ma il dato manca', () => {
+    expect(classify(null, true, lim)).toMatchObject({ color: 'viola', reason: 'dato_mancante', direction: null });
+    expect(classify(null, true, { min: null, max: 200 })).toMatchObject({ color: 'viola', reason: 'dato_mancante' });
+  });
+
+  it('viola, da verificare: dato parziale già sotto il minimo (5% o 50% sotto)', () => {
+    expect(classify(95, true, lim)).toMatchObject({ color: 'viola', direction: 'carenza', reason: 'parziale_sotto_minimo', provisional: true });
+    expect(classify(50, true, lim)).toMatchObject({ color: 'viola', direction: 'carenza', distance: 0.5 });
+    // senza "parziale" resta arancione / rosso come prima
+    expect(classify(95, false, lim).color).toBe('arancione');
+    expect(classify(50, false, lim).color).toBe('rosso');
+  });
+
+  it('dato parziale: un eccesso resta rosso o arancione, un verde resta verde', () => {
+    expect(classify(300, true, lim).color).toBe('rosso');
+    expect(classify(210, true, lim).color).toBe('arancione');
+    expect(classify(150, true, lim).color).toBe('verde');
+  });
+
+  it('carenza "da guardare": rossa, arancione o viola parziale; non il dato mancante', () => {
+    expect(isDeficit(classify(50, false, lim))).toBe(true);
+    expect(isDeficit(classify(50, true, lim))).toBe(true);
+    expect(isDeficit(classify(null, true, lim))).toBe(false);
+    expect(isDeficit(classify(300, true, lim))).toBe(false);
   });
 
   it('valore parziale: eccesso resta valido, verde e carenza possono cambiare', () => {
@@ -59,10 +85,11 @@ describe('colori: verde, arancione entro il 10%, rosso oltre', () => {
   });
 
   it('riepilogo', () => {
-    expect(summarize(['rosso', 'rosso', 'arancione', 'grigio', 'verde'])).toEqual({
+    expect(summarize(['rosso', 'rosso', 'arancione', 'grigio', 'verde', 'viola'])).toEqual({
       verde: 1,
       arancione: 1,
       rosso: 2,
+      viola: 1,
       grigio: 1,
     });
   });

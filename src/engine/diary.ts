@@ -229,7 +229,7 @@ export function diaryAverage(
     .map((d) => entryForDay(entries, dogId, d, endDay)?.snapshot)
     .filter((s): s is DiarySnapshot => !!s);
   const nutrients: Record<string, AverageNutrient> = {};
-  const summary: Record<Color, number> = { verde: 0, arancione: 0, rosso: 0, grigio: 0 };
+  const summary: Record<Color, number> = { verde: 0, arancione: 0, rosso: 0, viola: 0, grigio: 0 };
   for (const def of NUTRIENTS) {
     const items = snaps.map((s) => s.nutrients[def.id]).filter((x): x is SnapshotNutrient => !!x);
     const values = items.map((x) => x.valuePer1000).filter((v): v is number => v !== null);
@@ -267,28 +267,35 @@ export function diaryAverage(
 export interface Streak {
   id: string;
   name: string;
-  /** Giorni di fila, fino a "endDay" compreso, con il nutriente rosso o arancione. */
+  /** Giorni di fila, fino a "endDay" compreso, con il nutriente rosso, arancione o in carenza "da verificare". */
   days: number;
-  worst: 'rosso' | 'arancione';
+  worst: 'rosso' | 'arancione' | 'viola';
   direction: 'carenza' | 'eccesso' | null;
 }
 
+function isDeficitOrExcess(n: { color: Color; direction: 'carenza' | 'eccesso' | null }): boolean {
+  return n.color === 'rosso' || n.color === 'arancione' || (n.color === 'viola' && n.direction === 'carenza');
+}
+
 /**
- * Nutrienti (con riga FEDIAF) rossi o arancioni da almeno "threshold" giorni di fila fino a endDay.
+ * Nutrienti (con riga FEDIAF) rossi o arancioni (o viola in carenza) da almeno "threshold" giorni di fila fino a endDay.
  * Un giorno senza ricetta interrompe la serie (non si sa cosa abbia mangiato).
  */
 export function problemStreaks(entries: DiaryEntry[], dogId: string, endDay: string, threshold: number): Streak[] {
   const out: Streak[] = [];
   for (const def of NUTRIENTS.filter((n) => n.inFediaf)) {
     let days = 0;
-    let worst: Streak['worst'] = 'arancione';
+    let worst: Streak['worst'] = 'viola';
     let direction: Streak['direction'] = null;
     for (let i = 0; i < 366; i++) {
       const snap = entryForDay(entries, dogId, addDays(endDay, -i), endDay)?.snapshot;
       const n = snap?.nutrients[def.id];
-      if (!n || (n.color !== 'rosso' && n.color !== 'arancione')) break;
+      // Viola in carenza (dato parziale già sotto il minimo) conta come prima del 19/11/2026,
+      // quando era rosso o arancione.
+      if (!n || !isDeficitOrExcess(n)) break;
       days++;
       if (n.color === 'rosso') worst = 'rosso';
+      else if (n.color === 'arancione' && worst !== 'rosso') worst = 'arancione';
       direction ??= n.direction;
     }
     if (days >= threshold) out.push({ id: def.id, name: def.nameIt, days, worst, direction });

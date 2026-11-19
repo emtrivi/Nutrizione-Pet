@@ -6,6 +6,7 @@ import {
   ACTIVITY_LABELS,
   RECIPE_CATEGORY_LABELS,
   shortName,
+  summaryText,
   unitPrice,
   type Catalog,
   type Color,
@@ -52,8 +53,8 @@ const MCS_LABELS: Record<string, string> = {
   perdita_moderata: 'Perdita moderata',
   perdita_grave: 'Perdita grave',
 };
-const COLOR_HEX: Record<Color, string> = { verde: '#2e7d32', arancione: '#e08600', rosso: '#c62828', grigio: '#9e9e9e' };
-const COLOR_WORD: Record<Color, string> = { verde: 'verde', arancione: 'arancione', rosso: 'rosso', grigio: 'grigio' };
+const COLOR_HEX: Record<Color, string> = { verde: '#2e7d32', arancione: '#e08600', rosso: '#c62828', viola: '#7b3fa0', grigio: '#9e9e9e' };
+const COLOR_WORD: Record<Color, string> = { verde: 'verde', arancione: 'arancione', rosso: 'rosso', viola: 'da verificare', grigio: 'informativo' };
 const CATEGORY_ORDER = ['proteica', 'energetica', 'verdure', 'grassi', 'frattaglie', 'altro'];
 
 const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -197,8 +198,9 @@ function nutrientNotes(v: NutrientView, catalog: Catalog): string {
     return item ? shortName(item) : k;
   };
   const notes: string[] = [];
-  if (v.total.value === null) notes.push('dato non disponibile negli ingredienti');
+  if (v.total.value === null) notes.push(v.evaluation.color === 'viola' ? 'dato mancante, da verificare' : 'dato non disponibile negli ingredienti');
   else if (v.total.partial) notes.push(`valore parziale: manca in ${v.total.missingIn.map(name).join(', ')}`);
+  if (v.evaluation.reason === 'parziale_sotto_minimo') notes.push('già sotto il minimo con i dati noti: da verificare');
   if (v.total.toVerify) notes.push('un valore è da verificare');
   if (v.evaluation.legalMaxWarning) notes.push(v.evaluation.legalMaxWarning);
   if (!v.def.inFediaf) notes.push('solo informativo');
@@ -228,7 +230,7 @@ function nutrientsSection(input: RecipeReportInput): string {
     })
     .join('');
   return `<h2>Nutrienti</h2>
-<p class="note">Confronto ogni 1.000 kcal della ricetta con la tabella FEDIAF ${ev.requirements.table} (cane adulto). Verde: nei limiti; arancione: fuori fino al ${formatNumber(input.settings.tolerance * 100)}%; rosso: oltre; grigio: dato mancante o nessun riferimento. «Almeno»: il dato manca in qualche ingrediente. N = massimo nutrizionale, L = massimo di legge (per sostanza secca, convertito).</p>
+<p class="note">Confronto ogni 1.000 kcal della ricetta con la tabella FEDIAF ${ev.requirements.table} (cane adulto). Verde: nei limiti; arancione: fuori fino al ${formatNumber(input.settings.tolerance * 100)}%; rosso: oltre; viola, da verificare: dato mancante, oppure parziale e già sotto il minimo; grigio: nessun riferimento FEDIAF, solo informativo. «Almeno»: il dato manca in qualche ingrediente. N = massimo nutrizionale, L = massimo di legge (per sostanza secca, convertito).</p>
 ${groups}`;
 }
 
@@ -302,7 +304,7 @@ table { border-collapse: collapse; width: 100%; } .grid { table-layout: fixed; }
 <div class="disclaimer">Strumento di supporto, da validare con la nutrizionista.</div>
 <h2>Riepilogo</h2><table class="kv">
 ${row('Calorie della ricetta', kcalLine, `colore ${COLOR_WORD[ev.kcal.color]}: verde entro ±5%, arancione entro ±10%`)}
-${row('Nutrienti FEDIAF', `${s.verde} verdi, ${s.arancione} arancioni, ${s.rosso} rossi, ${s.grigio} grigi`)}
+${row('Nutrienti FEDIAF', summaryText(s))}
 ${row('Prezzo al giorno', `${formatEuro(ev.cost.total)}${ev.cost.incomplete ? ' (incompleto)' : ''}`)}
 ${row('Tabella FEDIAF', String(ev.requirements.table))}
 </table>

@@ -151,13 +151,23 @@ describe('valutazione della ricetta di prova (tabella 95, 1.218 kcal)', () => {
     const n = NUTRIENTS.filter((d) => d.inFediaf).length;
     expect(n).toBe(43);
     const s = ev.summary;
-    expect(s.verde + s.arancione + s.rosso + s.grigio).toBe(43);
-    expect(summaryText({ rosso: 2, arancione: 4, verde: 0, grigio: 3 })).toBe('2 rossi, 4 arancioni, 3 grigi');
+    expect(s.verde + s.arancione + s.rosso + s.viola + s.grigio).toBe(43);
+    const fediafViews = NUTRIENTS.filter((d) => d.inFediaf).map((d) => ev.nutrients[d.id]!.evaluation);
+    // viola = dato mancante o parziale già sotto il minimo; grigio = nessun riferimento FEDIAF
+    expect(s.viola).toBe(fediafViews.filter((e) => e.reason === 'dato_mancante' || e.reason === 'parziale_sotto_minimo').length);
+    expect(s.grigio).toBe(fediafViews.filter((e) => e.reason === 'nessun_riferimento').length);
+  });
+
+  it('testo del riepilogo: tutti i conteggi, "da verificare" e "informativi"', () => {
+    expect(summaryText({ verde: 37, arancione: 0, rosso: 0, viola: 4, grigio: 2 })).toBe('37 verdi, 0 arancioni, 0 rossi, 4 da verificare, 2 informativi');
+    expect(summaryText({ verde: 1, arancione: 1, rosso: 1, viola: 0, grigio: 1 })).toBe('1 verde, 1 arancione, 1 rosso, 0 da verificare, 1 informativo');
+    // copia del diario salvata prima del viola: il grigio comprendeva anche i dati mancanti
+    expect(summaryText({ rosso: 2, arancione: 4, verde: 0, grigio: 3 })).toBe('0 verdi, 4 arancioni, 2 rossi, 3 grigi');
   });
 
   it('nei gruppi i problemi vengono prima', () => {
     const minerals = ev.groups.find((g) => g.group === 'minerali')!.items.map((v) => v.evaluation.color);
-    const rank = { rosso: 0, arancione: 1, verde: 2, grigio: 3 };
+    const rank = { rosso: 0, arancione: 1, viola: 2, verde: 3, grigio: 4 };
     expect([...minerals].sort((a, b) => rank[a] - rank[b])).toEqual(minerals);
     expect(minerals[0]).toBe('rosso');
   });

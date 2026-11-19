@@ -50,6 +50,9 @@ export function formatFixedUnit(value: number, unit: Unit | string): string {
   return `${formatSmart(value)} ${unitLabel(unit)}`;
 }
 
+/** Testo accanto al pallino viola. */
+export const TO_VERIFY_TEXT = 'dato mancante, da verificare';
+
 export function formatEuro(value: number): string {
   return `${formatNumber(value, 2)} €`;
 }

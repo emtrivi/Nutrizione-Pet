@@ -6,7 +6,7 @@ import { Pressable, Text, View } from 'react-native';
 import { GROUP_LABELS, GROUP_ORDER, NUTRIENTS, type BarGeometry, type Color, type Limits } from '../engine';
 import { NutrientBarRow } from './NutrientBar';
 import { Badge, Card } from './components';
-import { formatFixedUnit, formatSmart } from './format';
+import { TO_VERIFY_TEXT, formatFixedUnit, formatSmart } from './format';
 import { colors } from './theme';
 
 export interface BarItem {
@@ -14,11 +14,18 @@ export interface BarItem {
   perDay?: number | null;
   partial: boolean;
   color: Color;
+  /** Carenza o eccesso (le copie del diario lo salvano). */
+  direction?: 'carenza' | 'eccesso' | null;
   limits: Limits;
   bar: BarGeometry;
 }
 
-const RANK: Record<Color, number> = { rosso: 0, arancione: 1, verde: 2, grigio: 3 };
+const RANK: Record<Color, number> = { rosso: 0, arancione: 1, viola: 2, verde: 3, grigio: 4 };
+
+/** Rosso o arancione, o viola in carenza (come i "da guardare" della ricetta). */
+function isDeficitOrExcessItem(it: { color: Color; direction?: 'carenza' | 'eccesso' | null }): boolean {
+  return it.color === 'rosso' || it.color === 'arancione' || (it.color === 'viola' && it.direction === 'carenza');
+}
 
 export function SnapshotBars({ items, perDayLabel = 'al giorno' }: { items: Record<string, BarItem>; perDayLabel?: string }) {
   const [open, setOpen] = useState<Record<string, boolean>>({});
@@ -28,7 +35,7 @@ export function SnapshotBars({ items, perDayLabel = 'al giorno' }: { items: Reco
         const defs = NUTRIENTS.filter((n) => n.group === g && items[n.id])
           .map((d, i) => ({ d, i, it: items[d.id] as BarItem }))
           .sort((a, b) => RANK[a.it.color] - RANK[b.it.color] || a.i - b.i);
-        const problems = defs.filter(({ d, it }) => d.inFediaf && (it.color === 'rosso' || it.color === 'arancione')).length;
+        const problems = defs.filter(({ d, it }) => d.inFediaf && isDeficitOrExcessItem(it)).length;
         const isOpen = open[g] ?? problems > 0;
         return (
           <Card key={g}>
@@ -52,7 +59,13 @@ export function SnapshotBars({ items, perDayLabel = 'al giorno' }: { items: Reco
                     <NutrientBarRow
                       key={d.id}
                       name={d.nameIt}
-                      valueText={it.valuePer1000 === null ? 'non disponibile' : `${it.partial ? 'almeno ' : ''}${formatFixedUnit(it.valuePer1000, d.unit)}`}
+                      valueText={
+                        it.valuePer1000 === null
+                          ? it.color === 'viola'
+                            ? TO_VERIFY_TEXT
+                            : 'non disponibile'
+                          : `${it.partial ? 'almeno ' : ''}${formatFixedUnit(it.valuePer1000, d.unit)}${it.color === 'viola' ? ' · da verificare' : ''}`
+                      }
                       color={it.color}
                       bar={it.bar}
                       partial={it.partial}

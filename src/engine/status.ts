@@ -1,11 +1,13 @@
 // Colori delle barre.
 // Verde: tra minimo e massimo. Arancione: fuori dal limite fino al 10%.
-// Rosso: fuori oltre il 10%. Grigio: nessun riferimento o dato mancante.
+// Rosso: fuori oltre il 10%. Grigio: nessun riferimento FEDIAF (solo informativo).
+// Viola, "da verificare": c'è un riferimento ma nessun ingrediente porta il dato, oppure il dato è
+// parziale e il valore è già sotto il minimo (non si sa se manca davvero).
 
 import { legalMaxPer1000Kcal, type Requirement } from './requirements';
 import type { NutrientTotal } from './totals';
 
-export type Color = 'verde' | 'arancione' | 'rosso' | 'grigio';
+export type Color = 'verde' | 'arancione' | 'rosso' | 'viola' | 'grigio';
 
 /** Zona arancione: 10% oltre il limite (confermata dall'utente). */
 export const DEFAULT_TOLERANCE = 0.1;
@@ -28,7 +30,7 @@ export interface Classification {
    * un eccesso invece resta valido.
    */
   provisional: boolean;
-  reason: 'ok' | 'dato_mancante' | 'nessun_riferimento' | 'fuori_limite';
+  reason: 'ok' | 'dato_mancante' | 'nessun_riferimento' | 'fuori_limite' | 'parziale_sotto_minimo';
 }
 
 export function classify(
@@ -41,7 +43,7 @@ export function classify(
     return { color: 'grigio', direction: null, distance: 0, provisional: false, reason: 'nessun_riferimento' };
   }
   if (value === null) {
-    return { color: 'grigio', direction: null, distance: 0, provisional: false, reason: 'dato_mancante' };
+    return { color: 'viola', direction: null, distance: 0, provisional: false, reason: 'dato_mancante' };
   }
   if (limits.max !== null && value > limits.max + EPS * Math.max(1, Math.abs(limits.max))) {
     const distance = limits.max === 0 ? Infinity : (value - limits.max) / limits.max;
@@ -55,11 +57,14 @@ export function classify(
   }
   if (limits.min !== null && value < limits.min - EPS * Math.max(1, Math.abs(limits.min))) {
     const distance = (limits.min - value) / limits.min;
+    if (partial) {
+      return { color: 'viola', direction: 'carenza', distance, provisional: true, reason: 'parziale_sotto_minimo' };
+    }
     return {
       color: distance <= tolerance + EPS ? 'arancione' : 'rosso',
       direction: 'carenza',
       distance,
-      provisional: partial,
+      provisional: false,
       reason: 'fuori_limite',
     };
   }
@@ -123,9 +128,14 @@ export function evaluateNutrient(
   return { ...c, valuePer1000, limitsPer1000, maxKind: chosen?.kind ?? null, legalMaxWarning };
 }
 
-/** Riepilogo in alto, es. "2 rossi, 4 arancioni, 3 grigi". */
+/** Riepilogo in alto, es. "37 verdi, 0 arancioni, 2 rossi, 3 da verificare, 1 informativo". */
 export function summarize(colors: Color[]): Record<Color, number> {
-  const out: Record<Color, number> = { verde: 0, arancione: 0, rosso: 0, grigio: 0 };
+  const out: Record<Color, number> = { verde: 0, arancione: 0, rosso: 0, viola: 0, grigio: 0 };
   for (const c of colors) out[c]++;
   return out;
+}
+
+/** Carenza "da guardare": rossa, arancione, o viola perché parziale e già sotto il minimo. */
+export function isDeficit(c: Pick<Classification, 'color' | 'direction'>): boolean {
+  return c.direction === 'carenza' && (c.color === 'rosso' || c.color === 'arancione' || c.color === 'viola');
 }

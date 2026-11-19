@@ -135,7 +135,7 @@ export default function AltroScreen() {
       </Card>
 
       <Card title="Spiegazioni">
-        <LinkRow href={{ pathname: '/info/[topic]', params: { topic: 'legenda' } }} title="Colori e segni" subtitle="Verde, arancione, rosso, grigio; dato indicativo e provvisorio" />
+        <LinkRow href={{ pathname: '/info/[topic]', params: { topic: 'legenda' } }} title="Colori e segni" subtitle="Verde, arancione, rosso, viola, grigio; dato indicativo e provvisorio" />
         <LinkRow href={{ pathname: '/info/[topic]', params: { topic: 'bcs' } }} title="BCS: condizione corporea" />
         <LinkRow href={{ pathname: '/info/[topic]', params: { topic: 'mcs' } }} title="MCS: massa muscolare" />
         <LinkRow href={{ pathname: '/info/[topic]', params: { topic: 'attivita' } }} title="Livelli di attività" />

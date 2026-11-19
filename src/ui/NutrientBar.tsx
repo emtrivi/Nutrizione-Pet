@@ -1,12 +1,13 @@
 // Barra di un nutriente: tratti uguali (rosso, arancione, verde, …) e una freccia nel punto del valore.
-// Grigia senza freccia se non c'è riferimento o manca il dato. A righe se il valore è parziale.
+// Grigia senza freccia se non c'è riferimento o manca il dato (con il dato mancante lo sfondo è viola chiaro).
+// A righe se il valore è parziale.
 
 import { Pressable, Text, View } from 'react-native';
 import type { BarGeometry, Color } from '../engine';
 import { colors } from './theme';
 
 const SEGMENT: Record<string, string> = { rosso: colors.red, arancione: colors.orange, verde: colors.green };
-const DOT: Record<Color, string> = { rosso: colors.red, arancione: colors.orange, verde: colors.green, grigio: colors.grey };
+export const DOT: Record<Color, string> = { rosso: colors.red, arancione: colors.orange, verde: colors.green, viola: colors.violet, grigio: colors.grey };
 
 function Stripes() {
   return (
@@ -18,7 +19,7 @@ function Stripes() {
   );
 }
 
-export function Bar({ bar, partial }: { bar: BarGeometry; partial: boolean }) {
+export function Bar({ bar, partial, toVerify = false }: { bar: BarGeometry; partial: boolean; toVerify?: boolean }) {
   const grey = bar.segments.length === 0 || bar.position === null;
   return (
     <View style={{ height: 22, justifyContent: 'flex-end' }}>
@@ -36,7 +37,7 @@ export function Bar({ bar, partial }: { bar: BarGeometry; partial: boolean }) {
           ▼
         </Text>
       ) : null}
-      <View style={{ height: 10, flexDirection: 'row', borderRadius: 5, overflow: 'hidden', backgroundColor: colors.greyBg }}>
+      <View style={{ height: 10, flexDirection: 'row', borderRadius: 5, overflow: 'hidden', backgroundColor: grey && toVerify ? colors.violetBg : colors.greyBg }}>
         {grey
           ? null
           : bar.segments.map((s, i) => <View key={i} style={{ flex: 1, backgroundColor: SEGMENT[s], marginLeft: i ? 1 : 0 }} />)}
@@ -69,7 +70,7 @@ export function NutrientBarRow({
       onPress={onPress}
       disabled={!onPress}
       accessibilityRole={onPress ? 'button' : undefined}
-      accessibilityLabel={`${name}: ${valueText}, ${color}${partial ? ', valore parziale' : ''}`}
+      accessibilityLabel={`${name}: ${valueText}, ${color === 'viola' ? 'da verificare' : color}${partial ? ', valore parziale' : ''}`}
       style={({ pressed }) => ({ paddingVertical: 6, gap: 2, opacity: pressed ? 0.6 : 1 })}
     >
       <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
@@ -77,7 +78,7 @@ export function NutrientBarRow({
         <Text style={{ flex: 1, fontSize: 15, color: colors.text }}>{name}</Text>
         <Text style={{ fontSize: 15, color: colors.text }}>{valueText}</Text>
       </View>
-      <Bar bar={bar} partial={partial} />
+      <Bar bar={bar} partial={partial} toVerify={color === 'viola'} />
       {subtitle ? <Text style={{ fontSize: 12, color: colors.muted }}>{subtitle}</Text> : null}
     </Pressable>
   );

@@ -89,12 +89,13 @@ export const INFO: Record<string, InfoTopic> = {
   },
   legenda: {
     title: 'Colori e segni',
-    intro: 'Le barre colorate arrivano con le ricette (Fase 2). Ecco cosa vorranno dire:',
+    intro: 'Cosa vogliono dire i colori delle barre e i segni accanto ai nutrienti:',
     items: [
       { label: 'Verde', text: 'Tra il minimo e il massimo.' },
       { label: 'Arancione', text: 'Fuori dal limite, ma di poco: fino al 10%.' },
       { label: 'Rosso', text: 'Fuori dal limite di oltre il 10%.' },
-      { label: 'Grigio', text: 'Nessun riferimento FEDIAF, oppure dato mancante. Un dato mancante non è mai zero e non è mai verde.' },
+      { label: 'Viola, “da verificare”', text: 'C’è un riferimento FEDIAF ma nessun ingrediente porta il dato (dato mancante), oppure il dato è parziale e il valore noto è già sotto il minimo: non si sa se manca davvero. Un dato mancante non è mai zero e non è mai verde.' },
+      { label: 'Grigio, “informativo”', text: 'FEDIAF non dà un riferimento per questo nutriente: si mostra solo il valore.' },
       { label: 'A righe, “almeno X”', text: 'Valore parziale: il nutriente manca in alcuni ingredienti. Un rosso per eccesso resta valido; un verde o una carenza possono cambiare.' },
       { label: 'Massimo N', text: 'Massimo nutrizionale FEDIAF.' },
       { label: 'Massimo L', text: 'Massimo di legge FEDIAF, per i nutrienti aggiunti come additivi; si controlla sulla sostanza secca della ricetta.' },

@@ -94,6 +94,11 @@ describe('scheda PDF: tutti i nutrienti e i rapporti', () => {
     expect(text).toMatch(/Calcio [^|]*1,5 g \(modificato\)/);
     expect(text).toContain('modificato a mano in questa ricetta');
   });
+  it('riepilogo con "da verificare" e "informativi"; cloruro viola "dato mancante, da verificare"', () => {
+    expect(text).toMatch(/Nutrienti FEDIAF \d+ verdi?, \d+ arancion[ei], \d+ ross[oi], \d+ da verificare, \d+ informativ[oi]/);
+    expect(text).toMatch(/Cloruro [^]*?dato mancante, da verificare/);
+    expect(html).toContain('#7b3fa0');
+  });
   it('rapporti, disclaimer e versioni', () => {
     expect(text).toContain('Calcio / fosforo');
     expect(text).toContain('Omega-6 / omega-3');

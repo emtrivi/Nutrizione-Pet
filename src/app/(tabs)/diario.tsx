@@ -65,12 +65,12 @@ function DayStepper({ label, value, onChange, today }: { label: string; value: s
   );
 }
 
-const DOT = { verde: colors.green, arancione: colors.orange, rosso: colors.red, grigio: colors.grey };
+const DOT = { verde: colors.green, arancione: colors.orange, rosso: colors.red, viola: colors.violet, grigio: colors.grey };
 
 function counts(summary: DiaryEntry['snapshot']['summary']) {
   return (
     <View style={{ flexDirection: 'row', gap: 8, flexWrap: 'wrap' }}>
-      {(['rosso', 'arancione', 'verde', 'grigio'] as const).map((c) =>
+      {(['rosso', 'arancione', 'viola', 'verde', 'grigio'] as const).map((c) =>
         summary[c] ? (
           <View key={c} style={{ flexDirection: 'row', alignItems: 'center', gap: 3 }}>
             <View style={{ width: 9, height: 9, borderRadius: 5, backgroundColor: DOT[c] }} />
@@ -189,12 +189,12 @@ export default function DiarioScreen() {
       {streaks.length > 0 ? (
         <Card title="Avvisi nel tempo">
           <Hint>
-            Nutrienti rossi o arancioni da almeno {data.settings.diaryAlertDays} giorni di fila (fino a oggi). Un giorno senza
-            ricetta interrompe la serie.
+            Nutrienti rossi, arancioni o viola in carenza (da verificare) da almeno {data.settings.diaryAlertDays} giorni di fila
+            (fino a oggi). Un giorno senza ricetta interrompe la serie.
           </Hint>
           {streaks.map((s) => (
             <View key={s.id} style={{ flexDirection: 'row', alignItems: 'center', gap: 8, paddingVertical: 3 }}>
-              <View style={{ width: 10, height: 10, borderRadius: 5, backgroundColor: s.worst === 'rosso' ? colors.red : colors.orange }} />
+              <View style={{ width: 10, height: 10, borderRadius: 5, backgroundColor: DOT[s.worst] }} />
               <Text style={{ flex: 1, fontSize: 15, color: colors.text }}>{s.name}</Text>
               <Text style={{ fontSize: 14, color: colors.muted }}>
                 {s.direction === 'carenza' ? 'carenza' : s.direction === 'eccesso' ? 'eccesso' : ''} · {s.days} giorni

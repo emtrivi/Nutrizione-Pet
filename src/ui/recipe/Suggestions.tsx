@@ -23,6 +23,7 @@ const DOT: Record<Color, string> = {
   verde: colors.green,
   arancione: colors.orange,
   rosso: colors.red,
+  viola: colors.violet,
   grigio: colors.grey,
 };
 

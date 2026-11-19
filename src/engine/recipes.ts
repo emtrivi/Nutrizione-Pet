@@ -269,7 +269,7 @@ export interface RecipeEvaluation {
   supplements: { key: string; amount: number; suggestion: DoseSuggestion; status: ReturnType<typeof doseStatus> }[];
 }
 
-const COLOR_RANK: Record<Color, number> = { rosso: 0, arancione: 1, verde: 2, grigio: 3 };
+const COLOR_RANK: Record<Color, number> = { rosso: 0, arancione: 1, viola: 2, verde: 3, grigio: 4 };
 
 export interface EvaluateInput {
   lines: { key: string; amount: number }[];
@@ -332,7 +332,7 @@ export function evaluateRecipe(
       .map(({ v }) => v),
   }));
 
-  const summary: Record<Color, number> = { verde: 0, arancione: 0, rosso: 0, grigio: 0 };
+  const summary: Record<Color, number> = { verde: 0, arancione: 0, rosso: 0, viola: 0, grigio: 0 };
   for (const def of NUTRIENTS) if (def.inFediaf) summary[(nutrients[def.id] as NutrientView).evaluation.color]++;
 
   const ratio = calciumPhosphorusRatio(totals);
@@ -393,11 +393,16 @@ export function evaluateRecipe(
 }
 
 /** Riepilogo in parole, es. "2 rossi, 4 arancioni, 3 grigi". */
-export function summaryText(s: Record<Color, number>): string {
-  const parts: string[] = [];
-  if (s.rosso) parts.push(`${s.rosso} ${s.rosso === 1 ? 'rosso' : 'rossi'}`);
-  if (s.arancione) parts.push(`${s.arancione} ${s.arancione === 1 ? 'arancione' : 'arancioni'}`);
-  if (s.verde) parts.push(`${s.verde} ${s.verde === 1 ? 'verde' : 'verdi'}`);
-  if (s.grigio) parts.push(`${s.grigio} ${s.grigio === 1 ? 'grigio' : 'grigi'}`);
+/**
+ * "37 verdi, 0 arancioni, 0 rossi, 3 da verificare, 1 informativo".
+ * Le copie del diario salvate prima del 19/11/2026 non hanno il viola: lì il grigio comprende
+ * anche i dati mancanti e si scrive "grigi" come allora.
+ */
+export function summaryText(s: Partial<Record<Color, number>>): string {
+  const n = (c: Color) => s[c] ?? 0;
+  const word = (k: number, one: string, many: string) => `${k} ${k === 1 ? one : many}`;
+  const parts = [word(n('verde'), 'verde', 'verdi'), word(n('arancione'), 'arancione', 'arancioni'), word(n('rosso'), 'rosso', 'rossi')];
+  if (s.viola === undefined) parts.push(word(n('grigio'), 'grigio', 'grigi'));
+  else parts.push(`${n('viola')} da verificare`, word(n('grigio'), 'informativo', 'informativi'));
   return parts.join(', ');
 }

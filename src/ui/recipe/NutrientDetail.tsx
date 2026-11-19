@@ -1,7 +1,7 @@
 // Tocco su una barra: valore, limite, da quali ingredienti arriva, pagina FEDIAF.
 
 import { Modal, ScrollView, Text, View } from 'react-native';
-import { getCatalog, shortName, type EvaluateInput, type NutrientView } from '../../engine';
+import { getCatalog, isDeficit, shortName, type Color, type EvaluateInput, type NutrientView } from '../../engine';
 import { SuggestionsPanel } from './Suggestions';
 import { Bar } from '../NutrientBar';
 import { Button, Card, Hint, Notice, Row } from '../components';
@@ -9,7 +9,13 @@ import { formatFixedUnit, formatSmart, unitLabel } from '../format';
 import { colors } from '../theme';
 
 const catalog = getCatalog();
-const COLOR_WORD = { verde: 'verde: nei limiti', arancione: 'arancione: fuori di poco (fino al 10%)', rosso: 'rosso: fuori di oltre il 10%', grigio: 'grigio' };
+const COLOR_WORD: Record<Color, string> = {
+  verde: 'verde: nei limiti',
+  arancione: 'arancione: fuori di poco (fino al 10%)',
+  rosso: 'rosso: fuori di oltre il 10%',
+  viola: 'viola: da verificare',
+  grigio: 'grigio: solo informativo',
+};
 
 export function NutrientDetail({
   view,
@@ -41,13 +47,15 @@ export function NutrientDetail({
     ev.reason === 'nessun_riferimento'
       ? 'FEDIAF non dà un riferimento per questo nutriente (trattino nella tabella): la barra è grigia e mostra solo il valore.'
       : ev.reason === 'dato_mancante'
-        ? 'Nessun ingrediente della ricetta ha questo dato nel catalogo: non è zero, è sconosciuto.'
-        : null;
+        ? 'Dato mancante, da verificare: FEDIAF dà un riferimento, ma nessun ingrediente della ricetta ha questo dato nel catalogo. Non è zero, è sconosciuto.'
+        : ev.reason === 'parziale_sotto_minimo'
+          ? 'Da verificare: il valore noto è già sotto il minimo, ma il dato manca in alcuni ingredienti, quindi non si sa se manca davvero.'
+          : null;
   return (
     <Modal visible animationType="slide" presentationStyle="pageSheet" onRequestClose={onClose}>
       <ScrollView style={{ flex: 1, backgroundColor: colors.background }} contentContainerStyle={{ padding: 16, gap: 12, paddingBottom: 48 }}>
         <Text style={{ fontSize: 22, fontWeight: '700', color: colors.text }}>{def.nameIt}</Text>
-        <Bar bar={view.bar} partial={total.partial} />
+        <Bar bar={view.bar} partial={total.partial} toVerify={ev.color === 'viola'} />
         <Text style={{ fontSize: 15, color: colors.text }}>Colore {COLOR_WORD[ev.color]}.</Text>
         {greyReason ? <Notice tone="info">{greyReason}</Notice> : null}
         {total.partial && total.value !== null ? (
@@ -114,7 +122,7 @@ export function NutrientDetail({
             {def.note ? <Hint>{def.note}</Hint> : null}
           </Card>
         ) : null}
-        {suggest && def.inFediaf && ev.direction === 'carenza' && (ev.color === 'rosso' || ev.color === 'arancione') ? (
+        {suggest && def.inFediaf && isDeficit(ev) ? (
           <SuggestionsPanel def={def} input={suggest.input} ctx={suggest.ctx} onAdd={suggest.onAdd} onAddFood={suggest.onAddFood} />
         ) : null}
         <Button title="Chiudi" kind="secondary" onPress={onClose} />

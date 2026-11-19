@@ -20,6 +20,9 @@ export const colors = {
   green: '#2E7D32',
   orange: '#C26A00',
   red: '#B3261E',
+  // "da verificare": dato mancante, o parziale e già sotto il minimo
+  violet: '#7B3FA0',
+  violetBg: '#F1E8F7',
 };
 
 export const space = { xs: 4, s: 8, m: 12, l: 16, xl: 24 };
