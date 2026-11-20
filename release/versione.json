@@ -1,5 +1,5 @@
 {
-  "versione": "0.6.1",
-  "data": "2026-11-19",
-  "note": "Omega-3 totali: per ogni ingrediente il più alto tra il totale dichiarato e ALA + EPA + DHA (senza contare due volte EPA e DHA), sempre «almeno». Rapporto omega-6/omega-3 invariato."
+  "versione": "0.6.2",
+  "data": "2026-11-20",
+  "note": "Segno «max?»: per i nutrienti con un massimo e dati parziali, quando il valore noto arriva almeno al 70% del massimo (modificabile in Impostazioni). Il colore resta verde."
 }

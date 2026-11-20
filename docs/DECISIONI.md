@@ -241,3 +241,10 @@ Per ogni ingrediente: il più alto tra il totale dichiarato nel catalogo e la so
 (EPA + DHA dichiarato insieme o come somma di EPA e DHA separati, contato una volta sola: si prende il più alto dei due).
 Poi la somma della ricetta. Sempre "almeno" (altri omega-3 non sono nel catalogo). Calcolato all'apertura del catalogo,
 i file e le impronte non cambiano; il rapporto omega-6/omega-3 resta acido linoleico ÷ (ALA + EPA + DHA).
+
+## 19/11/2026 — segno "max?" (decisione dell'utente con la nutrizionista)
+
+Compare solo per i nutrienti con un massimo e un dato parziale, verdi, quando il valore già noto arriva almeno al 70%
+del massimo (soglia modificabile in Impostazioni → Colori, salvata nelle impostazioni e nel backup; i backup vecchi
+partono da 70). Piccolo segno "max?" accanto al valore; nel dettaglio e nel PDF: "con i dati noti sei al X% del
+massimo, il resto non è verificabile". Il colore resta verde; nessun calcolo cambia. Le copie del diario non lo mostrano.
