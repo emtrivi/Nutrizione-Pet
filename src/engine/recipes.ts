@@ -199,11 +199,25 @@ export function markReviewed(recipe: Recipe, dog: Dog, catalog: Catalog, now: Da
 }
 
 /** Copia della ricetta, anche per un altro cane (che dovrà rivederla). */
-export function duplicateRecipe(recipe: Recipe, id: string, now: Date, dogId = recipe.dogId): Recipe {
+/**
+ * Copia della ricetta. Ingredienti e quantità restano identici (nessuna scalatura).
+ * Per un altro cane (20/11/2026): calorie obiettivo e tabella FEDIAF diventano quelle del nuovo cane,
+ * come per una ricetta nuova senza calorie scritte a mano. Per lo stesso cane non cambia nulla.
+ */
+export function duplicateRecipe(
+  recipe: Recipe,
+  id: string,
+  now: Date,
+  target?: Dog,
+  multipliers?: Settings['multipliers'],
+): Recipe {
+  const otherDog = target !== undefined && target.id !== recipe.dogId;
+  const energy = otherDog ? computeDogEnergy(target, multipliers ?? undefined) : null;
   return {
     ...recipe,
     id,
-    dogId,
+    dogId: target?.id ?? recipe.dogId,
+    ...(energy ? { kcalTarget: energy.kcalPerDay, table: energy.table } : {}),
     name: `${recipe.name} (copia)`,
     lines: recipe.lines.map((l) => ({ ...l })),
     requirementOverrides: { ...recipe.requirementOverrides },

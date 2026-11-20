@@ -190,7 +190,7 @@ export default function RicettaScreen() {
   const duplicateFor = (target: Dog) => {
     if (!saved) return;
     const now = new Date();
-    const copy = duplicateRecipe(saved, generateId(now), now, target.id);
+    const copy = duplicateRecipe(saved, generateId(now), now, target, multipliers);
     update((d) => saveRecipe(d, copy));
     setChoosingDog(false);
     router.replace({ pathname: '/ricetta/[id]', params: { id: copy.id } });

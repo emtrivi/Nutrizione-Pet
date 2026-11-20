@@ -253,7 +253,7 @@ describe('“da rivedere”: l’app non cambia mai i grammi', () => {
 
   it('copiata per un altro cane: da rivedere; segnata come rivista: a posto, grammi uguali', () => {
     const other = { ...dog, id: 'cane-2', name: 'Luna', weightKg: 12 };
-    const copy = duplicateRecipe(recipe, 'r2', now, other.id);
+    const copy = duplicateRecipe(recipe, 'r2', now, other);
     expect(copy.name).toBe('Manzo e riso (copia)');
     expect(reviewReasons(copy, [dog, other], catalog)).toEqual(['Ricetta copiata da un altro cane: controlla calorie e grammi.']);
     const reviewed = markReviewed(copy, other, catalog, now);
