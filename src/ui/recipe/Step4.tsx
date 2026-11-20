@@ -8,8 +8,10 @@ import { useData } from '../../data/DataContext';
 import { parseDecimal } from '../../data/dogForm';
 import {
   fediaf,
+  daysCovered,
   getCatalog,
   isDeficit,
+  pantryAmount,
   RECIPE_CATEGORY_LABELS,
   substituteGrams,
   shortName,
@@ -25,7 +27,7 @@ import {
 } from '../../engine';
 import { NutrientBarRow, Bar } from '../NutrientBar';
 import { Badge, Button, Card, Hint, InfoButton, Notice, Row, styles } from '../components';
-import { TO_VERIFY_TEXT, formatEuro, formatFixedUnit, formatNumber, formatSmart, priceRateText } from '../format';
+import { TO_VERIFY_TEXT, formatEuro, formatFixedUnit, formatGrams, formatNumber, formatSmart, priceRateText } from '../format';
 import { colors } from '../theme';
 import { draftLines, type Draft, type DraftLine } from './draft';
 import { NutrientDetail } from './NutrientDetail';
@@ -108,6 +110,14 @@ function costText(item: CatalogItem, amount: number, prices: PriceBook): string 
   const e = prices[item.key];
   const p = e ? unitPrice(e, item.doseUnit) : null;
   return p === null ? 'prezzo non inserito' : `${formatEuro(p * amount)} (${priceRateText(e, item.doseUnit)})`;
+}
+
+/** "in dispensa 2,4 kg, basta per 6 giorni" (o "in dispensa: niente"). */
+function pantryText(inPantry: number, perDay: number, unit: 'g' | 'capsule'): string {
+  if (!(inPantry > 0)) return 'in dispensa: niente';
+  const q = unit === 'capsule' ? `${formatNumber(inPantry)} ${inPantry === 1 ? 'capsula' : 'capsule'}` : formatGrams(inPantry);
+  const days = daysCovered(inPantry, perDay);
+  return `in dispensa ${q}${days === null ? '' : `, basta per ${days} ${days === 1 ? 'giorno' : 'giorni'}`}`;
 }
 
 /** Ordine degli ingredienti nel passo 4: come le sezioni del passo 3 (dentro la sezione, l'ordine di scelta). */
@@ -223,6 +233,7 @@ export function Step4({
                 <Badge text={item.processingLabel ?? ''} tone="info" />
                 {item.indicative ? <Badge text="dato indicativo" tone="warning" /> : null}
                 <Text style={{ fontSize: 13, color: colors.muted }}>{costText(item, amount, prices)}</Text>
+                <Text style={{ fontSize: 13, color: colors.muted }}>{pantryText(pantryAmount(data.pantry, item.key), amount, item.doseUnit)}</Text>
               </View>
               <AmountControl
                 label={shortName(item)}
@@ -349,6 +360,7 @@ export function Step4({
               <View style={{ flexDirection: 'row', gap: 6, flexWrap: 'wrap' }}>
                 {item.provisional ? <Badge text="dato provvisorio" tone="warning" /> : null}
                 <Text style={{ fontSize: 13, color: colors.muted }}>{costText(item, amount, prices)}</Text>
+                <Text style={{ fontSize: 13, color: colors.muted }}>{pantryText(pantryAmount(data.pantry, item.key), amount, item.doseUnit)}</Text>
               </View>
               {s ? <Hint>{describeDose(s.suggestion, dogWeightKg)}</Hint> : null}
               <AmountControl

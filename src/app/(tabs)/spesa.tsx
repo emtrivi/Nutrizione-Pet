@@ -1,6 +1,7 @@
 // Spesa: previsione dei grammi da comprare per i prossimi giorni, sommando i cani.
 // Separata dal diario e senza toccarlo: si indicano ricette e giorni per ogni cane.
 
+import { router } from 'expo-router';
 import { useState } from 'react';
 import { Modal, Pressable, Text, TextInput, View } from 'react-native';
 import { useData } from '../../data/DataContext';
@@ -69,7 +70,7 @@ export default function SpesaScreen() {
   const period = { days: edit.days ?? String(s.horizonDays), margin: edit.margin ?? formatSmart(s.marginPct) };
 
   const save = (next: Partial<ShoppingData>) => update((d) => withShopping(d, { ...d.shopping, ...next }));
-  const forecast = shoppingForecast(s, data.recipes, catalog, data.prices);
+  const forecast = shoppingForecast(s, data.recipes, catalog, data.prices, data.pantry);
 
   const commitPeriod = (field: 'days' | 'margin', text: string) => {
     const v = parseDecimal(text);
@@ -92,9 +93,10 @@ export default function SpesaScreen() {
   return (
     <Screen>
       <Explain>
-        Previsione della spesa: per ogni cane scegli le ricette e per quanti giorni. L’app somma i grammi di tutti i cani, con i
-        prezzi del catalogo. Non tocca il diario.
+        Previsione della spesa: per ogni cane scegli le ricette e per quanti giorni. L’app somma i grammi di tutti i cani, toglie
+        quello che hai in dispensa e mostra i prezzi del catalogo. Non tocca il diario.
       </Explain>
+      <Button title="Apri la dispensa" kind="secondary" onPress={() => router.push('/dispensa')} />
 
       <Card title="Periodo">
         <Field
@@ -176,9 +178,17 @@ export default function SpesaScreen() {
               <View style={{ paddingVertical: 6, borderBottomWidth: 0.5, borderBottomColor: colors.border, gap: 2 }}>
                 <View style={{ flexDirection: 'row', gap: 8 }}>
                   <Text style={{ flex: 1, fontSize: 15, color: colors.text }}>{it.item.nameIt}</Text>
-                  <Text style={{ fontSize: 15, fontWeight: '600', color: colors.text }}>{quantity(it, it.amount)}</Text>
+                  <Text style={{ fontSize: 15, fontWeight: '600', color: it.toBuy > 0 ? colors.text : colors.green }}>
+                    {it.toBuy > 0 ? quantity(it, it.toBuy) : 'c’è già'}
+                  </Text>
                 </View>
-                {it.rawEstimate !== null ? (
+                {it.inPantry > 0 ? (
+                  <Text style={{ fontSize: 13, color: colors.muted }}>
+                    Servono {quantity(it, it.amount)}, in dispensa {quantity(it, it.inPantry)}
+                    {it.toBuy > 0 ? `: da comprare ${quantity(it, it.toBuy)}` : ': basta'}.
+                  </Text>
+                ) : null}
+                {it.rawEstimate !== null && it.toBuy > 0 ? (
                   <Text style={{ fontSize: 13, color: colors.warningText }}>
                     Peso a cotto. Da comprare crudi circa {formatGrams(it.rawEstimate)} (stima: resa di cottura {YIELD}).
                   </Text>
@@ -226,11 +236,13 @@ export default function SpesaScreen() {
 
       <Card title="Totale previsto">
         <Text style={{ fontSize: 18, fontWeight: '700', color: colors.text }}>
-          {formatEuro(forecast.total)}
-          {forecast.incomplete ? ' — incompleto' : ''}
+          {forecast.total === 0 && forecast.incomplete ? 'nessun prezzo inserito' : `${formatEuro(forecast.total)}${forecast.incomplete ? ' — incompleto' : ''}`}
         </Text>
         {forecast.incomplete ? <Hint>Mancano dei prezzi: si inseriscono nel Catalogo (o nelle righe libere).</Hint> : null}
-        <Hint>Prezzi del catalogo per il peso nella ciotola, con il margine. Le verdure cotte da comprare crude sono una stima.</Hint>
+        <Hint>
+          Prezzi del catalogo per quello da comprare (previsione con il margine meno la dispensa) e per le righe libere. Le verdure cotte
+          da comprare crude sono una stima.
+        </Hint>
       </Card>
 
       <Modal visible={picking !== null} animationType="slide" presentationStyle="pageSheet" onRequestClose={() => setPicking(null)}>

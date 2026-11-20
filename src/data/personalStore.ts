@@ -13,9 +13,11 @@ import {
   type PriceBook,
   type PriceEntry,
   type Recipe,
+  sanitizePantry,
   sanitizeShopping,
   type Settings,
   type ShoppingData,
+  type PantryData,
 } from '../engine';
 import type { DogFields } from './dogForm';
 
@@ -82,6 +84,7 @@ function normalize(d: Record<string, unknown>): PersonalData {
     ...(d as Partial<PersonalData>),
     settings: mergeSettings(d.settings as Partial<Settings> | undefined),
     shopping: sanitizeShopping(d.shopping),
+    pantry: sanitizePantry(d.pantry),
   };
 }
 
@@ -134,6 +137,11 @@ export function deleteRecipe(data: PersonalData, id: string): PersonalData {
 
 export function withSettings(data: PersonalData, settings: Settings): PersonalData {
   return { ...data, settings };
+}
+
+/** Dispensa: sostituisce le quantità in casa e il registro degli acquisti. */
+export function withPantry(data: PersonalData, pantry: PantryData): PersonalData {
+  return { ...data, pantry };
 }
 
 /** Spesa: sostituisce la previsione (ricette per cane, margine, righe libere). */

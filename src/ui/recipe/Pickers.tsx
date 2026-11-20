@@ -15,6 +15,7 @@ export function CatalogPicker({
   visible,
   category,
   supplements,
+  all,
   exclude,
   onPick,
   onClose,
@@ -23,6 +24,8 @@ export function CatalogPicker({
   /** Categoria degli alimenti; ignorata se supplements = true. */
   category?: RecipeCategory;
   supplements?: boolean;
+  /** Tutti gli alimenti e gli integratori (dispensa). */
+  all?: boolean;
   exclude: string[];
   onPick: (item: CatalogItem) => void;
   onClose: () => void;
@@ -31,19 +34,19 @@ export function CatalogPicker({
   const { data } = useData();
   const items = useMemo(() => {
     const q = norm(query.trim());
-    const base = supplements ? catalog.supplements : catalog.foods.filter((f) => f.recipeCategory === category);
+    const base = all ? [...catalog.foods, ...catalog.supplements] : supplements ? catalog.supplements : catalog.foods.filter((f) => f.recipeCategory === category);
     return base
       .filter((i) => i.availableForNewRecipes && !exclude.includes(i.key))
       .filter((i) => !q || norm(i.nameIt).includes(q))
       .sort((a, b) => a.nameIt.localeCompare(b.nameIt, 'it'));
-  }, [query, supplements, category, exclude]);
+  }, [query, supplements, category, exclude, all]);
 
   return (
     <Modal visible={visible} animationType="slide" presentationStyle="pageSheet" onRequestClose={onClose}>
       <View style={[styles.screen, { paddingTop: 16 }]}>
         <View style={{ paddingHorizontal: 16, gap: 10, paddingBottom: 8 }}>
           <Text style={{ fontSize: 20, fontWeight: '700', color: colors.text }}>
-            {supplements ? 'Scegli un integratore' : `Scegli: ${RECIPE_CATEGORY_LABELS[category ?? 'altro']}`}
+            {all ? 'Scegli un ingrediente' : supplements ? 'Scegli un integratore' : `Scegli: ${RECIPE_CATEGORY_LABELS[category ?? 'altro']}`}
           </Text>
           <TextInput
             value={query}

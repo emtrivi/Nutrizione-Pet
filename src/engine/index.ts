@@ -16,4 +16,5 @@ export * from './recipes';
 export * from './diary';
 export * from './suggestions';
 export * from './shopping';
+export * from './pantry';
 export * from './bundledData';

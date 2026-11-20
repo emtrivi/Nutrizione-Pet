@@ -5,6 +5,7 @@ import { migrateData } from './migrations';
 import type { PriceBook } from './prices';
 import type { DiaryEntry } from './diary';
 import type { Recipe } from './recipes';
+import { sanitizePantry, type PantryData } from './pantry';
 import { DEFAULT_SHOPPING, sanitizeShopping, type ShoppingData } from './shopping';
 import type { LegalMaxMode } from './status';
 import type { ActivityLevel, Dog } from './types';
@@ -74,6 +75,8 @@ export interface PersonalData {
   settings: Settings;
   /** Spesa: previsione per i prossimi giorni (19/11/2026). Manca nei dati e nei backup di prima. */
   shopping: ShoppingData;
+  /** Dispensa (20/11/2026): quantità in casa per ingrediente. Manca nei dati e nei backup di prima. */
+  pantry: PantryData;
   lastBackupAt: string | null;
 }
 
@@ -101,6 +104,7 @@ export function emptyPersonalData(): PersonalData {
     prices: {},
     settings: { ...DEFAULT_SETTINGS },
     shopping: { ...DEFAULT_SHOPPING, plans: [], extras: [] },
+    pantry: { items: {}, purchases: [] },
     lastBackupAt: null,
   };
 }
@@ -209,6 +213,8 @@ export function parseBackup(text: string, now: Date): RestoreResult {
       settings: mergeSettings(isObject(data.settings) ? data.settings : undefined),
       // Backup di prima della Spesa: spesa vuota.
       shopping: sanitizeShopping(data.shopping),
+      // Backup di prima della Dispensa: dispensa vuota.
+      pantry: sanitizePantry(data.pantry),
       // Dopo un ripristino, l'ultimo backup è quello appena letto.
       lastBackupAt: typeof parsed.exportedAt === 'string' ? parsed.exportedAt : null,
     },

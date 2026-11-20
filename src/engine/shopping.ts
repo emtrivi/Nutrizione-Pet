@@ -3,6 +3,7 @@
 // di tutti i cani, con il prezzo del catalogo. È separata dal diario e non lo tocca.
 
 import type { Catalog, CatalogItem, RecipeCategory } from './catalog';
+import { EMPTY_PANTRY, pantryAmount, type PantryData } from './pantry';
 import { unitPrice, type PriceBook } from './prices';
 import type { Recipe } from './recipes';
 
@@ -79,13 +80,17 @@ export interface ShoppingItem {
   unit: 'g' | 'capsule';
   /** Quantità nella ciotola nel periodo (somma di cani e giorni), senza margine. */
   bowlAmount: number;
-  /** Con il margine; grammi arrotondati per eccesso al grammo, capsule al numero intero. */
+  /** Previsione con il margine; grammi arrotondati per eccesso al grammo, capsule al numero intero. */
   amount: number;
-  /** Verdure pesate cotte: grammi da comprare crudi stimati con la resa di cottura; altrimenti null. */
+  /** In dispensa (stesso peso delle ricette). */
+  inPantry: number;
+  /** Da comprare: previsione − dispensa (mai sotto zero), arrotondato per eccesso. */
+  toBuy: number;
+  /** Verdure pesate cotte: grammi da comprare crudi stimati con la resa di cottura (sul "da comprare"); altrimenti null. */
   rawEstimate: number | null;
   /** Peso a cotto senza conversione (cereali, legumi, carni cotte): si compra in base alla resa. */
   cookedNotConverted: boolean;
-  /** Prezzo previsto (prezzo del catalogo × quantità con margine); null se il prezzo manca. */
+  /** Prezzo previsto di quello da comprare (prezzo del catalogo × da comprare); null se il prezzo manca. */
   cost: number | null;
   /** Quantità per cane (senza margine). */
   byDog: { dogId: string; amount: number }[];
@@ -107,7 +112,14 @@ export interface ShoppingForecast {
 
 const SECTION_ORDER: ShoppingItem['section'][] = ['proteica', 'energetica', 'verdure', 'grassi', 'frattaglie', 'altro', 'integratori'];
 
-export function shoppingForecast(shopping: ShoppingData, recipes: Recipe[], catalog: Catalog, prices: PriceBook): ShoppingForecast {
+/** Lista della spesa: previsione − dispensa + righe libere. */
+export function shoppingForecast(
+  shopping: ShoppingData,
+  recipes: Recipe[],
+  catalog: Catalog,
+  prices: PriceBook,
+  pantry: PantryData = EMPTY_PANTRY,
+): ShoppingForecast {
   const byKey = new Map<string, { item: CatalogItem; bowl: number; byDog: Map<string, number> }>();
   const daysByDog: Record<string, number> = {};
   const missingRecipes: ShoppingPlanLine[] = [];
@@ -144,13 +156,16 @@ export function shoppingForecast(shopping: ShoppingData, recipes: Recipe[], cata
     const unit = e.item.doseUnit;
     const withMargin = e.bowl * factor;
     const amount = Math.ceil(withMargin - 1e-9);
+    const inPantry = pantryAmount(pantry, key);
+    const missing = Math.max(0, withMargin - inPantry);
+    const toBuy = Math.max(0, Math.ceil(missing - 1e-9)); // max: evita -0 quando non manca niente
     const section: ShoppingItem['section'] = e.item.kind === 'supplement' ? 'integratori' : e.item.recipeCategory;
     const state = e.item.processingState ?? '';
     const cooked = state.startsWith('cooked');
     const yieldFactor = section === 'verdure' ? VEGETABLE_COOKING_YIELD[state] : undefined;
     const entry = prices[key];
     const p = entry ? unitPrice(entry, unit) : null;
-    const cost = p === null ? null : p * withMargin;
+    const cost = p === null ? null : p * missing;
     if (cost === null) incomplete = true;
     else total += cost;
     items.push({
@@ -160,7 +175,9 @@ export function shoppingForecast(shopping: ShoppingData, recipes: Recipe[], cata
       unit,
       bowlAmount: e.bowl,
       amount,
-      rawEstimate: yieldFactor ? Math.ceil(withMargin / yieldFactor - 1e-9) : null,
+      inPantry,
+      toBuy,
+      rawEstimate: yieldFactor ? Math.max(0, Math.ceil(missing / yieldFactor - 1e-9)) : null,
       cookedNotConverted: cooked && !yieldFactor,
       cost,
       byDog: [...e.byDog].map(([dogId, amount]) => ({ dogId, amount })),
