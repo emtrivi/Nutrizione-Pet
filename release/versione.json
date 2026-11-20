@@ -1,5 +1,5 @@
 {
-  "versione": "0.7.1",
+  "versione": "0.7.2",
   "data": "2026-11-20",
-  "note": "Dispensa: acquisti a confezioni, «Finito», correzioni; in ogni ricetta «in dispensa X, basta per N giorni»; la lista della spesa toglie quello che c'è in dispensa. Nessuno scalo dal diario."
+  "note": "Duplicare una ricetta per un altro cane: calorie e tabella FEDIAF diventano quelle del nuovo cane; ingredienti e quantità restano identici. Per lo stesso cane non cambia nulla."
 }

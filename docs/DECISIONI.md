@@ -266,3 +266,9 @@ capsule per gli integratori a capsule. Acquisto "N confezioni da X" (l'app fa il
 In ogni ricetta: "in dispensa X, basta per N giorni" (giorni interi) o "in dispensa: niente". Lista della spesa =
 previsione con il margine − dispensa (mai sotto zero) + righe libere; prezzo sul "da comprare". Dati in `pantry`
 (backup compresi; i backup vecchi si ripristinano con la dispensa vuota).
+
+## 20/11/2026 — duplicare una ricetta per un altro cane (richiesta dell'utente)
+
+Per un altro cane la copia prende calorie obiettivo e tabella FEDIAF del nuovo cane (quelle del suo profilo: calcolate,
+o scritte a mano lì), come una ricetta nuova senza calorie scritte a mano. Ingredienti e quantità identici, nessuna
+scalatura (integratori compresi); la copia resta "da rivedere". Per lo stesso cane nulla cambia.
