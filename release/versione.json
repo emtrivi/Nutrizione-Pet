@@ -1,5 +1,5 @@
 {
-  "versione": "0.6.2",
+  "versione": "0.7.0",
   "data": "2026-11-20",
-  "note": "Segno «max?»: per i nutrienti con un massimo e dati parziali, quando il valore noto arriva almeno al 70% del massimo (modificabile in Impostazioni). Il colore resta verde."
+  "note": "Nuova scheda Spesa: ricette e giorni per ogni cane, lista della spesa sommata con prezzi previsti, margine facoltativo, stima del peso crudo delle verdure cotte, righe libere. Il diario non cambia."
 }

@@ -248,3 +248,12 @@ Compare solo per i nutrienti con un massimo e un dato parziale, verdi, quando il
 del massimo (soglia modificabile in Impostazioni → Colori, salvata nelle impostazioni e nel backup; i backup vecchi
 partono da 70). Piccolo segno "max?" accanto al valore; nel dettaglio e nel PDF: "con i dati noti sei al X% del
 massimo, il resto non è verificabile". Il colore resta verde; nessun calcolo cambia. Le copie del diario non lo mostrano.
+
+## 19/11/2026 — Spesa (richiesta dell'utente)
+
+Scheda "Spesa", separata dal diario: per ogni cane si scelgono ricette e giorni (es. A 20, B 5, C 5 su 30); l'app somma
+i grammi per ingrediente di tutti i cani (ricetta × giorni), con il prezzo del catalogo (prezzo per il peso nella ciotola).
+Margine facoltativo in % sulle quantità delle ricette; grammi arrotondati per eccesso al grammo, capsule al numero intero.
+Verdure pesate cotte: peso da comprare crudo stimato con una resa di cottura di 0,9 (peso cotto ÷ peso crudo, STIMA);
+cereali, legumi e carni pesati cotti non vengono convertiti (lo dice la lista). Righe libere con quantità e prezzo
+facoltativi. Dati salvati in `shopping` (backup compresi; i backup vecchi si ripristinano con la spesa vuota).
