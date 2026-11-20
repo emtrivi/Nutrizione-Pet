@@ -257,3 +257,12 @@ Margine facoltativo in % sulle quantità delle ricette; grammi arrotondati per e
 Verdure pesate cotte: peso da comprare crudo stimato con una resa di cottura di 0,9 (peso cotto ÷ peso crudo, STIMA);
 cereali, legumi e carni pesati cotti non vengono convertiti (lo dice la lista). Righe libere con quantità e prezzo
 facoltativi. Dati salvati in `shopping` (backup compresi; i backup vecchi si ripristinano con la spesa vuota).
+
+## 20/11/2026 — Dispensa (richiesta dell'utente)
+
+Quantità in casa per ingrediente, nello stesso peso delle ricette (verdure cotte: peso cotto, confermato dall'utente);
+capsule per gli integratori a capsule. Acquisto "N confezioni da X" (l'app fa il totale e ricorda la confezione),
+"Finito" toglie una confezione (mai sotto zero), correzione a mano, "Togli". Nessuno scalo automatico dal diario.
+In ogni ricetta: "in dispensa X, basta per N giorni" (giorni interi) o "in dispensa: niente". Lista della spesa =
+previsione con il margine − dispensa (mai sotto zero) + righe libere; prezzo sul "da comprare". Dati in `pantry`
+(backup compresi; i backup vecchi si ripristinano con la dispensa vuota).
