@@ -104,7 +104,7 @@ export function emptyPersonalData(): PersonalData {
     prices: {},
     settings: { ...DEFAULT_SETTINGS },
     shopping: { ...DEFAULT_SHOPPING, plans: [], extras: [] },
-    pantry: { items: {}, purchases: [] },
+    pantry: { lots: [], items: {}, purchases: [] },
     lastBackupAt: null,
   };
 }

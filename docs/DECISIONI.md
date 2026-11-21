@@ -288,3 +288,14 @@ Armonia (cistina e metionina + cistina, acido linoleico, ALA, EPA/DHA del conigl
 colina), solo dove mancavano; nessun valore presente cambiato, kcal invariate, le altre 162 voci identiche. Armonia manzo
 e coniglio resta usabile nelle ricette su richiesta dell'utente, con i valori dell'etichetta (proteine 52,9%, acqua 33,2%)
 in attesa di conferma. Catalogo della 0.7.3 in `archivio/CATALOGO_CANI_REVISIONATO_2026-11-21_v0.7.3.json`.
+
+## 21/11/2026 — Dispensa a righe (0.7.5)
+
+La dispensa passa da un totale per ingrediente a righe ("lotti"): **confezioni** (N confezioni intere di un formato; un
+acquisto dello stesso prodotto e formato si somma alla riga, un formato diverso fa una riga nuova; +1/−1; modifica di
+numero e formato, che unisce le righe se il formato diventa uguale), **resto** (la parte non intera dopo una correzione
+dei grammi di una riga a confezioni: mai sommato alle confezioni intere, ogni correzione fa il suo resto) e **partita
+sfusa** (grammi in tutto, sempre una riga a parte con la data, «Aggiorna quanto resta», «Finito»). A zero la riga sparisce.
+Il totale per ingrediente è la somma delle righe: Spesa e ricette lo usano come prima. Dati e backup di prima si convertono
+in lettura (confezioni intere + resto, stesso totale); il riepilogo `items` resta scritto per le versioni precedenti.
+Schema dei dati invariato (2).
