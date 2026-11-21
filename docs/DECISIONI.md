@@ -299,3 +299,18 @@ sfusa** (grammi in tutto, sempre una riga a parte con la data, «Aggiorna quanto
 Il totale per ingrediente è la somma delle righe: Spesa e ricette lo usano come prima. Dati e backup di prima si convertono
 in lettura (confezioni intere + resto, stesso totale); il riepilogo `items` resta scritto per le versioni precedenti.
 Schema dei dati invariato (2).
+
+## 21/11/2026 — Dispensa: acquisto e consumo separati (0.8.0)
+
+**Acquisto**: una bozza (`pantry.draft`, salvata sul telefono) con la data (di partenza oggi, non nel futuro). Dentro si
+aggiungono confezioni e partite sfuse con le stesse regole di unione; +1, −1, modifica e togli correggono la bozza e non
+vanno nello storico. «Ho finito di registrare gli acquisti» porta le righe in dispensa, salva l'acquisto confermato
+(`pantry.sessions`) e scrive la voce «acquisto». Un acquisto confermato si riapre con «Modifica»: al salvataggio la
+dispensa riceve solo la differenza (confezioni per prodotto e formato; partite per riga, tenendo conto di quanto già
+consumato) e lo storico scrive «modifica» con la data del giorno, prima/dopo per i prodotti cambiati. Una sola bozza alla volta.
+**Consumo**: sulle righe solo «Confezione finita» (una confezione in meno; per partite e resti «Finita» toglie la riga)
+e «Consumata in parte» (si scrive quanto resta o quanto si è consumato, l'altro si calcola; per le confezioni restano
+quelle intere e la parte aperta diventa un «Resto»). Tolti +1/−1, «Modifica», «Correggi grammi» e «Togli» dalle righe.
+**Storico** (`pantry.history`): acquisto, modifica, finita, consumo parziale; si tengono 3 mesi (dal giorno di oggi meno
+3 mesi), anche gli acquisti confermati: le voci più vecchie si cancellano alla prima operazione successiva e non si
+mostrano. Parte vuoto. Righe e registro di prima invariati; backup vecchi si ripristinano (campi nuovi vuoti).

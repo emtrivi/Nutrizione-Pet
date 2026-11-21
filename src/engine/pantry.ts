@@ -1,13 +1,20 @@
-// Dispensa (20/11/2026, righe per confezione dal 21/11/2026): quanto c'è in casa di ogni ingrediente,
-// in grammi (o capsule per gli integratori a capsule), nello stesso peso delle ricette.
-// Si aggiorna solo a mano: acquisti, +1/−1, correzioni, "finito". Nessuno scalo automatico dal diario.
+// Dispensa (20/11/2026; righe per confezione dal 21/11/2026; acquisto e consumo separati dal 21/11/2026):
+// quanto c'è in casa di ogni ingrediente, in grammi (o capsule per gli integratori a capsule), nello stesso
+// peso delle ricette. Si aggiorna solo a mano. Nessuno scalo automatico dal diario.
 //
 // Ogni ingrediente può avere più righe ("lotti"):
 //   - confezioni: N confezioni intere dello stesso formato (es. 2 × 1.000 g). Un acquisto dello stesso
 //     prodotto e dello stesso formato si somma alla riga; un formato diverso fa una riga a parte.
-//   - resto: grammi sfusi rimasti da una correzione a mano. Non si somma mai alle confezioni intere.
+//   - resto: grammi rimasti di una confezione aperta. Non si somma mai alle confezioni intere.
 //   - partita: acquisto sfuso (es. 10.000 g). Non si unisce mai a niente: ogni partita resta la sua riga.
 // Il totale per ingrediente (pantryAmount) è la somma delle righe: Spesa e ricette lo usano come prima.
+//
+// Due momenti separati:
+//   - ACQUISTO: una bozza (con la data) in cui si aggiungono i prodotti e si corregge liberamente; le
+//     correzioni non vanno nello storico. «Ho finito» la conferma: entra in dispensa e nello storico.
+//     Un acquisto confermato si può modificare dopo: la dispensa si aggiorna e lo storico lo registra.
+//   - CONSUMO: sulle righe della dispensa, «Confezione finita» e «Consumata in parte», con voce nello storico.
+// Lo storico e gli acquisti confermati si tengono 3 mesi; le voci più vecchie si cancellano da sole.
 
 import type { Catalog } from './catalog';
 
@@ -26,7 +33,7 @@ export interface PantryLot {
   amount: number;
   /** Solo partita: grammi acquistati all'inizio. */
   bought: number;
-  /** Giorno dell'acquisto (o della correzione per un resto), AAAA-MM-GG. */
+  /** Giorno dell'acquisto (o del consumo per un resto), AAAA-MM-GG. */
   day: string;
   updatedAt: string;
 }
@@ -50,15 +57,61 @@ export interface PantryPurchase {
   kind?: 'partita';
 }
 
+/** Un prodotto dentro un acquisto (bozza o confermato). */
+export interface PurchaseLine {
+  id: string;
+  key: string;
+  kind: 'confezioni' | 'partita';
+  /** Confezioni: numero e formato. */
+  packages: number;
+  packageSize: number;
+  /** Partita sfusa: grammi in tutto. */
+  grams: number;
+}
+
+/** Acquisto confermato: si tiene per poterlo modificare (3 mesi). */
+export interface PurchaseSession {
+  id: string;
+  /** Giorno dell'acquisto, AAAA-MM-GG. */
+  day: string;
+  lines: PurchaseLine[];
+  confirmedAt: string;
+}
+
+/** Bozza: un acquisto nuovo, o la modifica di uno confermato (editingOf). */
+export interface PurchaseDraft {
+  id: string;
+  day: string;
+  lines: PurchaseLine[];
+  /** Id dell'acquisto confermato che si sta modificando, o null per un acquisto nuovo. */
+  editingOf: string | null;
+  updatedAt: string;
+}
+
+export type PantryHistoryEntry =
+  | { id: string; at: string; day: string; type: 'acquisto'; purchaseDay: string; lines: PurchaseLine[] }
+  | { id: string; at: string; day: string; type: 'modifica'; purchaseDay: string; before: PurchaseLine[]; after: PurchaseLine[] }
+  | { id: string; at: string; day: string; type: 'finita'; key: string; lotKind: PantryLotKind; amount: number; packageSize: number }
+  | { id: string; at: string; day: string; type: 'consumo'; key: string; lotKind: PantryLotKind; consumed: number; remaining: number };
+
 export interface PantryData {
   lots: PantryLot[];
   /** Riepilogo calcolato dalle righe (non modificarlo a mano). */
   items: Record<string, PantryItem>;
-  /** Registro degli acquisti (solo da consultare). */
+  /** Registro degli acquisti delle versioni precedenti (e degli acquisti confermati), solo da consultare. */
   purchases: PantryPurchase[];
+  /** Acquisto non ancora confermato (salvato sul telefono), o null. */
+  draft: PurchaseDraft | null;
+  /** Acquisti confermati degli ultimi 3 mesi (per poterli modificare). */
+  sessions: PurchaseSession[];
+  /** Storico: acquisti confermati, modifiche e consumi degli ultimi 3 mesi. */
+  history: PantryHistoryEntry[];
 }
 
-export const EMPTY_PANTRY: PantryData = { lots: [], items: {}, purchases: [] };
+export const EMPTY_PANTRY: PantryData = { lots: [], items: {}, purchases: [], draft: null, sessions: [], history: [] };
+
+/** Mesi di storico (e di acquisti modificabili). */
+export const HISTORY_MONTHS = 3;
 
 const EPS = 1e-9;
 const isObject = (v: unknown): v is Record<string, unknown> => typeof v === 'object' && v !== null && !Array.isArray(v);
@@ -66,10 +119,16 @@ const nonNeg = (v: unknown): v is number => typeof v === 'number' && Number.isFi
 const pos = (v: unknown): v is number => nonNeg(v) && v > 0;
 const str = (v: unknown) => (typeof v === 'string' ? v : '');
 const sameSize = (a: number, b: number) => Math.abs(a - b) < EPS;
+const localDayOf = (d: Date) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 
 /** Quantità di una riga: confezioni × formato, oppure i grammi che restano. */
 export function lotAmount(lot: PantryLot): number {
   return lot.kind === 'confezioni' ? lot.packages * lot.packageSize : lot.amount;
+}
+
+/** Quantità di un prodotto in un acquisto. */
+export function lineAmount(line: PurchaseLine): number {
+  return line.kind === 'confezioni' ? line.packages * line.packageSize : line.grams;
 }
 
 function summarize(lots: PantryLot[]): Record<string, PantryItem> {
@@ -85,7 +144,10 @@ function summarize(lots: PantryLot[]): Record<string, PantryItem> {
   return items;
 }
 
-const make = (lots: PantryLot[], purchases: PantryPurchase[]): PantryData => ({ lots, items: summarize(lots), purchases });
+/** Nuove righe: il riepilogo si ricalcola, il resto resta com'è. */
+const withLots = (pantry: PantryData, lots: PantryLot[]): PantryData => ({ ...pantry, lots, items: summarize(lots) });
+
+// ---------------------------------------------------------------- lettura dal telefono / backup
 
 function sanitizeLot(l: unknown): PantryLot | null {
   if (!isObject(l) || typeof l.id !== 'string' || typeof l.key !== 'string') return null;
@@ -117,9 +179,40 @@ function convertOldItems(items: Record<string, unknown>): PantryLot[] {
   return lots;
 }
 
+function sanitizeLine(l: unknown): PurchaseLine | null {
+  if (!isObject(l) || typeof l.id !== 'string' || typeof l.key !== 'string') return null;
+  if (l.kind === 'confezioni' && pos(l.packages) && pos(l.packageSize))
+    return { id: l.id, key: l.key, kind: 'confezioni', packages: Math.round(l.packages), packageSize: l.packageSize, grams: 0 };
+  if (l.kind === 'partita' && pos(l.grams)) return { id: l.id, key: l.key, kind: 'partita', packages: 0, packageSize: 0, grams: l.grams };
+  return null;
+}
+
+const sanitizeLines = (v: unknown): PurchaseLine[] => (Array.isArray(v) ? v.map(sanitizeLine).filter((l): l is PurchaseLine => l !== null) : []);
+const LOT_KINDS: PantryLotKind[] = ['confezioni', 'resto', 'partita'];
+
+function sanitizeHistoryEntry(e: unknown): PantryHistoryEntry | null {
+  if (!isObject(e) || typeof e.id !== 'string' || typeof e.day !== 'string') return null;
+  const base = { id: e.id, at: str(e.at), day: e.day };
+  switch (e.type) {
+    case 'acquisto':
+      return { ...base, type: 'acquisto', purchaseDay: str(e.purchaseDay), lines: sanitizeLines(e.lines) };
+    case 'modifica':
+      return { ...base, type: 'modifica', purchaseDay: str(e.purchaseDay), before: sanitizeLines(e.before), after: sanitizeLines(e.after) };
+    case 'finita':
+    case 'consumo': {
+      if (typeof e.key !== 'string') return null;
+      const lotKind = LOT_KINDS.includes(e.lotKind as PantryLotKind) ? (e.lotKind as PantryLotKind) : 'resto';
+      if (e.type === 'finita') return { ...base, type: 'finita', key: e.key, lotKind, amount: nonNeg(e.amount) ? e.amount : 0, packageSize: nonNeg(e.packageSize) ? e.packageSize : 0 };
+      return { ...base, type: 'consumo', key: e.key, lotKind, consumed: nonNeg(e.consumed) ? e.consumed : 0, remaining: nonNeg(e.remaining) ? e.remaining : 0 };
+    }
+    default:
+      return null;
+  }
+}
+
 /** Dispensa letta dal telefono o da un backup: quello che non è valido si scarta (dati di prima: convertiti). */
 export function sanitizePantry(v: unknown): PantryData {
-  if (!isObject(v)) return make([], []);
+  if (!isObject(v)) return { ...EMPTY_PANTRY };
   const lots = Array.isArray(v.lots)
     ? v.lots.map(sanitizeLot).filter((l): l is PantryLot => l !== null)
     : isObject(v.items)
@@ -137,7 +230,18 @@ export function sanitizePantry(v: unknown): PantryData {
           return out;
         })
     : [];
-  return make(lots, purchases);
+  const d = v.draft;
+  const draft: PurchaseDraft | null =
+    isObject(d) && typeof d.id === 'string' && typeof d.day === 'string'
+      ? { id: d.id, day: d.day, lines: sanitizeLines(d.lines), editingOf: typeof d.editingOf === 'string' ? d.editingOf : null, updatedAt: str(d.updatedAt) }
+      : null;
+  const sessions = Array.isArray(v.sessions)
+    ? v.sessions
+        .filter((s): s is Record<string, unknown> => isObject(s) && typeof s.id === 'string' && typeof s.day === 'string')
+        .map((s) => ({ id: s.id as string, day: s.day as string, lines: sanitizeLines(s.lines), confirmedAt: str(s.confirmedAt) }))
+    : [];
+  const history = Array.isArray(v.history) ? v.history.map(sanitizeHistoryEntry).filter((e): e is PantryHistoryEntry => e !== null) : [];
+  return { lots, items: summarize(lots), purchases, draft, sessions, history };
 }
 
 /** Quanto c'è in casa in tutto (somma delle righe; 0 se l'ingrediente non è in dispensa). */
@@ -147,9 +251,11 @@ export function pantryAmount(pantry: PantryData, key: string): number {
   return sum;
 }
 
+// ---------------------------------------------------------------- righe della dispensa
+
 /**
- * Acquisto a confezioni: "2 vaschette da 1.000 g". Se c'è già una riga dello stesso prodotto con lo
- * stesso formato, le confezioni si sommano a quella; altrimenti nasce una riga nuova.
+ * Confezioni in dispensa: se c'è già una riga dello stesso prodotto con lo stesso formato, le confezioni
+ * si sommano a quella; altrimenti nasce una riga nuova.
  */
 export function addPackages(pantry: PantryData, purchase: Omit<PantryPurchase, 'kind'>, now: Date): PantryData {
   const at = now.toISOString();
@@ -163,10 +269,10 @@ export function addPackages(pantry: PantryData, purchase: Omit<PantryPurchase, '
           ...pantry.lots,
           { id: purchase.id, key: purchase.key, kind: 'confezioni' as const, packages, packageSize: purchase.packageSize, amount: 0, bought: 0, day: purchase.day, updatedAt: at },
         ];
-  return make(lots, [...pantry.purchases, { ...purchase, packages }]);
+  return { ...withLots(pantry, lots), purchases: [...pantry.purchases, { ...purchase, packages }] };
 }
 
-/** Acquisto sfuso: "10.000 g". È sempre una riga nuova, anche se c'è già una partita uguale. */
+/** Partita sfusa in dispensa: sempre una riga nuova, anche se c'è già una partita uguale. */
 export function addBulk(pantry: PantryData, purchase: { id: string; key: string; day: string; grams: number }, now: Date): PantryData {
   if (!(purchase.grams > 0)) return pantry;
   const lot: PantryLot = {
@@ -180,68 +286,17 @@ export function addBulk(pantry: PantryData, purchase: { id: string; key: string;
     day: purchase.day,
     updatedAt: now.toISOString(),
   };
-  return make([...pantry.lots, lot], [...pantry.purchases, { id: purchase.id, key: purchase.key, day: purchase.day, packages: 1, packageSize: purchase.grams, kind: 'partita' }]);
+  return {
+    ...withLots(pantry, [...pantry.lots, lot]),
+    purchases: [...pantry.purchases, { id: purchase.id, key: purchase.key, day: purchase.day, packages: 1, packageSize: purchase.grams, kind: 'partita' }],
+  };
 }
 
-/** +1 / −1 confezione su una riga a confezioni. A zero confezioni la riga sparisce. */
-export function changePackages(pantry: PantryData, lotId: string, delta: number, now: Date): PantryData {
-  const lot = pantry.lots.find((l) => l.id === lotId);
-  if (!lot || lot.kind !== 'confezioni') return pantry;
-  return editLot(pantry, lotId, lot.packages + delta, lot.packageSize, now);
-}
-
-/**
- * Modifica completa di una riga a confezioni: numero di confezioni e formato. A zero confezioni la riga
- * sparisce; se il nuovo formato è uguale a quello di un'altra riga dello stesso prodotto, le due si uniscono.
- */
-export function editLot(pantry: PantryData, lotId: string, packages: number, packageSize: number, now: Date): PantryData {
-  const lot = pantry.lots.find((l) => l.id === lotId);
-  if (!lot || lot.kind !== 'confezioni' || !(packageSize > 0)) return pantry;
-  const n = Math.round(packages);
-  if (!(n > 0)) return removeLot(pantry, lotId);
-  const at = now.toISOString();
-  const other = pantry.lots.find((l) => l.id !== lotId && l.kind === 'confezioni' && l.key === lot.key && sameSize(l.packageSize, packageSize));
-  const lots = other
-    ? pantry.lots.filter((l) => l.id !== lotId).map((l) => (l.id === other.id ? { ...l, packages: l.packages + n, updatedAt: at } : l))
-    : pantry.lots.map((l) => (l.id === lotId ? { ...l, packages: n, packageSize, updatedAt: at } : l));
-  return make(lots, pantry.purchases);
-}
-
-/**
- * Correzione dei grammi di una riga a confezioni (es. 2 × 1.000 g → 1.600 g): restano le confezioni intere
- * (1 × 1.000 g) e la parte che non fa una confezione intera (600 g) diventa una riga «resto» a parte.
- */
-export function correctPackageGrams(pantry: PantryData, lotId: string, grams: number, restoId: string, now: Date, day: string): PantryData {
-  const lot = pantry.lots.find((l) => l.id === lotId);
-  if (!lot || lot.kind !== 'confezioni' || !nonNeg(grams)) return pantry;
-  const at = now.toISOString();
-  const whole = Math.floor(grams / lot.packageSize + EPS);
-  const rest = grams - whole * lot.packageSize;
-  const lots: PantryLot[] = [];
-  for (const l of pantry.lots) {
-    if (l.id !== lotId) lots.push(l);
-    else if (whole > 0) lots.push({ ...l, packages: whole, updatedAt: at });
-  }
-  if (rest > EPS) lots.push({ id: restoId, key: lot.key, kind: 'resto', packages: 0, packageSize: 0, amount: rest, bought: 0, day, updatedAt: at });
-  return make(lots, pantry.purchases);
-}
-
-/** «Aggiorna quanto resta» per una partita sfusa o un resto. A zero la riga sparisce. */
-export function updateRemaining(pantry: PantryData, lotId: string, grams: number, now: Date): PantryData {
-  const lot = pantry.lots.find((l) => l.id === lotId);
-  if (!lot || lot.kind === 'confezioni' || !nonNeg(grams)) return pantry;
-  if (!(grams > EPS)) return removeLot(pantry, lotId);
-  return make(
-    pantry.lots.map((l) => (l.id === lotId ? { ...l, amount: grams, updatedAt: now.toISOString() } : l)),
-    pantry.purchases,
-  );
-}
-
-/** Toglie la riga dalla dispensa («Finito» per partite e resti, «Togli» per le confezioni). Il registro resta. */
+/** Toglie la riga dalla dispensa (senza voce nello storico). */
 export function removeLot(pantry: PantryData, lotId: string): PantryData {
-  return make(
+  return withLots(
+    pantry,
     pantry.lots.filter((l) => l.id !== lotId),
-    pantry.purchases,
   );
 }
 
@@ -253,6 +308,268 @@ export function lastPackageSize(pantry: PantryData, key: string): number | null 
   }
   return null;
 }
+
+// ---------------------------------------------------------------- storico
+
+/** Primo giorno che resta nello storico: oggi meno 3 mesi. */
+export function historyCutoff(now: Date): string {
+  const d = new Date(now.getFullYear(), now.getMonth() - HISTORY_MONTHS, now.getDate());
+  return localDayOf(d);
+}
+
+/** Cancella le voci dello storico (e gli acquisti confermati) più vecchi di 3 mesi. */
+export function pruneHistory(pantry: PantryData, now: Date): PantryData {
+  const cutoff = historyCutoff(now);
+  const history = pantry.history.filter((e) => e.day >= cutoff);
+  const sessions = pantry.sessions.filter((s) => s.day >= cutoff || s.confirmedAt.slice(0, 10) >= cutoff);
+  if (history.length === pantry.history.length && sessions.length === pantry.sessions.length) return pantry;
+  return { ...pantry, history, sessions };
+}
+
+/** Storico da mostrare: ultimi 3 mesi, dal più recente. */
+export function visibleHistory(pantry: PantryData, now: Date): PantryHistoryEntry[] {
+  const cutoff = historyCutoff(now);
+  return pantry.history.filter((e) => e.day >= cutoff).sort((a, b) => b.at.localeCompare(a.at) || b.id.localeCompare(a.id));
+}
+
+const record = (pantry: PantryData, entry: PantryHistoryEntry, now: Date): PantryData => pruneHistory({ ...pantry, history: [...pantry.history, entry] }, now);
+
+// ---------------------------------------------------------------- acquisto: bozza
+
+type NewLine = { key: string; kind: 'confezioni'; packages: number; packageSize: number } | { key: string; kind: 'partita'; grams: number };
+
+/** Aggiunge un prodotto alla bozza (la crea se non c'è). Stesso prodotto e formato: si somma; partite mai unite. */
+export function draftAddLine(pantry: PantryData, line: NewLine, lineId: string, now: Date, day: string): PantryData {
+  const draft = pantry.draft ?? { id: lineId, day, lines: [], editingOf: null, updatedAt: '' };
+  let lines: PurchaseLine[];
+  if (line.kind === 'confezioni') {
+    const n = Math.round(line.packages);
+    if (!(n > 0) || !(line.packageSize > 0)) return pantry;
+    const same = draft.lines.find((l) => l.kind === 'confezioni' && l.key === line.key && sameSize(l.packageSize, line.packageSize));
+    lines = same
+      ? draft.lines.map((l) => (l === same ? { ...l, packages: l.packages + n } : l))
+      : [...draft.lines, { id: lineId, key: line.key, kind: 'confezioni', packages: n, packageSize: line.packageSize, grams: 0 }];
+  } else {
+    if (!(line.grams > 0)) return pantry;
+    lines = [...draft.lines, { id: lineId, key: line.key, kind: 'partita', packages: 0, packageSize: 0, grams: line.grams }];
+  }
+  return { ...pantry, draft: { ...draft, lines, updatedAt: now.toISOString() } };
+}
+
+/** +1 / −1 su un prodotto a confezioni della bozza (a zero sparisce). Non va nello storico. */
+export function draftChangePackages(pantry: PantryData, lineId: string, delta: number, now: Date): PantryData {
+  const line = pantry.draft?.lines.find((l) => l.id === lineId);
+  if (!line || line.kind !== 'confezioni') return pantry;
+  return draftEditLine(pantry, lineId, { packages: line.packages + delta, packageSize: line.packageSize }, now);
+}
+
+/**
+ * Modifica di un prodotto della bozza: confezioni e formato, oppure i grammi di una partita. A zero sparisce;
+ * se il nuovo formato è uguale a quello di un'altra riga dello stesso prodotto, le due si uniscono.
+ */
+export function draftEditLine(pantry: PantryData, lineId: string, change: { packages: number; packageSize: number } | { grams: number }, now: Date): PantryData {
+  const draft = pantry.draft;
+  const line = draft?.lines.find((l) => l.id === lineId);
+  if (!draft || !line) return pantry;
+  const at = now.toISOString();
+  if ('grams' in change) {
+    if (line.kind !== 'partita' || !nonNeg(change.grams)) return pantry;
+    if (!(change.grams > 0)) return draftRemoveLine(pantry, lineId, now);
+    return { ...pantry, draft: { ...draft, lines: draft.lines.map((l) => (l.id === lineId ? { ...l, grams: change.grams } : l)), updatedAt: at } };
+  }
+  if (line.kind !== 'confezioni' || !(change.packageSize > 0)) return pantry;
+  const n = Math.round(change.packages);
+  if (!(n > 0)) return draftRemoveLine(pantry, lineId, now);
+  const other = draft.lines.find((l) => l.id !== lineId && l.kind === 'confezioni' && l.key === line.key && sameSize(l.packageSize, change.packageSize));
+  const lines = other
+    ? draft.lines.filter((l) => l.id !== lineId).map((l) => (l.id === other.id ? { ...l, packages: l.packages + n } : l))
+    : draft.lines.map((l) => (l.id === lineId ? { ...l, packages: n, packageSize: change.packageSize } : l));
+  return { ...pantry, draft: { ...draft, lines, updatedAt: at } };
+}
+
+export function draftRemoveLine(pantry: PantryData, lineId: string, now: Date): PantryData {
+  const draft = pantry.draft;
+  if (!draft) return pantry;
+  return { ...pantry, draft: { ...draft, lines: draft.lines.filter((l) => l.id !== lineId), updatedAt: now.toISOString() } };
+}
+
+export function draftSetDay(pantry: PantryData, day: string, now: Date): PantryData {
+  return pantry.draft ? { ...pantry, draft: { ...pantry.draft, day, updatedAt: now.toISOString() } } : pantry;
+}
+
+/** Scarta la bozza: la dispensa e lo storico non cambiano. */
+export function discardDraft(pantry: PantryData): PantryData {
+  return { ...pantry, draft: null };
+}
+
+/** Apre un acquisto confermato in una bozza per modificarlo (solo se non c'è già una bozza). */
+export function startEditPurchase(pantry: PantryData, sessionId: string, now: Date): PantryData {
+  const s = pantry.sessions.find((x) => x.id === sessionId);
+  if (!s || pantry.draft) return pantry;
+  return { ...pantry, draft: { id: s.id, day: s.day, lines: s.lines.map((l) => ({ ...l })), editingOf: s.id, updatedAt: now.toISOString() } };
+}
+
+/** Applica alla dispensa la differenza tra le righe di prima e quelle di dopo di un acquisto. */
+function applyPurchaseChange(pantry: PantryData, before: PurchaseLine[], after: PurchaseLine[], sessionId: string, day: string, now: Date): PantryData {
+  const at = now.toISOString();
+  let lots = [...pantry.lots];
+  // confezioni: differenza di confezioni per prodotto e formato
+  const groups = new Map<string, { key: string; size: number; delta: number }>();
+  const add = (l: PurchaseLine, sign: number) => {
+    if (l.kind !== 'confezioni') return;
+    const g = [...groups.values()].find((x) => x.key === l.key && sameSize(x.size, l.packageSize));
+    if (g) g.delta += sign * l.packages;
+    else groups.set(`${l.key}|${l.packageSize}`, { key: l.key, size: l.packageSize, delta: sign * l.packages });
+  };
+  before.forEach((l) => add(l, -1));
+  after.forEach((l) => add(l, 1));
+  for (const g of groups.values()) {
+    if (g.delta === 0) continue;
+    const i = lots.findIndex((l) => l.kind === 'confezioni' && l.key === g.key && sameSize(l.packageSize, g.size));
+    const lot = i >= 0 ? lots[i] : undefined;
+    if (lot) {
+      const n = lot.packages + g.delta;
+      lots = n > 0 ? lots.map((l, j) => (j === i ? { ...l, packages: n, updatedAt: at } : l)) : lots.filter((_, j) => j !== i);
+    } else if (g.delta > 0) {
+      lots.push({ id: `${sessionId}:${g.key}:${g.size}`, key: g.key, kind: 'confezioni', packages: g.delta, packageSize: g.size, amount: 0, bought: 0, day, updatedAt: at });
+    }
+  }
+  // partite: ogni partita è la riga con lo stesso id
+  const oldBulk = new Map(before.filter((l) => l.kind === 'partita').map((l) => [l.id, l]));
+  const newBulk = new Map(after.filter((l) => l.kind === 'partita').map((l) => [l.id, l]));
+  for (const id of new Set([...oldBulk.keys(), ...newBulk.keys()])) {
+    const o = oldBulk.get(id);
+    const n = newBulk.get(id);
+    const delta = (n?.grams ?? 0) - (o?.grams ?? 0);
+    const i = lots.findIndex((l) => l.id === id && l.kind === 'partita');
+    const lot = i >= 0 ? lots[i] : undefined;
+    if (lot) {
+      if (!n) lots = lots.filter((_, j) => j !== i);
+      else if (delta !== 0) {
+        const amount = lot.amount + delta;
+        lots = amount > EPS ? lots.map((l, j) => (j === i ? { ...l, amount, bought: lot.bought + delta, day, updatedAt: at } : l)) : lots.filter((_, j) => j !== i);
+      } else if (lot.day !== day) lots = lots.map((l, j) => (j === i ? { ...l, day } : l));
+    } else if (n && !o) {
+      lots.push({ id, key: n.key, kind: 'partita', packages: 0, packageSize: 0, amount: n.grams, bought: n.grams, day, updatedAt: at });
+    }
+  }
+  return withLots(pantry, lots);
+}
+
+const sameLines = (a: PurchaseLine[], b: PurchaseLine[]) => {
+  const norm = (ls: PurchaseLine[]) =>
+    ls
+      .map((l) => `${l.key}|${l.kind}|${l.kind === 'confezioni' ? `${l.packages}x${l.packageSize}` : `${l.id}:${l.grams}`}`)
+      .sort()
+      .join(';');
+  return norm(a) === norm(b);
+};
+
+/**
+ * «Ho finito di registrare gli acquisti»: la bozza entra in dispensa e nello storico («acquisto»).
+ * Se la bozza è la modifica di un acquisto confermato, la dispensa si aggiorna con la differenza e lo
+ * storico registra la «modifica» con la data di oggi (se non è cambiato niente, nessuna voce).
+ */
+export function confirmDraft(pantry: PantryData, historyId: string, now: Date): PantryData {
+  const draft = pantry.draft;
+  if (!draft) return pantry;
+  const at = now.toISOString();
+  const today = localDayOf(now);
+  if (draft.editingOf) {
+    const old = pantry.sessions.find((s) => s.id === draft.editingOf);
+    if (!old) return { ...pantry, draft: null };
+    const changed = !sameLines(old.lines, draft.lines) || old.day !== draft.day;
+    if (!changed) return { ...pantry, draft: null };
+    let next = applyPurchaseChange(pantry, old.lines, draft.lines, old.id, draft.day, now);
+    const sessions =
+      draft.lines.length > 0
+        ? next.sessions.map((s) => (s.id === old.id ? { ...s, day: draft.day, lines: draft.lines } : s))
+        : next.sessions.filter((s) => s.id !== old.id);
+    next = { ...next, draft: null, sessions };
+    return record(next, { id: historyId, at, day: today, type: 'modifica', purchaseDay: old.day, before: old.lines, after: draft.lines }, now);
+  }
+  if (draft.lines.length === 0) return pantry;
+  let next: PantryData = pantry;
+  for (const l of draft.lines) {
+    next =
+      l.kind === 'confezioni'
+        ? addPackages(next, { id: `${draft.id}:${l.id}`, key: l.key, day: draft.day, packages: l.packages, packageSize: l.packageSize }, now)
+        : addBulk(next, { id: l.id, key: l.key, day: draft.day, grams: l.grams }, now);
+  }
+  next = { ...next, draft: null, sessions: [...next.sessions, { id: draft.id, day: draft.day, lines: draft.lines, confirmedAt: at }] };
+  return record(next, { id: historyId, at, day: today, type: 'acquisto', purchaseDay: draft.day, lines: draft.lines }, now);
+}
+
+// ---------------------------------------------------------------- consumo
+
+/**
+ * «Confezione finita»: una confezione intera in meno (da 3 a 2; a zero la riga sparisce). Per una partita o
+ * un resto la riga sparisce tutta. Voce «finita» nello storico.
+ */
+export function packageFinished(pantry: PantryData, lotId: string, historyId: string, now: Date): PantryData {
+  const lot = pantry.lots.find((l) => l.id === lotId);
+  if (!lot) return pantry;
+  const at = now.toISOString();
+  const lots =
+    lot.kind === 'confezioni' && lot.packages > 1
+      ? pantry.lots.map((l) => (l.id === lotId ? { ...l, packages: l.packages - 1, updatedAt: at } : l))
+      : pantry.lots.filter((l) => l.id !== lotId);
+  const amount = lot.kind === 'confezioni' ? lot.packageSize : lot.amount;
+  return record(
+    withLots(pantry, lots),
+    { id: historyId, at, day: localDayOf(now), type: 'finita', key: lot.key, lotKind: lot.kind, amount, packageSize: lot.kind === 'confezioni' ? lot.packageSize : 0 },
+    now,
+  );
+}
+
+/**
+ * «Consumata in parte»: dato UNO tra grammi rimasti e grammi consumati, l'altro si calcola dal totale
+ * della riga. null se il valore non è valido (negativo o più del totale).
+ */
+export function partialValues(total: number, input: { remaining: number } | { consumed: number }): { remaining: number; consumed: number } | null {
+  const v = 'remaining' in input ? input.remaining : input.consumed;
+  if (!nonNeg(v) || v > total + EPS) return null;
+  const other = Math.max(0, total - v);
+  return 'remaining' in input ? { remaining: v, consumed: other } : { remaining: other, consumed: v };
+}
+
+/**
+ * «Consumata in parte» su una riga: per le confezioni restano quelle intere e la parte aperta diventa una
+ * riga «Resto»; per una partita o un resto si aggiorna quanto resta (a zero la riga sparisce).
+ * Voce «consumo» nello storico.
+ */
+export function consumePartial(
+  pantry: PantryData,
+  lotId: string,
+  input: { remaining: number } | { consumed: number },
+  ids: { resto: string; history: string },
+  now: Date,
+): PantryData {
+  const lot = pantry.lots.find((l) => l.id === lotId);
+  if (!lot) return pantry;
+  const v = partialValues(lotAmount(lot), input);
+  if (!v || !(v.consumed > EPS)) return pantry;
+  const at = now.toISOString();
+  const day = localDayOf(now);
+  const lots: PantryLot[] = [];
+  if (lot.kind === 'confezioni') {
+    const whole = Math.floor(v.remaining / lot.packageSize + EPS);
+    const rest = v.remaining - whole * lot.packageSize;
+    for (const l of pantry.lots) {
+      if (l.id !== lotId) lots.push(l);
+      else if (whole > 0) lots.push({ ...l, packages: whole, updatedAt: at });
+    }
+    if (rest > EPS) lots.push({ id: ids.resto, key: lot.key, kind: 'resto', packages: 0, packageSize: 0, amount: rest, bought: 0, day, updatedAt: at });
+  } else {
+    for (const l of pantry.lots) {
+      if (l.id !== lotId) lots.push(l);
+      else if (v.remaining > EPS) lots.push({ ...l, amount: v.remaining, updatedAt: at });
+    }
+  }
+  return record(withLots(pantry, lots), { id: ids.history, at, day, type: 'consumo', key: lot.key, lotKind: lot.kind, consumed: v.consumed, remaining: v.remaining }, now);
+}
+
+// ---------------------------------------------------------------- calcoli e liste
 
 /** Per quanti giorni basta quello che c'è in casa con la dose giornaliera della ricetta (giorni interi). */
 export function daysCovered(amountInPantry: number, perDay: number): number | null {
@@ -281,4 +598,15 @@ export function pantryGroups(
       return { key, name: c?.nameIt ?? key, unit: c?.doseUnit ?? ('g' as const), total: lots.reduce((s, l) => s + lotAmount(l), 0), lots: sorted };
     })
     .sort((a, b) => a.name.localeCompare(b.name, 'it'));
+}
+
+/**
+ * Differenza tra due versioni di un acquisto, per prodotto: solo i prodotti cambiati, con le righe di prima
+ * e quelle di dopo.
+ */
+export function purchaseChanges(before: PurchaseLine[], after: PurchaseLine[]): { key: string; before: PurchaseLine[]; after: PurchaseLine[] }[] {
+  const keys = [...new Set([...before, ...after].map((l) => l.key))];
+  return keys
+    .map((key) => ({ key, before: before.filter((l) => l.key === key), after: after.filter((l) => l.key === key) }))
+    .filter((c) => !sameLines(c.before, c.after));
 }

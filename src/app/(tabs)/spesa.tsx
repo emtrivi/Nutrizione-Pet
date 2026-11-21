@@ -97,6 +97,12 @@ export default function SpesaScreen() {
         quello che hai in dispensa e mostra i prezzi del catalogo. Non tocca il diario.
       </Explain>
       <Button title="Apri la dispensa" kind="secondary" onPress={() => router.push('/dispensa')} />
+      {data.pantry.draft ? (
+        <Notice tone="warning">
+          {data.pantry.draft.editingOf ? 'C’è una modifica a un acquisto non ancora salvata' : 'C’è un acquisto non ancora confermato'}: non è ancora
+          in dispensa. Aprila e tocca «{data.pantry.draft.editingOf ? 'Salva le modifiche' : 'Ho finito di registrare gli acquisti'}».
+        </Notice>
+      ) : null}
 
       <Card title="Periodo">
         <Field

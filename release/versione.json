@@ -1,5 +1,5 @@
 {
-  "versione": "0.7.5",
+  "versione": "0.8.0",
   "data": "2026-11-21",
-  "note": "Dispensa: una riga per prodotto e formato di confezione (acquisti uguali si sommano), +1/−1, modifica di confezioni e formato, «resto» separato dopo una correzione dei grammi, partite sfuse sempre a parte con la data e «Aggiorna quanto resta». Calcoli, Spesa, catalogo e diario invariati."
+  "note": "Dispensa: acquisto e consumo separati. Acquisto come bozza con la data, confermato con «Ho finito di registrare gli acquisti» e modificabile dopo; sulle righe «Confezione finita» e «Consumata in parte»; nuovo Storico (ultimi 3 mesi). Righe già in dispensa, calcoli, Spesa, catalogo e diario invariati."
 }

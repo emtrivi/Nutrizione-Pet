@@ -1,41 +1,73 @@
 // Dispensa: quanto c'è in casa di ogni ingrediente, nello stesso peso delle ricette.
-// Una riga per prodotto e formato di confezione; le partite sfuse e i resti sono righe a parte.
-// Si aggiorna solo a mano (acquisti, +1/−1, correzioni, «Finito»): il diario non scala niente.
+// Due momenti separati: ACQUISTO (una bozza con la data, confermata con «Ho finito») e CONSUMO
+// («Confezione finita», «Consumata in parte» sulle righe). Acquisti confermati, modifiche e consumi
+// vanno nello storico (ultimi 3 mesi). Il diario non scala niente.
 
 import { useState } from 'react';
-import { Pressable, Text, TextInput, View } from 'react-native';
+import { Alert, Platform, Pressable, Text, TextInput, View } from 'react-native';
 import { useData } from '../data/DataContext';
 import { parseDecimal } from '../data/dogForm';
 import { generateId, withPantry } from '../data/personalStore';
 import {
-  addBulk,
-  addPackages,
-  changePackages,
-  correctPackageGrams,
-  editLot,
+  addDays,
+  confirmDraft,
+  consumePartial,
+  discardDraft,
+  draftAddLine,
+  draftChangePackages,
+  draftEditLine,
+  draftRemoveLine,
+  draftSetDay,
+  formatDay,
   getCatalog,
   lastPackageSize,
   localDay,
   lotAmount,
+  packageFinished,
   pantryGroups,
-  removeLot,
-  updateRemaining,
+  partialValues,
+  startEditPurchase,
+  visibleHistory,
+  weekday,
   type CatalogItem,
+  type PantryData,
+  type PantryHistoryEntry,
   type PantryLot,
+  type PurchaseLine,
 } from '../engine';
 import { Badge, Button, Card, Explain, Field, Hint, Notice, Screen, Segmented, styles } from '../ui/components';
-import { formatGrams, formatNumber } from '../ui/format';
+import { HISTORY_LABEL, historyText, lineText, packagesText, purchaseByProduct, qty } from '../ui/pantryText';
 import { CatalogPicker } from '../ui/recipe/Pickers';
 import { colors } from '../ui/theme';
 
 const catalog = getCatalog();
-const qty = (n: number, unit: 'g' | 'capsule') => (unit === 'capsule' ? `${formatNumber(n)} ${n === 1 ? 'capsula' : 'capsule'}` : formatGrams(n));
+const unitOf = (key: string): 'g' | 'capsule' => catalog.get(key)?.doseUnit ?? 'g';
+const nameOf = (key: string) => catalog.get(key)?.nameIt ?? key;
 const unitWord = (unit: 'g' | 'capsule') => (unit === 'capsule' ? 'capsule' : 'g');
-const dayIt = (day: string) => (day ? day.split('-').reverse().join('/') : '');
-const packagesText = (n: number) => `${formatNumber(n)} ${n === 1 ? 'confezione' : 'confezioni'}`;
+/** Numero scritto con la virgola, senza punti delle migliaia (per i campi da modificare). */
+const plain = (n: number) => String(Math.round(n * 1000) / 1000).replace('.', ',');
 
 type Mode = 'confezioni' | 'partita';
-type Editor = { lotId: string; mode: 'modifica' | 'grammi' | 'resta'; packages: string; size: string; grams: string };
+type LineEditor = { lineId: string; packages: string; size: string; grams: string };
+type ConsumeEditor = { lotId: string; remaining: string; consumed: string; last: 'remaining' | 'consumed' | null };
+
+const HISTORY_TONE: Record<PantryHistoryEntry['type'], 'info' | 'warning' | 'danger' | 'grey'> = {
+  acquisto: 'info',
+  modifica: 'warning',
+  finita: 'danger',
+  consumo: 'grey',
+};
+
+function confirmAsk(title: string, message: string, yes: string, onYes: () => void) {
+  if (Platform.OS === 'web') {
+    if (globalThis.confirm?.(`${title}\n\n${message}`)) onYes();
+    return;
+  }
+  Alert.alert(title, message, [
+    { text: 'Annulla', style: 'cancel' },
+    { text: yes, style: 'destructive', onPress: onYes },
+  ]);
+}
 
 function Action({ title, label, onPress, tone = 'primary' }: { title: string; label: string; onPress: () => void; tone?: 'primary' | 'danger' }) {
   return (
@@ -57,10 +89,43 @@ function SmallInput({ value, onChangeText, label, width = 90 }: { value: string;
   );
 }
 
+/** Scelta del giorno con ‹ › e «Oggi». */
+function DayStepper({ label, value, onChange, today }: { label: string; value: string; onChange: (d: string) => void; today: string }) {
+  const btn = { paddingHorizontal: 14, paddingVertical: 8, borderRadius: 8, borderWidth: 1, borderColor: colors.primary };
+  return (
+    <View style={{ gap: 4 }}>
+      <Text style={{ fontSize: 15, fontWeight: '600', color: colors.text }}>{label}</Text>
+      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+        <Pressable accessibilityRole="button" accessibilityLabel={`${label}: giorno prima`} onPress={() => onChange(addDays(value, -1))} style={btn}>
+          <Text style={{ color: colors.primary, fontSize: 18 }}>‹</Text>
+        </Pressable>
+        <Text style={{ fontSize: 17, minWidth: 130, textAlign: 'center', color: colors.text }} accessibilityLabel={`${label} ${formatDay(value)}`}>
+          {weekday(value)} {formatDay(value)}
+        </Text>
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel={`${label}: giorno dopo`}
+          disabled={value >= today}
+          onPress={() => onChange(addDays(value, 1))}
+          style={[btn, value >= today && { opacity: 0.4 }]}
+        >
+          <Text style={{ color: colors.primary, fontSize: 18 }}>›</Text>
+        </Pressable>
+        <Pressable accessibilityRole="button" accessibilityLabel={`${label}: oggi`} onPress={() => onChange(today)} hitSlop={6}>
+          <Text style={{ color: colors.primary, fontSize: 15 }}>Oggi</Text>
+        </Pressable>
+      </View>
+    </View>
+  );
+}
+
 export default function DispensaScreen() {
   const { data, update } = useData();
   const pantry = data.pantry;
+  const draft = pantry.draft;
+  const today = localDay(new Date());
   const [picking, setPicking] = useState(false);
+  const [formDay, setFormDay] = useState(today);
   const [buy, setBuy] = useState<{ item: CatalogItem | null; mode: Mode; packages: string; size: string; grams: string }>({
     item: null,
     mode: 'confezioni',
@@ -69,9 +134,14 @@ export default function DispensaScreen() {
     grams: '',
   });
   const [error, setError] = useState<string | null>(null);
-  const [editor, setEditor] = useState<Editor | null>(null);
+  const [lineEditor, setLineEditor] = useState<LineEditor | null>(null);
+  const [consume, setConsume] = useState<ConsumeEditor | null>(null);
   const [editError, setEditError] = useState<string | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
+
+  const change = (f: (p: PantryData) => PantryData) => update((d) => withPantry(d, f(d.pantry)));
+  const editing = !!draft?.editingOf;
+  const day = draft?.day ?? formDay;
 
   const packages = parseDecimal(buy.packages);
   const size = parseDecimal(buy.size);
@@ -79,85 +149,182 @@ export default function DispensaScreen() {
   const unit = buy.item?.doseUnit ?? 'g';
   const preview = typeof packages === 'number' && typeof size === 'number' ? Math.round(packages) * size : null;
 
-  const register = () => {
+  // ------------------------------------------------ acquisto (bozza)
+  const addLine = () => {
     if (!buy.item) return setError('Scegli l’ingrediente.');
     const now = new Date();
     const item = buy.item;
     if (buy.mode === 'partita') {
       if (typeof grams !== 'number' || grams <= 0) return setError(`Quantità della partita: scrivi ${unit === 'capsule' ? 'il numero di capsule' : 'i grammi'}, per esempio 10000.`);
-      update((d) => withPantry(d, addBulk(d.pantry, { id: generateId(now), key: item.key, day: localDay(now), grams }, now)));
-      setNotice(`Registrata una partita sfusa: ${item.nameIt}, ${qty(grams, unit)}. È una riga a parte.`);
+      change((p) => draftAddLine(p, { key: item.key, kind: 'partita', grams }, generateId(now), now, day));
     } else {
       if (typeof packages !== 'number' || packages <= 0 || !Number.isInteger(packages)) return setError('Numero di confezioni: scrivi un numero intero, per esempio 3.');
       if (typeof size !== 'number' || size <= 0) return setError(`Contenuto di una confezione: scrivi ${unit === 'capsule' ? 'il numero di capsule' : 'i grammi'}, per esempio 1000.`);
-      const merged = pantry.lots.some((l) => l.kind === 'confezioni' && l.key === item.key && Math.abs(l.packageSize - size) < 1e-9);
-      update((d) => withPantry(d, addPackages(d.pantry, { id: generateId(now), key: item.key, day: localDay(now), packages, packageSize: size }, now)));
-      setNotice(
-        `Registrato: ${item.nameIt}, ${packagesText(packages)} da ${qty(size, unit)}${merged ? ' (aggiunte alla riga con lo stesso formato)' : ''}.`,
-      );
+      change((p) => draftAddLine(p, { key: item.key, kind: 'confezioni', packages, packageSize: size }, generateId(now), now, day));
     }
     setBuy((b) => ({ item: null, mode: b.mode, packages: '1', size: '', grams: '' }));
     setError(null);
+    setNotice(null);
   };
 
-  const closeEditor = () => {
-    setEditor(null);
+  const finish = () => {
+    if (!draft) return;
+    const now = new Date();
+    const wasEditing = editing;
+    const n = draft.lines.length;
+    change((p) => confirmDraft(p, generateId(now), now));
+    setLineEditor(null);
+    setFormDay(today);
+    setNotice(
+      wasEditing
+        ? 'Modifiche salvate: la dispensa è aggiornata e lo storico registra la correzione.'
+        : `Acquisto del ${formatDay(draft.day)} registrato (${n} ${n === 1 ? 'prodotto' : 'prodotti'}): ora è in dispensa e nello storico.`,
+    );
+  };
+
+  const saveLine = (line: PurchaseLine) => {
+    if (!lineEditor) return;
+    const now = new Date();
+    const u = unitOf(line.key);
+    if (line.kind === 'confezioni') {
+      const n = parseDecimal(lineEditor.packages);
+      const s = parseDecimal(lineEditor.size);
+      if (typeof n !== 'number' || n < 0 || !Number.isInteger(n)) return setEditError('Confezioni: scrivi un numero intero (0 toglie il prodotto).');
+      if (typeof s !== 'number' || s <= 0) return setEditError(`Formato: scrivi ${u === 'capsule' ? 'le capsule' : 'i grammi'} di una confezione.`);
+      change((p) => draftEditLine(p, line.id, { packages: n, packageSize: s }, now));
+    } else {
+      const g = parseDecimal(lineEditor.grams);
+      if (typeof g !== 'number' || g < 0) return setEditError(`Scrivi ${u === 'capsule' ? 'le capsule' : 'i grammi'} della partita (0 la toglie).`);
+      change((p) => draftEditLine(p, line.id, { grams: g }, now));
+    }
+    setLineEditor(null);
     setEditError(null);
   };
 
-  const saveEditor = (lot: PantryLot, u: 'g' | 'capsule') => {
-    if (!editor) return;
-    const now = new Date();
-    if (editor.mode === 'modifica') {
-      const n = parseDecimal(editor.packages);
-      const s = parseDecimal(editor.size);
-      if (typeof n !== 'number' || n < 0 || !Number.isInteger(n)) return setEditError('Confezioni: scrivi un numero intero (0 toglie la riga).');
-      if (typeof s !== 'number' || s <= 0) return setEditError(`Formato: scrivi ${u === 'capsule' ? 'le capsule' : 'i grammi'} di una confezione.`);
-      update((d) => withPantry(d, editLot(d.pantry, lot.id, n, s, now)));
-    } else {
-      const g = parseDecimal(editor.grams);
-      if (typeof g !== 'number' || g < 0) return setEditError(`Scrivi ${u === 'capsule' ? 'le capsule' : 'i grammi'} che hai in casa (0 toglie la riga).`);
-      if (editor.mode === 'grammi') update((d) => withPantry(d, correctPackageGrams(d.pantry, lot.id, g, generateId(now), now, localDay(now))));
-      else update((d) => withPantry(d, updateRemaining(d.pantry, lot.id, g, now)));
-    }
-    closeEditor();
-  };
-
-  const groups = pantryGroups(pantry, catalog);
-
-  const renderEditor = (lot: PantryLot, u: 'g' | 'capsule', name: string) => {
-    if (!editor || editor.lotId !== lot.id) return null;
+  const renderDraftLine = (line: PurchaseLine) => {
+    const u = unitOf(line.key);
+    const name = nameOf(line.key);
+    const open = lineEditor?.lineId === line.id ? lineEditor : null;
     return (
-      <View style={{ gap: 6, marginTop: 4 }}>
-        {editor.mode === 'modifica' ? (
-          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6, flexWrap: 'wrap' }}>
-            <SmallInput value={editor.packages} onChangeText={(t) => setEditor({ ...editor, packages: t })} label={`Numero di confezioni ${name}`} width={70} />
-            <Text style={{ color: colors.muted }}>confezioni da</Text>
-            <SmallInput value={editor.size} onChangeText={(t) => setEditor({ ...editor, size: t })} label={`Formato della confezione ${name}`} />
-            <Text style={{ color: colors.muted }}>{unitWord(u)}</Text>
-          </View>
-        ) : (
-          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
-            <Text style={{ color: colors.muted }}>{editor.mode === 'grammi' ? 'In tutto ho' : 'Restano'}</Text>
-            <SmallInput value={editor.grams} onChangeText={(t) => setEditor({ ...editor, grams: t })} label={`Quantità ${name}`} width={100} />
-            <Text style={{ color: colors.muted }}>{unitWord(u)}</Text>
-          </View>
-        )}
-        {editor.mode === 'grammi' ? <Hint>Le confezioni intere restano; la parte che avanza diventa una riga «resto» a parte.</Hint> : null}
-        {editError ? <Text style={{ color: colors.danger, fontSize: 14 }}>{editError}</Text> : null}
-        <View style={{ flexDirection: 'row', gap: 16 }}>
-          <Action title="Salva" label={`Salva ${name}`} onPress={() => saveEditor(lot, u)} />
-          <Action title="Annulla" label="Annulla" onPress={closeEditor} />
+      <View key={line.id} style={{ gap: 6, paddingVertical: 8, borderBottomWidth: 0.5, borderBottomColor: colors.border }}>
+        <Text style={{ fontSize: 15, fontWeight: '600', color: colors.text }}>{name}</Text>
+        <View style={{ flexDirection: 'row', gap: 8, alignItems: 'center' }}>
+          {line.kind === 'partita' ? <Badge text="Partita sfusa" tone="info" /> : null}
+          <Text style={{ flex: 1, fontSize: 15, color: colors.text }}>{line.kind === 'confezioni' ? lineText(line, u) : qty(line.grams, u)}</Text>
         </View>
+        <View style={{ flexDirection: 'row', gap: 16, alignItems: 'center', flexWrap: 'wrap' }}>
+          {line.kind === 'confezioni' ? (
+            <>
+              <Action title="−1" label={`Una confezione in meno di ${name} nell’acquisto`} onPress={() => change((p) => draftChangePackages(p, line.id, -1, new Date()))} />
+              <Action title="+1" label={`Una confezione in più di ${name} nell’acquisto`} onPress={() => change((p) => draftChangePackages(p, line.id, 1, new Date()))} />
+            </>
+          ) : null}
+          <Action
+            title="Modifica"
+            label={`Modifica ${name} nell’acquisto`}
+            onPress={() => {
+              setEditError(null);
+              setLineEditor({ lineId: line.id, packages: String(line.packages), size: plain(line.packageSize), grams: plain(line.grams) });
+            }}
+          />
+          <Action title="Togli" label={`Togli ${name} dall’acquisto`} tone="danger" onPress={() => change((p) => draftRemoveLine(p, line.id, new Date()))} />
+        </View>
+        {open ? (
+          <View style={{ gap: 6 }}>
+            {line.kind === 'confezioni' ? (
+              <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6, flexWrap: 'wrap' }}>
+                <SmallInput value={open.packages} onChangeText={(t) => setLineEditor({ ...open, packages: t })} label={`Numero di confezioni ${name}`} width={70} />
+                <Text style={{ color: colors.muted }}>confezioni da</Text>
+                <SmallInput value={open.size} onChangeText={(t) => setLineEditor({ ...open, size: t })} label={`Formato della confezione ${name}`} />
+                <Text style={{ color: colors.muted }}>{unitWord(u)}</Text>
+              </View>
+            ) : (
+              <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
+                <SmallInput value={open.grams} onChangeText={(t) => setLineEditor({ ...open, grams: t })} label={`Quantità della partita ${name}`} width={100} />
+                <Text style={{ color: colors.muted }}>{unitWord(u)}</Text>
+              </View>
+            )}
+            {editError ? <Text style={{ color: colors.danger, fontSize: 14 }}>{editError}</Text> : null}
+            <View style={{ flexDirection: 'row', gap: 16 }}>
+              <Action title="Salva" label={`Salva ${name}`} onPress={() => saveLine(line)} />
+              <Action title="Annulla" label="Annulla" onPress={() => setLineEditor(null)} />
+            </View>
+          </View>
+        ) : null}
       </View>
     );
   };
 
+  // ------------------------------------------------ consumo
+  const consumeTyped = (lot: PantryLot, field: 'remaining' | 'consumed', text: string) => {
+    const v = parseDecimal(text);
+    const res = typeof v === 'number' ? partialValues(lotAmount(lot), field === 'remaining' ? { remaining: v } : { consumed: v }) : null;
+    const other = field === 'remaining' ? 'consumed' : 'remaining';
+    setConsume({ lotId: lot.id, remaining: '', consumed: '', [field]: text, [other]: res ? plain(res[other]) : '', last: field } as ConsumeEditor);
+  };
+
+  const saveConsume = (lot: PantryLot) => {
+    if (!consume || !consume.last) return setEditError('Scrivi quanto resta oppure quanto hai consumato.');
+    const v = parseDecimal(consume.last === 'remaining' ? consume.remaining : consume.consumed);
+    const u = unitOf(lot.key);
+    const total = lotAmount(lot);
+    const input = consume.last === 'remaining' ? { remaining: typeof v === 'number' ? v : NaN } : { consumed: typeof v === 'number' ? v : NaN };
+    const res = partialValues(total, input);
+    if (!res) return setEditError(`Scrivi un numero tra 0 e ${qty(total, u)}.`);
+    if (!(res.consumed > 0)) return setEditError('Non risulta consumato niente.');
+    const now = new Date();
+    change((p) => consumePartial(p, lot.id, input, { resto: generateId(now), history: generateId(now) }, now));
+    setConsume(null);
+    setEditError(null);
+  };
+
   const renderLot = (lot: PantryLot, u: 'g' | 'capsule', name: string) => {
-    const open = (mode: Editor['mode']) => {
-      setEditError(null);
-      setEditor({ lotId: lot.id, mode, packages: String(lot.packages), size: String(lot.packageSize), grams: String(lotAmount(lot)) });
+    const open = consume?.lotId === lot.id ? consume : null;
+    const finished = () => {
+      const now = new Date();
+      change((p) => packageFinished(p, lot.id, generateId(now), now));
+      if (open) setConsume(null);
     };
+    const actions = (
+      <View style={{ flexDirection: 'row', gap: 16, alignItems: 'center', flexWrap: 'wrap' }}>
+        <Action
+          title={lot.kind === 'confezioni' ? 'Confezione finita' : 'Finita'}
+          label={lot.kind === 'confezioni' ? `Confezione finita di ${name} da ${qty(lot.packageSize, u)}` : `Finita ${lot.kind === 'partita' ? 'la partita' : 'il resto'} di ${name}`}
+          tone="danger"
+          onPress={finished}
+        />
+        <Action
+          title="Consumata in parte"
+          label={`Consumata in parte ${name}${lot.kind === 'confezioni' ? ` da ${qty(lot.packageSize, u)}` : ''}`}
+          onPress={() => {
+            setEditError(null);
+            setConsume({ lotId: lot.id, remaining: '', consumed: '', last: null });
+          }}
+        />
+      </View>
+    );
+    const editor = open ? (
+      <View style={{ gap: 6, marginTop: 4 }}>
+        <Hint>Scrivi uno dei due: l’altro si calcola da solo (in tutto {qty(lotAmount(lot), u)}).</Hint>
+        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6, flexWrap: 'wrap' }}>
+          <Text style={{ color: colors.muted, width: 110 }}>Restano</Text>
+          <SmallInput value={open.remaining} onChangeText={(t) => consumeTyped(lot, 'remaining', t)} label={`Quanto resta di ${name}`} width={100} />
+          <Text style={{ color: colors.muted }}>{unitWord(u)}</Text>
+        </View>
+        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6, flexWrap: 'wrap' }}>
+          <Text style={{ color: colors.muted, width: 110 }}>Ho consumato</Text>
+          <SmallInput value={open.consumed} onChangeText={(t) => consumeTyped(lot, 'consumed', t)} label={`Quanto hai consumato di ${name}`} width={100} />
+          <Text style={{ color: colors.muted }}>{unitWord(u)}</Text>
+        </View>
+        {lot.kind === 'confezioni' ? <Hint>Le confezioni intere restano; quella aperta diventa una riga «Resto».</Hint> : null}
+        {editError ? <Text style={{ color: colors.danger, fontSize: 14 }}>{editError}</Text> : null}
+        <View style={{ flexDirection: 'row', gap: 16 }}>
+          <Action title="Salva" label={`Salva il consumo di ${name}`} onPress={() => saveConsume(lot)} />
+          <Action title="Annulla" label="Annulla" onPress={() => setConsume(null)} />
+        </View>
+      </View>
+    ) : null;
+
     if (lot.kind === 'confezioni') {
       return (
         <View key={lot.id} style={{ gap: 6, paddingVertical: 6 }}>
@@ -167,14 +334,8 @@ export default function DispensaScreen() {
             </Text>
             <Text style={{ fontSize: 15, color: colors.muted }}>{qty(lotAmount(lot), u)}</Text>
           </View>
-          <View style={{ flexDirection: 'row', gap: 16, alignItems: 'center', flexWrap: 'wrap' }}>
-            <Action title="−1" label={`Una confezione in meno di ${name} da ${qty(lot.packageSize, u)}`} onPress={() => update((d) => withPantry(d, changePackages(d.pantry, lot.id, -1, new Date())))} />
-            <Action title="+1 confezione" label={`Una confezione in più di ${name} da ${qty(lot.packageSize, u)}`} onPress={() => update((d) => withPantry(d, changePackages(d.pantry, lot.id, 1, new Date())))} />
-            <Action title="Modifica" label={`Modifica confezioni e formato di ${name}`} onPress={() => open('modifica')} />
-            <Action title="Correggi grammi" label={`Correggi i grammi di ${name}`} onPress={() => open('grammi')} />
-            <Action title="Togli" label={`Togli la riga di ${name} da ${qty(lot.packageSize, u)}`} tone="danger" onPress={() => update((d) => withPantry(d, removeLot(d.pantry, lot.id)))} />
-          </View>
-          {renderEditor(lot, u, name)}
+          {actions}
+          {editor}
         </View>
       );
     }
@@ -194,27 +355,44 @@ export default function DispensaScreen() {
       >
         <View style={{ flexDirection: 'row', gap: 8, alignItems: 'center' }}>
           <Badge text={partita ? 'Partita sfusa' : 'Resto'} tone={partita ? 'info' : 'grey'} />
-          <Text style={{ flex: 1, fontSize: 15, color: colors.text }}>{partita ? `del ${dayIt(lot.day)}` : 'confezione aperta'}</Text>
+          <Text style={{ flex: 1, fontSize: 15, color: colors.text }}>{partita ? (lot.day ? `del ${formatDay(lot.day)}` : '') : 'confezione aperta'}</Text>
           <Text style={{ fontSize: 15, fontWeight: '600', color: colors.text }}>{qty(lot.amount, u)}</Text>
         </View>
         {partita && lot.bought > 0 ? <Hint>Acquistati {qty(lot.bought, u)}, restano {qty(lot.amount, u)}.</Hint> : null}
-        <View style={{ flexDirection: 'row', gap: 16, alignItems: 'center', flexWrap: 'wrap' }}>
-          <Action title="Aggiorna quanto resta" label={`Aggiorna quanto resta di ${name}`} onPress={() => open('resta')} />
-          <Action title="Finito" label={`Finito ${partita ? 'la partita' : 'il resto'} di ${name}`} tone="danger" onPress={() => update((d) => withPantry(d, removeLot(d.pantry, lot.id)))} />
-        </View>
-        {renderEditor(lot, u, name)}
+        {actions}
+        {editor}
       </View>
     );
   };
 
+  const groups = pantryGroups(pantry, catalog);
+  const history = visibleHistory(pantry, new Date());
+  const sessions = [...pantry.sessions].sort((a, b) => b.day.localeCompare(a.day) || b.confirmedAt.localeCompare(a.confirmedAt));
+
   return (
     <Screen>
       <Explain>
-        Quanto hai in casa di ogni ingrediente, nello stesso peso delle ricette (per le verdure cotte, il peso cotto). Una riga per
-        prodotto e formato di confezione; le partite sfuse restano righe a parte. Si aggiorna solo a mano: il diario non scala niente.
+        Quanto hai in casa di ogni ingrediente, nello stesso peso delle ricette (per le verdure cotte, il peso cotto). Quando fai la
+        spesa registri l’acquisto e lo confermi; quando consumi usi «Confezione finita» o «Consumata in parte» sulle righe. Il diario non
+        scala niente.
       </Explain>
 
-      <Card title="Registra un acquisto">
+      {draft ? (
+        <Notice tone="warning">
+          {editing
+            ? `Stai modificando l’acquisto del ${formatDay(draft.day)}: le modifiche non sono ancora in dispensa. Tocca «Salva le modifiche».`
+            : `Acquisto del ${formatDay(draft.day)} non ancora confermato (${draft.lines.length} ${draft.lines.length === 1 ? 'prodotto' : 'prodotti'}): non è ancora in dispensa. Tocca «Ho finito di registrare gli acquisti».`}
+        </Notice>
+      ) : null}
+      {notice ? <Notice tone="info">{notice}</Notice> : null}
+
+      <Card title={editing && draft ? `Modifica l’acquisto del ${formatDay(draft.day)}` : 'Registra acquisti'}>
+        <DayStepper
+          label="Data dell’acquisto"
+          value={day}
+          today={today}
+          onChange={(d) => (draft ? change((p) => draftSetDay(p, d, new Date())) : setFormDay(d))}
+        />
         <Pressable accessibilityRole="button" onPress={() => setPicking(true)} style={[styles.input, { justifyContent: 'center' }]}>
           <Text style={{ fontSize: 16, color: buy.item ? colors.text : colors.grey }}>{buy.item ? buy.item.nameIt : 'Scegli l’ingrediente…'}</Text>
         </Pressable>
@@ -242,7 +420,7 @@ export default function DispensaScreen() {
                 />
               </View>
             </View>
-            {preview !== null ? <Hint>Totale: {qty(preview, unit)}. Se hai già lo stesso formato, le confezioni si sommano a quella riga.</Hint> : null}
+            {preview !== null ? <Hint>Totale: {qty(preview, unit)}. Stesso prodotto e stesso formato si sommano in un’unica riga.</Hint> : null}
           </>
         ) : (
           <>
@@ -257,10 +435,39 @@ export default function DispensaScreen() {
           </>
         )}
         {error ? <Notice tone="danger">{error}</Notice> : null}
-        <Button title="Registra l’acquisto" onPress={register} />
-      </Card>
+        <Button title="Aggiungi all’acquisto" kind="secondary" onPress={addLine} />
 
-      {notice ? <Notice tone="info">{notice}</Notice> : null}
+        {draft && draft.lines.length > 0 ? (
+          <View>
+            <Text style={{ fontSize: 15, fontWeight: '700', color: colors.text, marginTop: 8 }}>Prodotti di questo acquisto</Text>
+            <Hint>Qui puoi correggere liberamente: le correzioni non vanno nello storico.</Hint>
+            {draft.lines.map(renderDraftLine)}
+          </View>
+        ) : null}
+        {draft && draft.lines.length === 0 && editing ? <Hint>Hai tolto tutti i prodotti: salvando, l’acquisto viene annullato.</Hint> : null}
+
+        {draft ? (
+          <>
+            <Button title={editing ? 'Salva le modifiche' : 'Ho finito di registrare gli acquisti'} onPress={finish} disabled={!editing && draft.lines.length === 0} />
+            <Action
+              title={editing ? 'Annulla le modifiche' : 'Scarta questo acquisto'}
+              label={editing ? 'Annulla le modifiche' : 'Scarta questo acquisto'}
+              tone="danger"
+              onPress={() =>
+                confirmAsk(
+                  editing ? 'Annullare le modifiche?' : 'Scartare questo acquisto?',
+                  editing ? 'L’acquisto resta com’era.' : 'I prodotti inseriti non entrano in dispensa.',
+                  editing ? 'Annulla le modifiche' : 'Scarta',
+                  () => {
+                    change(discardDraft);
+                    setLineEditor(null);
+                  },
+                )
+              }
+            />
+          </>
+        ) : null}
+      </Card>
 
       <Card title="In dispensa">
         {groups.length === 0 ? <Hint>La dispensa è vuota.</Hint> : null}
@@ -275,23 +482,42 @@ export default function DispensaScreen() {
         ))}
       </Card>
 
-      {pantry.purchases.length > 0 ? (
-        <Card title="Ultimi acquisti">
-          {[...pantry.purchases]
-            .reverse()
-            .slice(0, 10)
-            .map((p) => {
-              const c = catalog.get(p.key);
-              const u = c?.doseUnit ?? 'g';
-              return (
-                <Hint key={p.id}>
-                  {dayIt(p.day)} · {c?.nameIt ?? p.key}:{' '}
-                  {p.kind === 'partita' ? `partita sfusa di ${qty(p.packageSize, u)}` : `${packagesText(p.packages)} da ${qty(p.packageSize, u)}`}
-                </Hint>
-              );
-            })}
+      {sessions.length > 0 ? (
+        <Card title="Acquisti confermati">
+          <Hint>Ultimi 3 mesi. Se modifichi un acquisto, la dispensa si aggiorna e lo storico registra la correzione.</Hint>
+          {sessions.map((s) => (
+            <View key={s.id} style={{ gap: 4, paddingVertical: 8, borderBottomWidth: 0.5, borderBottomColor: colors.border }}>
+              <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+                <Text style={{ flex: 1, fontSize: 15, fontWeight: '600', color: colors.text }}>Acquisto del {formatDay(s.day)}</Text>
+                {draft ? null : (
+                  <Action
+                    title="Modifica"
+                    label={`Modifica l’acquisto del ${formatDay(s.day)}`}
+                    onPress={() => {
+                      change((p) => startEditPurchase(p, s.id, new Date()));
+                      setNotice(null);
+                    }}
+                  />
+                )}
+              </View>
+              {purchaseByProduct(s.lines, catalog).map((text) => (
+                <Hint key={text}>{text}</Hint>
+              ))}
+            </View>
+          ))}
+          {draft ? <Hint>Per modificare un acquisto, prima conferma o scarta quello in corso.</Hint> : null}
         </Card>
       ) : null}
+
+      <Card title="Storico">
+        {history.length === 0 ? <Hint>Ancora niente: qui compaiono gli acquisti confermati, le modifiche e i consumi degli ultimi 3 mesi.</Hint> : null}
+        {history.map((e) => (
+          <View key={e.id} style={{ gap: 4, paddingVertical: 8, borderBottomWidth: 0.5, borderBottomColor: colors.border, alignItems: 'flex-start' }}>
+            <Badge text={HISTORY_LABEL[e.type]} tone={HISTORY_TONE[e.type]} />
+            <Text style={{ fontSize: 15, color: colors.text }}>{historyText(e, catalog)}</Text>
+          </View>
+        ))}
+      </Card>
 
       <CatalogPicker
         visible={picking}
@@ -299,8 +525,8 @@ export default function DispensaScreen() {
         exclude={[]}
         onClose={() => setPicking(false)}
         onPick={(item) => {
-          const known = lastPackageSize(pantry, item.key);
-          setBuy((b) => ({ ...b, item, size: known ? String(known) : b.size }));
+          const known = draft?.lines.find((l) => l.key === item.key && l.kind === 'confezioni')?.packageSize ?? lastPackageSize(pantry, item.key);
+          setBuy((b) => ({ ...b, item, size: known ? plain(known) : b.size }));
           setPicking(false);
         }}
       />
