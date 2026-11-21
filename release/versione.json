@@ -1,5 +1,5 @@
 {
-  "versione": "0.7.3",
+  "versione": "0.7.4",
   "data": "2026-11-21",
-  "note": "Catalogo alimenti del 21/11/2026: aggiunti Armonia manzo e coniglio, Armonia manzo e agnello e polpa di tacchino macinata (CDB e Igea, 6 voci). Le altre 160 voci non cambiano."
+  "note": "Catalogo alimenti: aggiunti i dati che mancavano alle quattro voci Armonia (manzo e coniglio, manzo e agnello; CDB e Igea). Nessun valore già presente cambiato, calorie invariate."
 }

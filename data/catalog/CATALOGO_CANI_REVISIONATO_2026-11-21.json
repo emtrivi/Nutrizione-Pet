@@ -47693,7 +47693,7 @@
       "source_version": "Etichetta CDB fornita 20/11/2026; proxy USDA SR Legacy",
       "data_status": "review_required",
       "available_to_formulate": true,
-      "notes": "ETICHETTA CDB (commercializzato anche da Igea): Polpa di manzo 50%, fusti di coniglio 30% (comprensivi di ossa). Organi bovini complessivi 10%: cuore 3%, milza 3%, reni 3%, fegato 1%; trippa grezza bovina 10%. Proteine 52.9%, grassi 12.7%, fibra grezza 0.2%, ceneri 1.0%, umidità 33.2%. | ENERGIA DICHIARATA dal venditore: 332 kcal/100g; kcal app calcolate dal 4/9/4 per coerenza con gli altri prodotti. Valori micronutrienti: STIME ponderate da profili analoghi, non analisi specifiche CDB. Mancanti non equivalgono a zero. | AVVISO Ca/P: stima sul 30% di fusti di coniglio con osso usando schiene macinate di coniglio con osso come proxy, incertezza ELEVATA. | ATTENZIONE ETICHETTA: 52,9% proteine e 33,2% umidità sono insoliti per un prodotto crudo congelato; dati conservati esattamente come dettati. 1% ceneri non valida il contenuto osseo ipotizzato.",
+      "notes": "ETICHETTA CDB (commercializzato anche da Igea): Polpa di manzo 50%, fusti di coniglio 30% (comprensivi di ossa). Organi bovini complessivi 10%: cuore 3%, milza 3%, reni 3%, fegato 1%; trippa grezza bovina 10%. Proteine 52.9%, grassi 12.7%, fibra grezza 0.2%, ceneri 1.0%, umidità 33.2%. | ENERGIA DICHIARATA dal venditore: 332 kcal/100g; kcal app calcolate dal 4/9/4 per coerenza con gli altri prodotti. Valori micronutrienti: STIME ponderate da profili analoghi, non analisi specifiche CDB. Mancanti non equivalgono a zero. | AVVISO Ca/P: stima sul 30% di fusti di coniglio con osso usando schiene macinate di coniglio con osso come proxy, incertezza ELEVATA. | ATTENZIONE ETICHETTA: 52,9% proteine e 33,2% umidità sono insoliti per un prodotto crudo congelato; dati conservati esattamente come dettati. 1% ceneri non valida il contenuto osseo ipotizzato. | Integrazione 21/11: cistina e altri nutrienti stimati per media ponderata; fonti per singolo campo nel foglio Integrazioni Armonia. Coperture parziali non equivalgono a composizione completa; componente ossea non corretta nei proxy di carne. Nessuna modifica ai valori preesistenti.",
       "nutrients": {
         "protein": {
           "value": 52.9,
@@ -47733,6 +47733,18 @@
         },
         "methionine": {
           "value": 0.48072,
+          "unit": "g",
+          "status": "estimated",
+          "source": "USDA FoodData Central SR Legacy — profili nutrienti materie prime; analisi dichiarate CDB (foto/trascrizione utente)"
+        },
+        "cystine": {
+          "value": 0.217616,
+          "unit": "g",
+          "status": "estimated",
+          "source": "USDA FoodData Central SR Legacy — profili nutrienti materie prime; analisi dichiarate CDB (foto/trascrizione utente)"
+        },
+        "methionine_cystine": {
+          "value": 0.698336,
           "unit": "g",
           "status": "estimated",
           "source": "USDA FoodData Central SR Legacy — profili nutrienti materie prime; analisi dichiarate CDB (foto/trascrizione utente)"
@@ -47779,6 +47791,12 @@
           "status": "estimated",
           "source": "USDA FoodData Central SR Legacy — profili nutrienti materie prime; analisi dichiarate CDB (foto/trascrizione utente)"
         },
+        "linoleic_acid": {
+          "value": 0.417967,
+          "unit": "g",
+          "status": "estimated",
+          "source": "USDA FoodData Central SR Legacy — profili nutrienti materie prime; analisi dichiarate CDB (foto/trascrizione utente)"
+        },
         "c18_2_undifferentiated": {
           "value": 0.4313,
           "unit": "g",
@@ -47787,6 +47805,30 @@
         },
         "c20_4_undifferentiated": {
           "value": 0.08839,
+          "unit": "g",
+          "status": "estimated",
+          "source": "USDA FoodData Central SR Legacy — profili nutrienti materie prime; analisi dichiarate CDB (foto/trascrizione utente)"
+        },
+        "ala": {
+          "value": 0.086477,
+          "unit": "g",
+          "status": "estimated",
+          "source": "USDA FoodData Central SR Legacy — profili nutrienti materie prime; analisi dichiarate CDB (foto/trascrizione utente)"
+        },
+        "epa": {
+          "value": 0.001,
+          "unit": "g",
+          "status": "estimated",
+          "source": "USDA FoodData Central SR Legacy — profili nutrienti materie prime; analisi dichiarate CDB (foto/trascrizione utente)"
+        },
+        "dha": {
+          "value": 0.0005,
+          "unit": "g",
+          "status": "estimated",
+          "source": "USDA FoodData Central SR Legacy — profili nutrienti materie prime; analisi dichiarate CDB (foto/trascrizione utente)"
+        },
+        "epa_dha": {
+          "value": 0.0015,
           "unit": "g",
           "status": "estimated",
           "source": "USDA FoodData Central SR Legacy — profili nutrienti materie prime; analisi dichiarate CDB (foto/trascrizione utente)"
@@ -47863,6 +47905,25 @@
           "status": "estimated",
           "source": "USDA FoodData Central SR Legacy — profili nutrienti materie prime; analisi dichiarate CDB (foto/trascrizione utente)"
         },
+        "beta_carotene_ug": {
+          "value": 2.32,
+          "unit": "µg",
+          "status": "estimated",
+          "source": "USDA FoodData Central SR Legacy — profili nutrienti materie prime; analisi dichiarate CDB (foto/trascrizione utente)"
+        },
+        "vitamin_d": {
+          "value": 3.52,
+          "unit": "IU",
+          "status": "estimated",
+          "source": "USDA FoodData Central SR Legacy — profili nutrienti materie prime; analisi dichiarate CDB (foto/trascrizione utente)"
+        },
+        "vitamin_e": {
+          "value": 0.197842,
+          "unit": "mg",
+          "status": "estimated",
+          "source": "USDA FoodData Central SR Legacy — profili nutrienti materie prime; analisi dichiarate CDB (foto/trascrizione utente)",
+          "form": "d_alpha_tocopherol"
+        },
         "vitamin_b1": {
           "value": 0.07224,
           "unit": "mg",
@@ -47905,6 +47966,18 @@
           "status": "estimated",
           "source": "USDA FoodData Central SR Legacy — profili nutrienti materie prime; analisi dichiarate CDB (foto/trascrizione utente)"
         },
+        "choline": {
+          "value": 91.387222,
+          "unit": "mg",
+          "status": "estimated",
+          "source": "USDA FoodData Central SR Legacy — profili nutrienti materie prime; analisi dichiarate CDB (foto/trascrizione utente)"
+        },
+        "vitamin_k": {
+          "value": 0.996789,
+          "unit": "µg",
+          "status": "estimated",
+          "source": "USDA FoodData Central SR Legacy — profili nutrienti materie prime; analisi dichiarate CDB (foto/trascrizione utente)"
+        },
         "vitamin_c": {
           "value": 1.72,
           "unit": "mg",
@@ -47940,7 +48013,7 @@
       "source_version": "Etichetta CDB fornita 20/11/2026; proxy USDA SR Legacy",
       "data_status": "review_required",
       "available_to_formulate": true,
-      "notes": "ETICHETTA CDB (commercializzato anche da Igea): Polpa di manzo 50%, ovino intero senza testa ed eviscerato 30% (comprensivo di ossa). Organi bovini complessivi 10%: cuore 3%, milza 3%, reni 3%, fegato 1%; trippa grezza bovina 10%. Proteine 17.8%, grassi 14.3%, fibra grezza 0.7%, ceneri 1.6%, umidità 64.3%. | ENERGIA DICHIARATA dal venditore: 190 kcal/100g; kcal app calcolate dal 4/9/4 per coerenza con gli altri prodotti. Valori micronutrienti: STIME ponderate da profili analoghi, non analisi specifiche CDB. Mancanti non equivalgono a zero. | AVVISO Ca/P: per il 30% di ovino con osso, stima ottenuta usando come analogia la mineralizzazione del macinato di schiene di coniglio con osso; componente ovina non caratterizzata, incertezza ELEVATA. | ATTENZIONE: 1,6% ceneri può non rappresentare accuratamente la quota di osso; confermare Ca/P dal produttore se disponibili.",
+      "notes": "ETICHETTA CDB (commercializzato anche da Igea): Polpa di manzo 50%, ovino intero senza testa ed eviscerato 30% (comprensivo di ossa). Organi bovini complessivi 10%: cuore 3%, milza 3%, reni 3%, fegato 1%; trippa grezza bovina 10%. Proteine 17.8%, grassi 14.3%, fibra grezza 0.7%, ceneri 1.6%, umidità 64.3%. | ENERGIA DICHIARATA dal venditore: 190 kcal/100g; kcal app calcolate dal 4/9/4 per coerenza con gli altri prodotti. Valori micronutrienti: STIME ponderate da profili analoghi, non analisi specifiche CDB. Mancanti non equivalgono a zero. | AVVISO Ca/P: per il 30% di ovino con osso, stima ottenuta usando come analogia la mineralizzazione del macinato di schiene di coniglio con osso; componente ovina non caratterizzata, incertezza ELEVATA. | ATTENZIONE: 1,6% ceneri può non rappresentare accuratamente la quota di osso; confermare Ca/P dal produttore se disponibili. | Integrazione 21/11: cistina e altri nutrienti stimati per media ponderata; fonti per singolo campo nel foglio Integrazioni Armonia. Coperture parziali non equivalgono a composizione completa; componente ossea non corretta nei proxy di carne. Nessuna modifica ai valori preesistenti.",
       "nutrients": {
         "protein": {
           "value": 17.8,
@@ -47980,6 +48053,18 @@
         },
         "methionine": {
           "value": 0.46002,
+          "unit": "g",
+          "status": "estimated",
+          "source": "USDA FoodData Central SR Legacy — profili nutrienti materie prime; analisi dichiarate CDB (foto/trascrizione utente)"
+        },
+        "cystine": {
+          "value": 0.202616,
+          "unit": "g",
+          "status": "estimated",
+          "source": "USDA FoodData Central SR Legacy — profili nutrienti materie prime; analisi dichiarate CDB (foto/trascrizione utente)"
+        },
+        "methionine_cystine": {
+          "value": 0.662636,
           "unit": "g",
           "status": "estimated",
           "source": "USDA FoodData Central SR Legacy — profili nutrienti materie prime; analisi dichiarate CDB (foto/trascrizione utente)"
@@ -48026,6 +48111,12 @@
           "status": "estimated",
           "source": "USDA FoodData Central SR Legacy — profili nutrienti materie prime; analisi dichiarate CDB (foto/trascrizione utente)"
         },
+        "linoleic_acid": {
+          "value": 0.29099,
+          "unit": "g",
+          "status": "estimated",
+          "source": "USDA FoodData Central SR Legacy — profili nutrienti materie prime; analisi dichiarate CDB (foto/trascrizione utente)"
+        },
         "c18_2_undifferentiated": {
           "value": 0.5453,
           "unit": "g",
@@ -48034,6 +48125,12 @@
         },
         "c20_4_undifferentiated": {
           "value": 0.05539,
+          "unit": "g",
+          "status": "estimated",
+          "source": "USDA FoodData Central SR Legacy — profili nutrienti materie prime; analisi dichiarate CDB (foto/trascrizione utente)"
+        },
+        "ala": {
+          "value": 0.09701,
           "unit": "g",
           "status": "estimated",
           "source": "USDA FoodData Central SR Legacy — profili nutrienti materie prime; analisi dichiarate CDB (foto/trascrizione utente)"
@@ -48128,6 +48225,25 @@
           "status": "estimated",
           "source": "USDA FoodData Central SR Legacy — profili nutrienti materie prime; analisi dichiarate CDB (foto/trascrizione utente)"
         },
+        "beta_carotene_ug": {
+          "value": 2.32,
+          "unit": "µg",
+          "status": "estimated",
+          "source": "USDA FoodData Central SR Legacy — profili nutrienti materie prime; analisi dichiarate CDB (foto/trascrizione utente)"
+        },
+        "vitamin_d": {
+          "value": 4.12,
+          "unit": "IU",
+          "status": "estimated",
+          "source": "USDA FoodData Central SR Legacy — profili nutrienti materie prime; analisi dichiarate CDB (foto/trascrizione utente)"
+        },
+        "vitamin_e": {
+          "value": 0.171,
+          "unit": "mg",
+          "status": "estimated",
+          "source": "USDA FoodData Central SR Legacy — profili nutrienti materie prime; analisi dichiarate CDB (foto/trascrizione utente)",
+          "form": "d_alpha_tocopherol"
+        },
         "vitamin_b1": {
           "value": 0.07824,
           "unit": "mg",
@@ -48166,6 +48282,18 @@
         },
         "vitamin_b12": {
           "value": 3.8059,
+          "unit": "µg",
+          "status": "estimated",
+          "source": "USDA FoodData Central SR Legacy — profili nutrienti materie prime; analisi dichiarate CDB (foto/trascrizione utente)"
+        },
+        "choline": {
+          "value": 88.295643,
+          "unit": "mg",
+          "status": "estimated",
+          "source": "USDA FoodData Central SR Legacy — profili nutrienti materie prime; analisi dichiarate CDB (foto/trascrizione utente)"
+        },
+        "vitamin_k": {
+          "value": 1.761,
           "unit": "µg",
           "status": "estimated",
           "source": "USDA FoodData Central SR Legacy — profili nutrienti materie prime; analisi dichiarate CDB (foto/trascrizione utente)"
@@ -48519,7 +48647,7 @@
       "source_version": "Etichetta CDB fornita 20/11/2026; proxy USDA SR Legacy",
       "data_status": "review_required",
       "available_to_formulate": true,
-      "notes": "ETICHETTA CDB (commercializzato anche da Igea): Polpa di manzo 50%, fusti di coniglio 30% (comprensivi di ossa). Organi bovini complessivi 10%: cuore 3%, milza 3%, reni 3%, fegato 1%; trippa grezza bovina 10%. Proteine 52.9%, grassi 12.7%, fibra grezza 0.2%, ceneri 1.0%, umidità 33.2%. | ENERGIA DICHIARATA dal venditore: 332 kcal/100g; kcal app calcolate dal 4/9/4 per coerenza con gli altri prodotti. Valori micronutrienti: STIME ponderate da profili analoghi, non analisi specifiche CDB. Mancanti non equivalgono a zero. | AVVISO Ca/P: stima sul 30% di fusti di coniglio con osso usando schiene macinate di coniglio con osso come proxy, incertezza ELEVATA. | ATTENZIONE ETICHETTA: 52,9% proteine e 33,2% umidità sono insoliti per un prodotto crudo congelato; dati conservati esattamente come dettati. 1% ceneri non valida il contenuto osseo ipotizzato.",
+      "notes": "ETICHETTA CDB (commercializzato anche da Igea): Polpa di manzo 50%, fusti di coniglio 30% (comprensivi di ossa). Organi bovini complessivi 10%: cuore 3%, milza 3%, reni 3%, fegato 1%; trippa grezza bovina 10%. Proteine 52.9%, grassi 12.7%, fibra grezza 0.2%, ceneri 1.0%, umidità 33.2%. | ENERGIA DICHIARATA dal venditore: 332 kcal/100g; kcal app calcolate dal 4/9/4 per coerenza con gli altri prodotti. Valori micronutrienti: STIME ponderate da profili analoghi, non analisi specifiche CDB. Mancanti non equivalgono a zero. | AVVISO Ca/P: stima sul 30% di fusti di coniglio con osso usando schiene macinate di coniglio con osso come proxy, incertezza ELEVATA. | ATTENZIONE ETICHETTA: 52,9% proteine e 33,2% umidità sono insoliti per un prodotto crudo congelato; dati conservati esattamente come dettati. 1% ceneri non valida il contenuto osseo ipotizzato. | Integrazione 21/11: cistina e altri nutrienti stimati per media ponderata; fonti per singolo campo nel foglio Integrazioni Armonia. Coperture parziali non equivalgono a composizione completa; componente ossea non corretta nei proxy di carne. Nessuna modifica ai valori preesistenti.",
       "nutrients": {
         "protein": {
           "value": 52.9,
@@ -48559,6 +48687,18 @@
         },
         "methionine": {
           "value": 0.48072,
+          "unit": "g",
+          "status": "estimated",
+          "source": "USDA FoodData Central SR Legacy — profili nutrienti materie prime; analisi dichiarate CDB (foto/trascrizione utente)"
+        },
+        "cystine": {
+          "value": 0.217616,
+          "unit": "g",
+          "status": "estimated",
+          "source": "USDA FoodData Central SR Legacy — profili nutrienti materie prime; analisi dichiarate CDB (foto/trascrizione utente)"
+        },
+        "methionine_cystine": {
+          "value": 0.698336,
           "unit": "g",
           "status": "estimated",
           "source": "USDA FoodData Central SR Legacy — profili nutrienti materie prime; analisi dichiarate CDB (foto/trascrizione utente)"
@@ -48605,6 +48745,12 @@
           "status": "estimated",
           "source": "USDA FoodData Central SR Legacy — profili nutrienti materie prime; analisi dichiarate CDB (foto/trascrizione utente)"
         },
+        "linoleic_acid": {
+          "value": 0.417967,
+          "unit": "g",
+          "status": "estimated",
+          "source": "USDA FoodData Central SR Legacy — profili nutrienti materie prime; analisi dichiarate CDB (foto/trascrizione utente)"
+        },
         "c18_2_undifferentiated": {
           "value": 0.4313,
           "unit": "g",
@@ -48613,6 +48759,30 @@
         },
         "c20_4_undifferentiated": {
           "value": 0.08839,
+          "unit": "g",
+          "status": "estimated",
+          "source": "USDA FoodData Central SR Legacy — profili nutrienti materie prime; analisi dichiarate CDB (foto/trascrizione utente)"
+        },
+        "ala": {
+          "value": 0.086477,
+          "unit": "g",
+          "status": "estimated",
+          "source": "USDA FoodData Central SR Legacy — profili nutrienti materie prime; analisi dichiarate CDB (foto/trascrizione utente)"
+        },
+        "epa": {
+          "value": 0.001,
+          "unit": "g",
+          "status": "estimated",
+          "source": "USDA FoodData Central SR Legacy — profili nutrienti materie prime; analisi dichiarate CDB (foto/trascrizione utente)"
+        },
+        "dha": {
+          "value": 0.0005,
+          "unit": "g",
+          "status": "estimated",
+          "source": "USDA FoodData Central SR Legacy — profili nutrienti materie prime; analisi dichiarate CDB (foto/trascrizione utente)"
+        },
+        "epa_dha": {
+          "value": 0.0015,
           "unit": "g",
           "status": "estimated",
           "source": "USDA FoodData Central SR Legacy — profili nutrienti materie prime; analisi dichiarate CDB (foto/trascrizione utente)"
@@ -48689,6 +48859,25 @@
           "status": "estimated",
           "source": "USDA FoodData Central SR Legacy — profili nutrienti materie prime; analisi dichiarate CDB (foto/trascrizione utente)"
         },
+        "beta_carotene_ug": {
+          "value": 2.32,
+          "unit": "µg",
+          "status": "estimated",
+          "source": "USDA FoodData Central SR Legacy — profili nutrienti materie prime; analisi dichiarate CDB (foto/trascrizione utente)"
+        },
+        "vitamin_d": {
+          "value": 3.52,
+          "unit": "IU",
+          "status": "estimated",
+          "source": "USDA FoodData Central SR Legacy — profili nutrienti materie prime; analisi dichiarate CDB (foto/trascrizione utente)"
+        },
+        "vitamin_e": {
+          "value": 0.197842,
+          "unit": "mg",
+          "status": "estimated",
+          "source": "USDA FoodData Central SR Legacy — profili nutrienti materie prime; analisi dichiarate CDB (foto/trascrizione utente)",
+          "form": "d_alpha_tocopherol"
+        },
         "vitamin_b1": {
           "value": 0.07224,
           "unit": "mg",
@@ -48731,6 +48920,18 @@
           "status": "estimated",
           "source": "USDA FoodData Central SR Legacy — profili nutrienti materie prime; analisi dichiarate CDB (foto/trascrizione utente)"
         },
+        "choline": {
+          "value": 91.387222,
+          "unit": "mg",
+          "status": "estimated",
+          "source": "USDA FoodData Central SR Legacy — profili nutrienti materie prime; analisi dichiarate CDB (foto/trascrizione utente)"
+        },
+        "vitamin_k": {
+          "value": 0.996789,
+          "unit": "µg",
+          "status": "estimated",
+          "source": "USDA FoodData Central SR Legacy — profili nutrienti materie prime; analisi dichiarate CDB (foto/trascrizione utente)"
+        },
         "vitamin_c": {
           "value": 1.72,
           "unit": "mg",
@@ -48766,7 +48967,7 @@
       "source_version": "Etichetta CDB fornita 20/11/2026; proxy USDA SR Legacy",
       "data_status": "review_required",
       "available_to_formulate": true,
-      "notes": "ETICHETTA CDB (commercializzato anche da Igea): Polpa di manzo 50%, ovino intero senza testa ed eviscerato 30% (comprensivo di ossa). Organi bovini complessivi 10%: cuore 3%, milza 3%, reni 3%, fegato 1%; trippa grezza bovina 10%. Proteine 17.8%, grassi 14.3%, fibra grezza 0.7%, ceneri 1.6%, umidità 64.3%. | ENERGIA DICHIARATA dal venditore: 190 kcal/100g; kcal app calcolate dal 4/9/4 per coerenza con gli altri prodotti. Valori micronutrienti: STIME ponderate da profili analoghi, non analisi specifiche CDB. Mancanti non equivalgono a zero. | AVVISO Ca/P: per il 30% di ovino con osso, stima ottenuta usando come analogia la mineralizzazione del macinato di schiene di coniglio con osso; componente ovina non caratterizzata, incertezza ELEVATA. | ATTENZIONE: 1,6% ceneri può non rappresentare accuratamente la quota di osso; confermare Ca/P dal produttore se disponibili.",
+      "notes": "ETICHETTA CDB (commercializzato anche da Igea): Polpa di manzo 50%, ovino intero senza testa ed eviscerato 30% (comprensivo di ossa). Organi bovini complessivi 10%: cuore 3%, milza 3%, reni 3%, fegato 1%; trippa grezza bovina 10%. Proteine 17.8%, grassi 14.3%, fibra grezza 0.7%, ceneri 1.6%, umidità 64.3%. | ENERGIA DICHIARATA dal venditore: 190 kcal/100g; kcal app calcolate dal 4/9/4 per coerenza con gli altri prodotti. Valori micronutrienti: STIME ponderate da profili analoghi, non analisi specifiche CDB. Mancanti non equivalgono a zero. | AVVISO Ca/P: per il 30% di ovino con osso, stima ottenuta usando come analogia la mineralizzazione del macinato di schiene di coniglio con osso; componente ovina non caratterizzata, incertezza ELEVATA. | ATTENZIONE: 1,6% ceneri può non rappresentare accuratamente la quota di osso; confermare Ca/P dal produttore se disponibili. | Integrazione 21/11: cistina e altri nutrienti stimati per media ponderata; fonti per singolo campo nel foglio Integrazioni Armonia. Coperture parziali non equivalgono a composizione completa; componente ossea non corretta nei proxy di carne. Nessuna modifica ai valori preesistenti.",
       "nutrients": {
         "protein": {
           "value": 17.8,
@@ -48806,6 +49007,18 @@
         },
         "methionine": {
           "value": 0.46002,
+          "unit": "g",
+          "status": "estimated",
+          "source": "USDA FoodData Central SR Legacy — profili nutrienti materie prime; analisi dichiarate CDB (foto/trascrizione utente)"
+        },
+        "cystine": {
+          "value": 0.202616,
+          "unit": "g",
+          "status": "estimated",
+          "source": "USDA FoodData Central SR Legacy — profili nutrienti materie prime; analisi dichiarate CDB (foto/trascrizione utente)"
+        },
+        "methionine_cystine": {
+          "value": 0.662636,
           "unit": "g",
           "status": "estimated",
           "source": "USDA FoodData Central SR Legacy — profili nutrienti materie prime; analisi dichiarate CDB (foto/trascrizione utente)"
@@ -48852,6 +49065,12 @@
           "status": "estimated",
           "source": "USDA FoodData Central SR Legacy — profili nutrienti materie prime; analisi dichiarate CDB (foto/trascrizione utente)"
         },
+        "linoleic_acid": {
+          "value": 0.29099,
+          "unit": "g",
+          "status": "estimated",
+          "source": "USDA FoodData Central SR Legacy — profili nutrienti materie prime; analisi dichiarate CDB (foto/trascrizione utente)"
+        },
         "c18_2_undifferentiated": {
           "value": 0.5453,
           "unit": "g",
@@ -48860,6 +49079,12 @@
         },
         "c20_4_undifferentiated": {
           "value": 0.05539,
+          "unit": "g",
+          "status": "estimated",
+          "source": "USDA FoodData Central SR Legacy — profili nutrienti materie prime; analisi dichiarate CDB (foto/trascrizione utente)"
+        },
+        "ala": {
+          "value": 0.09701,
           "unit": "g",
           "status": "estimated",
           "source": "USDA FoodData Central SR Legacy — profili nutrienti materie prime; analisi dichiarate CDB (foto/trascrizione utente)"
@@ -48954,6 +49179,25 @@
           "status": "estimated",
           "source": "USDA FoodData Central SR Legacy — profili nutrienti materie prime; analisi dichiarate CDB (foto/trascrizione utente)"
         },
+        "beta_carotene_ug": {
+          "value": 2.32,
+          "unit": "µg",
+          "status": "estimated",
+          "source": "USDA FoodData Central SR Legacy — profili nutrienti materie prime; analisi dichiarate CDB (foto/trascrizione utente)"
+        },
+        "vitamin_d": {
+          "value": 4.12,
+          "unit": "IU",
+          "status": "estimated",
+          "source": "USDA FoodData Central SR Legacy — profili nutrienti materie prime; analisi dichiarate CDB (foto/trascrizione utente)"
+        },
+        "vitamin_e": {
+          "value": 0.171,
+          "unit": "mg",
+          "status": "estimated",
+          "source": "USDA FoodData Central SR Legacy — profili nutrienti materie prime; analisi dichiarate CDB (foto/trascrizione utente)",
+          "form": "d_alpha_tocopherol"
+        },
         "vitamin_b1": {
           "value": 0.07824,
           "unit": "mg",
@@ -48992,6 +49236,18 @@
         },
         "vitamin_b12": {
           "value": 3.8059,
+          "unit": "µg",
+          "status": "estimated",
+          "source": "USDA FoodData Central SR Legacy — profili nutrienti materie prime; analisi dichiarate CDB (foto/trascrizione utente)"
+        },
+        "choline": {
+          "value": 88.295643,
+          "unit": "mg",
+          "status": "estimated",
+          "source": "USDA FoodData Central SR Legacy — profili nutrienti materie prime; analisi dichiarate CDB (foto/trascrizione utente)"
+        },
+        "vitamin_k": {
+          "value": 1.761,
           "unit": "µg",
           "status": "estimated",
           "source": "USDA FoodData Central SR Legacy — profili nutrienti materie prime; analisi dichiarate CDB (foto/trascrizione utente)"

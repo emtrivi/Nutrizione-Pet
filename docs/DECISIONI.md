@@ -280,3 +280,11 @@ Armonia manzo e agnello, polpa di tacchino macinata (CDB e Igea, dato indicativo
 Le 160 voci di prima sono identiche; catalogo della 0.7.2 in `archivio/`.
 **Armonia manzo e coniglio**: proteine 52,9% e acqua 33,2% (325,9 kcal/100 g) sono improbabili per un macinato crudo
 (il gemello con l'agnello ha 17,8% e 64,3%); segnalato, importato così su richiesta dell'utente in attesa di conferma.
+
+## 21/11/2026 — Armonia: dati aggiunti (foglio "ARMONIA_INTEGRATI")
+
+Foglio `data/catalog/fonti/Catalogo_Nutrizione_Pet_166_ARMONIA_INTEGRATI_2026-11-21.xlsx`: 42 valori aggiunti alle 4 voci
+Armonia (cistina e metionina + cistina, acido linoleico, ALA, EPA/DHA del coniglio, beta-carotene, vitamine D, E, K,
+colina), solo dove mancavano; nessun valore presente cambiato, kcal invariate, le altre 162 voci identiche. Armonia manzo
+e coniglio resta usabile nelle ricette su richiesta dell'utente, con i valori dell'etichetta (proteine 52,9%, acqua 33,2%)
+in attesa di conferma. Catalogo della 0.7.3 in `archivio/CATALOGO_CANI_REVISIONATO_2026-11-21_v0.7.3.json`.
