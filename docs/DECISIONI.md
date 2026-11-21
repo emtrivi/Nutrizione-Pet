@@ -272,3 +272,11 @@ previsione con il margine − dispensa (mai sotto zero) + righe libere; prezzo s
 Per un altro cane la copia prende calorie obiettivo e tabella FEDIAF del nuovo cane (quelle del suo profilo: calcolate,
 o scritte a mano lì), come una ricetta nuova senza calorie scritte a mano. Ingredienti e quantità identici, nessuna
 scalatura (integratori compresi); la copia resta "da rivedere". Per lo stesso cane nulla cambia.
+
+## 21/11/2026 — 3 prodotti CDB / Igea (6 voci)
+
+Foglio `data/catalog/fonti/Catalogo_Nutrizione_Pet_166_ALIMENTI_CDB_IGEA_2026-11-21.xlsx`: Armonia manzo e coniglio,
+Armonia manzo e agnello, polpa di tacchino macinata (CDB e Igea, dato indicativo, fonte proteica, kcal 4/9 già nel foglio).
+Le 160 voci di prima sono identiche; catalogo della 0.7.2 in `archivio/`.
+**Armonia manzo e coniglio**: proteine 52,9% e acqua 33,2% (325,9 kcal/100 g) sono improbabili per un macinato crudo
+(il gemello con l'agnello ha 17,8% e 64,3%); segnalato, importato così su richiesta dell'utente in attesa di conferma.

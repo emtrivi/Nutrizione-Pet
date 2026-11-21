@@ -5,10 +5,15 @@
 //   fuso con pelle al forno      4 × 23,35 + 9 × 10,15 = 93,4   + 91,35 = 184,75
 import { describe, expect, it } from 'vitest';
 import { buildCatalog, type RawFood } from '../catalog';
-import { getCatalog, rawSupplements, SUPPLEMENTS_FILE } from '../bundledData';
+import { rawSupplements, SUPPLEMENTS_FILE } from '../bundledData';
+import afterImport from '../../../data/catalog/archivio/CATALOGO_CANI_REVISIONATO_2026-11-12.json';
 import v054 from '../../../data/catalog/archivio/CATALOGO_CANI_REVISIONATO_2026-10-30.json';
 
-const catalog = getCatalog();
+// Catalogo come uscito da questa importazione (versione 0.5.5, archiviato).
+const catalog = buildCatalog({
+  foods: { fileName: 'CATALOGO_CANI_REVISIONATO_2026-11-12.json', data: afterImport as unknown as { foods: RawFood[] } },
+  supplements: { fileName: SUPPLEMENTS_FILE, data: rawSupplements },
+});
 const food = (id: string) => catalog.get(`food:${id}`)!;
 const before = buildCatalog({
   foods: { fileName: 'CATALOGO_CANI_REVISIONATO_2026-10-30.json', data: v054 as unknown as { foods: RawFood[] } },
