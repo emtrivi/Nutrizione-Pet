@@ -14,6 +14,7 @@ import {
   type DogEnergy,
   type FediafTable,
   type NutrientView,
+  type MealSplit,
   type PriceBook,
   type RecipeEvaluation,
   type RequirementOverride,
@@ -40,6 +41,8 @@ export interface RecipeReportInput {
   foods: { key: string; amount: number }[];
   supplements: { key: string; amount: number }[];
   overrides: Record<string, RequirementOverride>;
+  /** Divisione della razione nei pasti (facoltativa: senza, 1 pasto). */
+  meals?: MealSplit;
   prices: PriceBook;
   settings: Settings;
   catalog: Catalog;
@@ -181,6 +184,30 @@ function ingredientsSection(input: RecipeReportInput): string {
 <p class="note">Peso nella ciotola come indicato (crudo o cotto). Prezzo al giorno della ricetta: ${esc(total)}.</p>`;
 }
 
+function mealsSection(input: RecipeReportInput): string {
+  const m = input.meals;
+  if (!m || m.count <= 1) return '<h2>Pasti</h2><p class="note">Un pasto al giorno: i grammi sono quelli degli ingredienti.</p>';
+  const pctT = (p: number) => `${formatNumber(p, Number.isInteger(Math.round(p * 10) / 10) ? 0 : 1)}%`;
+  const qty = (a: number, unit: 'g' | 'capsule') => (unit === 'capsule' ? `${formatSmart(a)} ${a === 1 ? 'capsula' : 'capsule'}` : `${formatSmart(a)} g`);
+  const keys = [...new Set(m.meals.flat().map((l) => l.key))];
+  const head = m.meals.map((_, i) => `<th class="n">Pasto ${i + 1} (${pctT(m.pcts[i] ?? 0)})</th>`).join('');
+  const rows = keys
+    .map((key) => {
+      const item = input.catalog.get(key);
+      const cells = m.meals
+        .map((meal) => {
+          const l = meal.find((x) => x.key === key);
+          return `<td class="n">${l ? qty(l.amount, l.unit) : '—'}</td>`;
+        })
+        .join('');
+      return `<tr><td>${esc(item?.nameIt ?? key)}</td>${cells}</tr>`;
+    })
+    .join('');
+  return `<h2>Pasti</h2>
+<table class="grid"><thead><tr><th>Ingrediente</th>${head}</tr></thead><tbody>${rows}</tbody></table>
+<p class="note">${m.count} pasti al giorno. Alimenti arrotondati ai 5 g, integratori in grammi a 1 g; il resto dell’arrotondamento va sul pasto più grande, quindi la somma dei pasti è il totale del giorno. Le capsule non si dividono: sono nel pasto indicato.</p>`;
+}
+
 function limitsText(v: NutrientView): { min: string; max: string } {
   const u = v.def.unit;
   const l = v.evaluation.limitsPer1000;
@@ -313,6 +340,7 @@ ${row('Tabella FEDIAF', String(ev.requirements.table))}
 ${warnings.map((w) => `<p class="warn">${esc(w)}</p>`).join('')}
 ${dogSection(input)}
 ${ingredientsSection(input)}
+${mealsSection(input)}
 ${nutrientsSection(input)}
 ${ratiosSection(input)}
 ${settingsSection(input)}

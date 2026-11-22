@@ -5,7 +5,7 @@
 // Ricetta: manzo 12,8% 400 g (8,90 €/kg → 3,56 €) + riso cotto 300 g (prezzo non inserito)
 //   kcal 752 + 390 = 1.142 · manzo 752 ÷ 1.142 = 65,8%
 import { describe, expect, it } from 'vitest';
-import { DEFAULT_SETTINGS, computeDogEnergy, evaluateRecipe, fediaf, getCatalog, NUTRIENTS, type Dog } from '../../engine';
+import { DEFAULT_SETTINGS, computeDogEnergy, evaluateRecipe, fediaf, getCatalog, NUTRIENTS, splitRecipe, type Dog } from '../../engine';
 import { recipePdfFileName } from '../fileName';
 import { recipeReportHtml } from '../recipeReport';
 
@@ -111,5 +111,37 @@ describe('scheda PDF: tutti i nutrienti e i rapporti', () => {
 describe('nome del file', () => {
   it('senza accenti né simboli', () => {
     expect(recipePdfFileName('Manzo & più riso', 'Fido', new Date(2026, 9, 27))).toBe('Ricetta_Manzo_piu_riso_Fido_2026-10-27.pdf');
+  });
+});
+
+describe('scheda PDF: pasti', () => {
+  const base = {
+    recipeName: 'Manzo & riso',
+    saved: true,
+    reviewReasons: [],
+    dog,
+    energy: { dogEnergy: e, kcalTarget: e.kcalPerDay, kcalFromDog: true, factorRounded: e.factorRounded, proposedTable: e.proposedTable, table: e.table },
+    ev,
+    foods,
+    supplements,
+    overrides,
+    prices,
+    settings: DEFAULT_SETTINGS,
+    catalog,
+    appVersion: '0.8.1',
+    now: new Date(2026, 10, 22, 9, 5),
+  };
+  it('senza divisione: un pasto al giorno', () => {
+    expect(text).toContain('Pasti Un pasto al giorno');
+  });
+  it('2 pasti 60/40: manzo 240 + 160 g, riso 180 + 120 g, farina d’ossa 4,5 + 3 g', () => {
+    // 400 × 40% = 160 → 160; primo 240 · 300 × 40% = 120; primo 180 · 7,5 × 40% = 3 → 3; primo 4,5
+    const meals = splitRecipe([...foods, ...supplements], catalog, { count: 2, pcts: [60, 40], capsules: {} });
+    const t = recipeReportHtml({ ...base, meals }).replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ');
+    expect(t).toContain('Pasto 1 (60%) Pasto 2 (40%)');
+    expect(t).toMatch(/Macinato[^]*?240 g 160 g/);
+    expect(t).toMatch(/Riso[^]*?180 g 120 g/);
+    expect(t).toMatch(/Farina d’ossa[^]*?4,5 g 3 g/);
+    expect(t).toContain('2 pasti al giorno');
   });
 });

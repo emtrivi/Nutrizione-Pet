@@ -13,7 +13,10 @@ import {
   type PriceBook,
   type PriceEntry,
   type Recipe,
+  removeDogMeals,
+  sanitizeMeals,
   sanitizePantry,
+  type MealsData,
   sanitizeShopping,
   type Settings,
   type ShoppingData,
@@ -41,7 +44,7 @@ export function updateDog(data: PersonalData, id: string, fields: DogFields, now
 }
 
 export function deleteDog(data: PersonalData, id: string): PersonalData {
-  return { ...data, dogs: data.dogs.filter((d) => d.id !== id) };
+  return { ...data, dogs: data.dogs.filter((d) => d.id !== id), meals: removeDogMeals(data.meals, id) };
 }
 
 export function setPrice(data: PersonalData, key: string, entry: PriceEntry, now: Date): PriceBook {
@@ -85,6 +88,7 @@ function normalize(d: Record<string, unknown>): PersonalData {
     settings: mergeSettings(d.settings as Partial<Settings> | undefined),
     shopping: sanitizeShopping(d.shopping),
     pantry: sanitizePantry(d.pantry),
+    meals: sanitizeMeals(d.meals),
   };
 }
 
@@ -140,6 +144,10 @@ export function withSettings(data: PersonalData, settings: Settings): PersonalDa
 }
 
 /** Dispensa: sostituisce le quantità in casa e il registro degli acquisti. */
+export function withMeals(data: PersonalData, meals: MealsData): PersonalData {
+  return { ...data, meals };
+}
+
 export function withPantry(data: PersonalData, pantry: PantryData): PersonalData {
   return { ...data, pantry };
 }

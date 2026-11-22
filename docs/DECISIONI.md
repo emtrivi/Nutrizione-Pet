@@ -314,3 +314,14 @@ quelle intere e la parte aperta diventa un «Resto»). Tolti +1/−1, «Modifica
 **Storico** (`pantry.history`): acquisto, modifica, finita, consumo parziale; si tengono 3 mesi (dal giorno di oggi meno
 3 mesi), anche gli acquisti confermati: le voci più vecchie si cancellano alla prima operazione successiva e non si
 mostrano. Parte vuoto. Righe e registro di prima invariati; backup vecchi si ripristinano (campi nuovi vuoti).
+
+## 22/11/2026 — Pasti (0.9.0)
+
+La ricetta resta la razione del giorno; la sezione «Pasti» (passo 4 e PDF) la divide in 1, 2 o 3 pasti solo per pesarla.
+Numero di pasti, percentuali e pasto di ogni capsula si ricordano **per cane** (`meals`, nuovo campo dei dati e dei backup;
+manca nei dati di prima = 1 pasto; eliminando un cane si tolgono i suoi pasti). Percentuali di partenza uguali; si salvano
+solo se la somma fa 100% (con 2 pasti l'altro si completa da solo); cambiando il numero di pasti tornano uguali.
+Arrotondamento: alimenti ai 5 g, integratori in grammi a 1 g (scelta mia: 5 g su dosi di pochi grammi non avrebbe senso);
+ogni pasto è arrotondato tranne quello con la percentuale più alta (il primo a parità), che prende il resto: la somma dei
+pasti è sempre il totale. Integratori a capsule: ogni capsula intera in un pasto, di partenza alternate (1ª al primo pasto,
+2ª al secondo...); una dose non intera resta tutta in un pasto. Il diario non cambia (una ricetta per giornata).

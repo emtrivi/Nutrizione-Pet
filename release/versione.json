@@ -1,5 +1,5 @@
 {
-  "versione": "0.8.0",
-  "data": "2026-11-21",
-  "note": "Dispensa: acquisto e consumo separati. Acquisto come bozza con la data, confermato con «Ho finito di registrare gli acquisti» e modificabile dopo; sulle righe «Confezione finita» e «Consumata in parte»; nuovo Storico (ultimi 3 mesi). Righe già in dispensa, calcoli, Spesa, catalogo e diario invariati."
+  "versione": "0.9.0",
+  "data": "2026-11-22",
+  "note": "Ricetta: nuova sezione «Pasti» per dividere la razione del giorno in 1, 2 o 3 pasti, con percentuali modificabili (somma 100%), grammi arrotondati ai 5 g senza perderne, capsule assegnate a un pasto. Ricordato per ogni cane, anche nel PDF. Calcoli, colori, diario, Spesa, Dispensa e catalogo invariati."
 }

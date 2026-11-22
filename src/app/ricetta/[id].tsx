@@ -9,7 +9,9 @@ import {
   evaluateRecipe,
   fediaf,
   getCatalog,
+  mealPlanFor,
   reviewReasons,
+  splitRecipe,
   startingGrams,
   type CatalogItem,
   type Dog,
@@ -21,6 +23,7 @@ import { recipeReportHtml } from '../../export/recipeReport';
 import { Button, Card, Disclaimer, Field, Hint, Notice, styles } from '../../ui/components';
 import { draftEnergy, draftFromRecipe, draftLines, draftToRecipe, newDraft, type Draft } from '../../ui/recipe/draft';
 import { Step1, Step2, Step3, StepBand } from '../../ui/recipe/Steps123';
+import { MealsCard } from '../../ui/recipe/MealsCard';
 import { Step4 } from '../../ui/recipe/Step4';
 import { colors } from '../../ui/theme';
 
@@ -173,6 +176,7 @@ export default function RicettaScreen() {
         foods: draftLines({ ...draft, supplements: [] }),
         supplements: draftLines({ ...draft, foods: [] }),
         overrides: draft.overrides,
+        meals: splitRecipe(draftLines(draft), catalog, mealPlanFor(data.meals, dog.id)),
         prices: data.prices,
         settings: data.settings,
         catalog,
@@ -229,6 +233,8 @@ export default function RicettaScreen() {
             }
           />
         ) : null}
+
+        {step === 4 && evaluation ? <MealsCard dogId={dog.id} dogName={dog.name} lines={draftLines(draft)} /> : null}
 
         {step === 4 ? (
           <Card title="Salva">
