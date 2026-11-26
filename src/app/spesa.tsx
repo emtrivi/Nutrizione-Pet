@@ -1,12 +1,12 @@
-// Spesa: previsione dei grammi da comprare per i prossimi giorni, sommando i cani.
+// Spesa e previsioni (si apre dalla scheda Dispensa): previsione dei grammi da comprare per i prossimi giorni, sommando i cani.
 // Separata dal diario e senza toccarlo: si indicano ricette e giorni per ogni cane.
 
 import { router } from 'expo-router';
 import { useState } from 'react';
 import { Modal, Pressable, Text, TextInput, View } from 'react-native';
-import { useData } from '../../data/DataContext';
-import { parseDecimal } from '../../data/dogForm';
-import { generateId, withShopping } from '../../data/personalStore';
+import { useData } from '../data/DataContext';
+import { parseDecimal } from '../data/dogForm';
+import { generateId, withShopping } from '../data/personalStore';
 import {
   RECIPE_CATEGORY_LABELS,
   VEGETABLE_COOKING_YIELD,
@@ -15,10 +15,11 @@ import {
   unitPrice,
   type ShoppingData,
   type ShoppingItem,
-} from '../../engine';
-import { Button, Card, Explain, Field, Hint, Notice, Screen, styles } from '../../ui/components';
-import { formatEuro, formatGrams, formatNumber, formatSmart, priceRateText } from '../../ui/format';
-import { colors } from '../../ui/theme';
+} from '../engine';
+import { Button, Card, Explain, Field, Hint, Notice, Screen, styles } from '../ui/components';
+import { formatEuro, formatGrams, formatNumber, formatSmart, priceRateText } from '../ui/format';
+import { BACK_TO_PANTRY_BUTTON, backToPantry } from '../ui/navigation';
+import { colors } from '../ui/theme';
 
 const catalog = getCatalog();
 const SECTION_LABEL: Record<ShoppingItem['section'], string> = { ...RECIPE_CATEGORY_LABELS, integratori: 'Integratori' };
@@ -96,11 +97,11 @@ export default function SpesaScreen() {
         Previsione della spesa: per ogni cane scegli le ricette e per quanti giorni. L’app somma i grammi di tutti i cani, toglie
         quello che hai in dispensa e mostra i prezzi del catalogo. Non tocca il diario.
       </Explain>
-      <Button title="Apri la dispensa" kind="secondary" onPress={() => router.push('/dispensa')} />
+      <Button title={`‹ ${BACK_TO_PANTRY_BUTTON}`} kind="secondary" onPress={() => backToPantry(router)} />
       {data.pantry.draft ? (
         <Notice tone="warning">
           {data.pantry.draft.editingOf ? 'C’è una modifica a un acquisto non ancora salvata' : 'C’è un acquisto non ancora confermato'}: non è ancora
-          in dispensa. Aprila e tocca «{data.pantry.draft.editingOf ? 'Salva le modifiche' : 'Ho finito di registrare gli acquisti'}».
+          in dispensa. Torna alla dispensa e tocca «{data.pantry.draft.editingOf ? 'Salva le modifiche' : 'Ho finito di registrare gli acquisti'}».
         </Notice>
       ) : null}
 

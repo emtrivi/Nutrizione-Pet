@@ -610,3 +610,53 @@ export function purchaseChanges(before: PurchaseLine[], after: PurchaseLine[]): 
     .map((key) => ({ key, before: before.filter((l) => l.key === key), after: after.filter((l) => l.key === key) }))
     .filter((c) => !sameLines(c.before, c.after));
 }
+
+// ------------------------------------------------------------------ ricerca e ordine (solo schermata)
+
+export type PantryGroup = ReturnType<typeof pantryGroups>[number];
+
+/** Testo per la ricerca: minuscole, senza accenti, spazi semplici. */
+export function searchText(s: string): string {
+  return s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/\s+/g, ' ').trim();
+}
+
+/** Parole con cui si trovano anche le righe speciali («resto», «partita sfusa»). */
+const LOT_SEARCH_WORDS: Record<PantryLotKind, string> = { confezioni: 'confezioni', resto: 'resto', partita: 'partita sfusa' };
+
+/**
+ * Filtra le righe della dispensa mentre si scrive. Ogni parola scritta deve comparire nel nome del prodotto
+ * (o nel tipo di riga: «resto», «partita sfusa»), senza distinguere maiuscole e accenti. Campo vuoto → tutto.
+ * Il totale del prodotto resta quello di tutte le sue righe. Non cambia i dati.
+ */
+export function searchPantryGroups(groups: PantryGroup[], query: string): PantryGroup[] {
+  const words = searchText(query).split(' ').filter(Boolean);
+  if (words.length === 0) return groups;
+  return groups.flatMap((g) => {
+    const name = searchText(g.name);
+    const lots = g.lots.filter((l) => {
+      const text = `${name} ${LOT_SEARCH_WORDS[l.kind]}`;
+      return words.every((w) => text.includes(w));
+    });
+    return lots.length > 0 ? [{ ...g, lots }] : [];
+  });
+}
+
+/** Ingredienti della dispensa dal toccato più di recente (acquisto, consumo, correzione) al meno recente. */
+export function pantryRecentOrder(pantry: PantryData): string[] {
+  const last = new Map<string, string>();
+  for (const l of pantry.lots) if (!last.has(l.key) || last.get(l.key)! < l.updatedAt) last.set(l.key, l.updatedAt);
+  return [...last].sort((a, b) => b[1].localeCompare(a[1]) || a[0].localeCompare(b[0])).map(([k]) => k);
+}
+
+/**
+ * Mette i gruppi nell'ordine dato (fissato all'apertura della scheda, così le righe non saltano mentre si tocca).
+ * I prodotti nuovi, non ancora nell'ordine, vanno in cima; gli altri restano nell'ordine di partenza.
+ */
+export function applyPantryOrder(groups: PantryGroup[], order: string[] | null): PantryGroup[] {
+  if (!order) return groups;
+  const pos = new Map(order.map((k, i) => [k, i]));
+  return groups
+    .map((g, i) => ({ g, i }))
+    .sort((a, b) => (pos.get(a.g.key) ?? -1) - (pos.get(b.g.key) ?? -1) || a.i - b.i)
+    .map(({ g }) => g);
+}

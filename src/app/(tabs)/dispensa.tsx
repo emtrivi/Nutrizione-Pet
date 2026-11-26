@@ -2,14 +2,17 @@
 // Due momenti separati: ACQUISTO (una bozza con la data, confermata con «Ho finito») e CONSUMO
 // («Confezione finita», «Consumata in parte» sulle righe). Acquisti confermati, modifiche e consumi
 // vanno nello storico (ultimi 3 mesi). Il diario non scala niente.
+// È una scheda in basso: si apre sulle righe, con la ricerca; «Spesa e previsioni» porta alla pagina della spesa.
 
-import { useState } from 'react';
+import { router, useFocusEffect } from 'expo-router';
+import { useCallback, useState } from 'react';
 import { Alert, Platform, Pressable, Text, TextInput, View } from 'react-native';
-import { useData } from '../data/DataContext';
-import { parseDecimal } from '../data/dogForm';
-import { generateId, withPantry } from '../data/personalStore';
+import { useData } from '../../data/DataContext';
+import { parseDecimal } from '../../data/dogForm';
+import { generateId, withPantry } from '../../data/personalStore';
 import {
   addDays,
+  applyPantryOrder,
   confirmDraft,
   consumePartial,
   discardDraft,
@@ -25,7 +28,9 @@ import {
   lotAmount,
   packageFinished,
   pantryGroups,
+  pantryRecentOrder,
   partialValues,
+  searchPantryGroups,
   startEditPurchase,
   visibleHistory,
   weekday,
@@ -34,11 +39,12 @@ import {
   type PantryHistoryEntry,
   type PantryLot,
   type PurchaseLine,
-} from '../engine';
-import { Badge, Button, Card, Explain, Field, Hint, Notice, Screen, Segmented, styles } from '../ui/components';
-import { HISTORY_LABEL, historyText, lineText, packagesText, purchaseByProduct, qty } from '../ui/pantryText';
-import { CatalogPicker } from '../ui/recipe/Pickers';
-import { colors } from '../ui/theme';
+} from '../../engine';
+import { Badge, Button, Card, Explain, Field, Hint, Notice, Screen, Segmented, styles } from '../../ui/components';
+import { HISTORY_LABEL, historyText, lineText, packagesText, purchaseByProduct, qty } from '../../ui/pantryText';
+import { SHOPPING_BUTTON, SHOPPING_HREF } from '../../ui/navigation';
+import { CatalogPicker } from '../../ui/recipe/Pickers';
+import { colors } from '../../ui/theme';
 
 const catalog = getCatalog();
 const unitOf = (key: string): 'g' | 'capsule' => catalog.get(key)?.doseUnit ?? 'g';
@@ -138,6 +144,16 @@ export default function DispensaScreen() {
   const [consume, setConsume] = useState<ConsumeEditor | null>(null);
   const [editError, setEditError] = useState<string | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
+  const [search, setSearch] = useState('');
+  // Ordine delle righe (dal prodotto toccato più di recente), fissato quando si apre la scheda:
+  // così una riga non salta in cima mentre la si sta usando.
+  const [order, setOrder] = useState<string[] | null>(null);
+  useFocusEffect(
+    useCallback(() => {
+      setOrder(pantryRecentOrder(pantry));
+      // eslint-disable-next-line react-hooks/exhaustive-deps -- solo all'apertura della scheda
+    }, []),
+  );
 
   const change = (f: (p: PantryData) => PantryData) => update((d) => withPantry(d, f(d.pantry)));
   const editing = !!draft?.editingOf;
@@ -365,12 +381,15 @@ export default function DispensaScreen() {
     );
   };
 
-  const groups = pantryGroups(pantry, catalog);
+  const allGroups = applyPantryOrder(pantryGroups(pantry, catalog), order?.length ? order : pantryRecentOrder(pantry));
+  const groups = searchPantryGroups(allGroups, search);
   const history = visibleHistory(pantry, new Date());
   const sessions = [...pantry.sessions].sort((a, b) => b.day.localeCompare(a.day) || b.confirmedAt.localeCompare(a.confirmedAt));
 
   return (
     <Screen>
+      <Button title={`🛒 ${SHOPPING_BUTTON}`} onPress={() => router.push(SHOPPING_HREF)} />
+
       <Explain>
         Quanto hai in casa di ogni ingrediente, nello stesso peso delle ricette (per le verdure cotte, il peso cotto). Quando fai la
         spesa registri l’acquisto e lo confermi; quando consumi usi «Confezione finita» o «Consumata in parte» sulle righe. Il diario non
@@ -380,11 +399,39 @@ export default function DispensaScreen() {
       {draft ? (
         <Notice tone="warning">
           {editing
-            ? `Stai modificando l’acquisto del ${formatDay(draft.day)}: le modifiche non sono ancora in dispensa. Tocca «Salva le modifiche».`
-            : `Acquisto del ${formatDay(draft.day)} non ancora confermato (${draft.lines.length} ${draft.lines.length === 1 ? 'prodotto' : 'prodotti'}): non è ancora in dispensa. Tocca «Ho finito di registrare gli acquisti».`}
+            ? `Stai modificando l’acquisto del ${formatDay(draft.day)}: le modifiche non sono ancora in dispensa. Tocca «Salva le modifiche» più sotto.`
+            : `Acquisto del ${formatDay(draft.day)} non ancora confermato (${draft.lines.length} ${draft.lines.length === 1 ? 'prodotto' : 'prodotti'}): non è ancora in dispensa. Tocca «Ho finito di registrare gli acquisti» più sotto.`}
         </Notice>
       ) : null}
       {notice ? <Notice tone="info">{notice}</Notice> : null}
+
+      <Card title="In dispensa">
+        {allGroups.length > 0 ? (
+          <TextInput
+            value={search}
+            onChangeText={setSearch}
+            placeholder="Cerca"
+            accessibilityLabel="Cerca nella dispensa"
+            autoCorrect={false}
+            autoCapitalize="none"
+            clearButtonMode="while-editing"
+            returnKeyType="search"
+            style={styles.input}
+          />
+        ) : null}
+        {allGroups.length === 0 ? <Hint>La dispensa è vuota.</Hint> : null}
+        {allGroups.length > 0 && groups.length === 0 ? <Hint>Nessun prodotto trovato.</Hint> : null}
+        {groups.map(({ key, name, unit: u, total, lots }) => (
+          <View key={key} style={{ paddingVertical: 8, borderBottomWidth: 0.5, borderBottomColor: colors.border }}>
+            <View style={{ flexDirection: 'row', gap: 8 }}>
+              <Text style={{ flex: 1, fontSize: 16, fontWeight: '700', color: colors.text }}>{name}</Text>
+              <Text style={{ fontSize: 16, fontWeight: '700', color: colors.text }}>{qty(total, u)}</Text>
+            </View>
+            {lots.map((lot) => renderLot(lot, u, name))}
+          </View>
+        ))}
+        {allGroups.length > 1 && !search ? <Hint>In cima i prodotti usati o comprati più di recente.</Hint> : null}
+      </Card>
 
       <Card title={editing && draft ? `Modifica l’acquisto del ${formatDay(draft.day)}` : 'Registra acquisti'}>
         <DayStepper
@@ -467,19 +514,6 @@ export default function DispensaScreen() {
             />
           </>
         ) : null}
-      </Card>
-
-      <Card title="In dispensa">
-        {groups.length === 0 ? <Hint>La dispensa è vuota.</Hint> : null}
-        {groups.map(({ key, name, unit: u, total, lots }) => (
-          <View key={key} style={{ paddingVertical: 8, borderBottomWidth: 0.5, borderBottomColor: colors.border }}>
-            <View style={{ flexDirection: 'row', gap: 8 }}>
-              <Text style={{ flex: 1, fontSize: 16, fontWeight: '700', color: colors.text }}>{name}</Text>
-              <Text style={{ fontSize: 16, fontWeight: '700', color: colors.text }}>{qty(total, u)}</Text>
-            </View>
-            {lots.map((lot) => renderLot(lot, u, name))}
-          </View>
-        ))}
       </Card>
 
       {sessions.length > 0 ? (

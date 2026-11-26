@@ -325,3 +325,17 @@ Arrotondamento: alimenti ai 5 g, integratori in grammi a 1 g (scelta mia: 5 g su
 ogni pasto è arrotondato tranne quello con la percentuale più alta (il primo a parità), che prende il resto: la somma dei
 pasti è sempre il totale. Integratori a capsule: ogni capsula intera in un pasto, di partenza alternate (1ª al primo pasto,
 2ª al secondo...); una dose non intera resta tutta in un pasto. Il diario non cambia (una ricetta per giornata).
+
+## 26/11/2026 — Dispensa al primo livello e ricerca (0.9.1)
+
+Solo schermate e navigazione: dati, calcoli, colori, diario, cataloghi e Spesa invariati; nessun cambio di struttura dei dati.
+**Navigazione**: la scheda in basso «Spesa» diventa «Dispensa» (stessa posizione, sempre 6 schede) e si apre sulle righe.
+In cima, «Spesa e previsioni» apre la pagina di prima (`/spesa`, fuori dalle schede); da lì «Torna alla dispensa» (o la
+freccia in alto) torna indietro in un tocco, e se la Spesa è aperta da sola apre la scheda Dispensa. Nella Dispensa la
+lista «In dispensa» viene prima di «Registra acquisti»; il resto della pagina è com'era.
+**Ricerca**: campo «Cerca» in cima alla lista, filtra mentre si scrive; ogni parola deve comparire nel nome (maiuscole e
+accenti non contano). Un prodotto trovato mostra tutte le sue righe, resti e partite comprese; si possono cercare anche
+«resto» e «sfusa». Il totale del prodotto resta quello di tutte le righe. Nessun risultato → «Nessun prodotto trovato».
+**Ordine**: prima i prodotti toccati più di recente (la data di modifica già salvata sulle righe). L'ordine si fissa quando
+si apre la scheda, così una riga non salta in cima mentre la si tocca (rischio di toccare il prodotto sbagliato); si
+aggiorna alla riapertura. I prodotti nuovi compaiono in cima.
