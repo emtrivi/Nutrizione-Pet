@@ -27,5 +27,5 @@ jobs:
     params:
       # ID della build iOS «0.5.0 (5)» del 26/11/2026: è l'ultima parte dell'indirizzo della sua pagina su expo.dev
       # (…/projects/nutrizione-pet/builds/<ID>).
-      build_id: DA_INSERIRE
+      build_id: e05066d0-a764-4774-842e-16add75bc824
       profile: production

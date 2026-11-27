@@ -35,6 +35,7 @@ describe('impronta della parte nativa', () => {
     expect(yml).toContain("paths: ['release/invio-testflight.json']");
     expect(yml).toContain('type: submit');
     expect(yml).toContain('Esporta tutto');
+    expect(yml).toContain('build_id: e05066d0-a764-4774-842e-16add75bc824'); // build 0.5.0 (5)
     for (const forbidden of ['type: build', 'type: update', 'type: get-build']) expect(yml).not.toContain(forbidden);
   });
 });
