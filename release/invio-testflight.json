@@ -1,5 +1,5 @@
 {
-  "richiesta": null,
+  "richiesta": "2026-11-27",
   "build": "iOS App Store build 0.5.0 (5) del 26/11/2026",
   "nota": "Cambiare la data in «richiesta» (per esempio \"2026-11-28\") e fare push sul ramo principale fa partire l'invio a TestFlight della build indicata in .eas/workflows/invio-testflight.yml, senza ricostruirla. Prima di installare la nuova build da TestFlight: nell'app, Altro → «Esporta tutto»."
 }
