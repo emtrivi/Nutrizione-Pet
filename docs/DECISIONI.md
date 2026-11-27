@@ -339,3 +339,11 @@ accenti non contano). Un prodotto trovato mostra tutte le sue righe, resti e par
 **Ordine**: prima i prodotti toccati più di recente (la data di modifica già salvata sulle righe). L'ordine si fissa quando
 si apre la scheda, così una riga non salta in cima mentre la si tocca (rischio di toccare il prodotto sbagliato); si
 aggiorna alla riapertura. I prodotti nuovi compaiono in cima.
+
+## 27/11/2026 — Pubblicazione: aggiornamento via internet separato da build e TestFlight
+
+La 0.9.1 non è arrivata: il flusso cercava una build con la stessa impronta, il file della 0.5.0 (4) era scaduto sui
+server di Expo (circa 30 giorni nel piano gratuito), quindi ha fatto la build 0.5.0 (5) e ha saltato l'aggiornamento;
+poi l'invio a TestFlight è fallito («Unable to find Apple ID for Bundle ID»). Ora `pubblica.yml` fa solo l'aggiornamento
+(sempre), build e TestFlight solo con `rinnovo-testflight.json`; entrambi solo dal ramo principale. L'impronta della
+build installata è in `release/impronta-ios.json` e un test la controlla prima di ogni pubblicazione.

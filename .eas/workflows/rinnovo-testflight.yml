@@ -8,7 +8,7 @@ name: Rinnovo TestFlight
 
 on:
   push:
-    branches: ['**']
+    branches: ['claude/dog-recipe-app-phase-1-fp4zxh']
     paths: ['release/rinnovo-testflight.json']
 
 concurrency:

@@ -5,24 +5,35 @@ sull'iPhone senza terminale e senza Codespaces.
 
 ## Come funziona
 
+Due flussi separati, sui server di Expo, solo dal ramo principale (`claude/dog-recipe-app-phase-1-fp4zxh`):
+
 ```
-push su GitHub che cambia release/versione.json
+push che cambia release/versione.json
         │
         ▼
-EAS Workflow "Pubblica versione" (.eas/workflows/pubblica.yml), sui server di Expo
+"Pubblica versione" (.eas/workflows/pubblica.yml)
+        └─ aggiornamento via internet (EAS Update, canale "production"): sempre, in ~3 minuti
+           l'app lo scarica e mostra «Aggiornamento disponibile — Riavvia ora»
+
+push che cambia release/rinnovo-testflight.json
         │
-        ├─ 1. impronta della parte nativa (fingerprint)
-        ├─ 2. c'è già una build iOS con la stessa impronta?
-        │
-        ├─ SÌ → aggiornamento via internet (EAS Update, ramo/canale "production")
-        │        l'app lo scarica e mostra «Aggiornamento disponibile — Riavvia ora»
-        │
-        └─ NO → nuova build iOS → invio a TestFlight
-                 (TestFlight la installa da solo se "Aggiornamenti automatici" è attivo)
+        ▼
+"Rinnovo TestFlight" (.eas/workflows/rinnovo-testflight.yml)
+        └─ nuova build iOS → invio a TestFlight
 ```
 
-- I commit di sviluppo **non** fanno partire nulla: il workflow parte solo se il push cambia
-  `release/versione.json` (filtro `paths`).
+- Dal 27/11/2026 l'aggiornamento **non dipende più** da build o TestFlight. Prima il flusso cercava una
+  build con la stessa impronta e, se non la trovava, faceva una build saltando l'aggiornamento: la 0.9.1
+  non è arrivata perché il file della build 0.5.0 (4) era scaduto sui server di Expo (nel piano gratuito
+  i file delle build restano circa 30 giorni, poi «Expired»; non è la scadenza di TestFlight) e poi
+  l'invio a TestFlight è fallito.
+- **Impronta**: il telefono scarica un aggiornamento solo se la sua «Runtime version» (= impronta della
+  parte nativa) è uguale. `release/impronta-ios.json` contiene l'impronta della build installata e il
+  test `src/__tests__/impronta.test.ts` la confronta con il progetto (stesso comando di Expo,
+  `npx expo-updates fingerprint:generate --platform ios`). Se il test fallisce, la parte nativa è
+  cambiata: serve una build con il file di rinnovo, e dopo l'installazione si aggiorna l'impronta nel file.
+  Un aggiornamento con impronta diversa non fa danni: nessun telefono lo scarica.
+- I commit di sviluppo **non** fanno partire nulla (filtro `paths`), e nemmeno i rami di lavoro (filtro `branches`).
 - **Mai** pubblicazione sull'App Store: solo TestFlight ed EAS Update.
 - Account Expo, project ID, bundle ID e credenziali Apple restano quelli già funzionanti
   (`@eviemets-team/nutrizione-pet`, `7da057fe-…`, `com.eviemet.nutrizionepet`).
@@ -32,12 +43,8 @@ EAS Workflow "Pubblica versione" (.eas/workflows/pubblica.yml), sui server di Ex
 | Modifica | Come arriva |
 |---|---|
 | Schermate, testi, calcoli, catalogo, correzioni JavaScript | aggiornamento via internet (minuti) |
-| Numero di versione, `release/versione.json`, `eas.json` | non cambiano l'impronta: nessuna build |
-| Nuovo pacchetto nativo (es. lo slider), plugin, impostazioni iOS in `app.json`, nuovo SDK Expo | build nuova + TestFlight (automatica) |
-
-Verificato il 25/10/2026 calcolando l'impronta iOS su una copia del progetto: uguale cambiando
-versione, `release/versione.json`, codice, catalogo ed `eas.json`; diversa cambiando impostazioni
-iOS o aggiungendo un plugin.
+| Numero di versione, `release/versione.json`, `eas.json` | non cambiano l'impronta |
+| Nuovo pacchetto nativo (es. lo slider), plugin, impostazioni iOS in `app.json`, nuovo SDK Expo | build nuova con `release/rinnovo-testflight.json` (il test dell'impronta fallisce) |
 
 ## Configurazione una tantum (utente)
 
@@ -63,7 +70,9 @@ iOS o aggiungendo un plugin.
    `app.json` non si tocca.
 5. Aggiornare `release/versione.json` (`versione`, `data`, `note`) e fare commit con un messaggio
    chiaro, per esempio `Pubblica 0.3.1: …` (diventa il messaggio dell'aggiornamento su Expo).
-6. Push. Il workflow decide da solo tra aggiornamento via internet e build TestFlight.
+6. Push sul ramo principale: parte solo l'aggiornamento via internet. Se la modifica è nativa, nello
+   stesso push cambiare anche la data in `release/rinnovo-testflight.json` e, quando la build nuova è
+   installata, aggiornare `release/impronta-ios.json`.
 
 ### Rinnovo TestFlight (ogni 2-3 mesi)
 

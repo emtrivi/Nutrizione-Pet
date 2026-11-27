@@ -1,0 +1,5 @@
+{
+  "impronta": "1d94068bba2a6f8e8251712c28b8d4c7bd635998",
+  "build": "0.5.0 (4) installata da TestFlight; anche la 0.5.0 (5) del 26/11/2026",
+  "nota": "Impronta della parte nativa (= «Runtime version») della build installata sul telefono. Gli aggiornamenti via internet arrivano solo se il progetto ha questa stessa impronta: il test src/__tests__/impronta.test.ts lo controlla prima di ogni pubblicazione. Se cambia, serve una build nuova (release/rinnovo-testflight.json) e poi si aggiorna questo file."
+}
