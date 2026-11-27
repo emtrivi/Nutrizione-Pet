@@ -80,6 +80,42 @@ Le build TestFlight scadono dopo 90 giorni e gli aggiornamenti via internet non 
 scadenza. Per una build nuova anche senza modifiche native: cambiare la data in
 `release/rinnovo-testflight.json` e fare push (workflow `.eas/workflows/rinnovo-testflight.yml`).
 
+## Scadenze e promemoria
+
+- **La build TestFlight installata sul telefono (0.5.0 (4)) scade verso il 23 gennaio 2027.** Dopo quella data
+  l'app non si apre più finché non si installa una build nuova: l'invio a TestFlight deve funzionare **prima**.
+- **Se l'invio a TestFlight smette di funzionare, controllare per prima cosa i contratti di Apple**:
+  App Store Connect → **Accordi, imposte e banche** (*Business*): se c'è un accordo «da accettare», va accettato
+  (solo il titolare dell'account può farlo). Il 26/11/2026 l'invio è fallito con «Unable to find Apple ID for
+  Bundle ID 'com.eviemet.nutrizionepet'» e il 27/11/2026 c'era un nuovo contratto da accettare.
+  Poi controllare: la chiave App Store Connect API usata da Expo (expo.dev → Credentials → iOS: stesso ID in
+  App Store Connect → Utenti e accessi → Integrazioni, non revocata, ruolo Admin o App Manager); l'app con
+  Apple ID 6826643282 e Bundle ID `com.eviemet.nutrizionepet`; l'iscrizione al Developer Program attiva.
+- **I file delle build restano su Expo circa 30 giorni** (piano gratuito), poi la build è «Expired»: si può
+  ancora installare da TestFlight se ci era arrivata, ma Expo non può più inviarla.
+- Build 0.5.0 (5) del 26/11/2026: costruita, invio a TestFlight fallito (contratto). Disponibile su Expo fino
+  a circa il **25 dicembre 2026** (controllare la data sulla pagina della build).
+
+### Inviare a TestFlight una build già costruita (senza ricostruirla)
+
+Flusso `.eas/workflows/invio-testflight.yml`: parte quando cambia `release/invio-testflight.json` sul ramo
+principale e fa solo l'invio della build scritta in `build_id` (l'ID è l'ultima parte dell'indirizzo della
+pagina della build su expo.dev).
+
+1. Chi sviluppa: scrive l'ID nel flusso, cambia la data in `release/invio-testflight.json`, push. Su expo.dev →
+   Workflows compare «Invia build a TestFlight» (pochi minuti, nessuna build).
+2. Apple elabora la build (da pochi minuti a un'ora); arriva un'email e la build compare nell'app TestFlight.
+3. **Prima di installarla: nell'app, Altro → «Esporta tutto»** e salvare il file (per esempio in File/iCloud).
+   Annotare qualche dato da confrontare: numero di cani e di ricette, il totale di un prodotto in dispensa,
+   l'ultimo giorno del diario.
+4. TestFlight → Nutrizione Pet → **Installa/Aggiorna** sopra l'app di adesso. **Non cancellare l'app prima**:
+   i dati stanno nell'app e restano solo se si installa sopra.
+5. Aprire l'app e controllare: cani, ricette, dispensa e diario come prima; Altro → Informazioni mostra la
+   versione. Se manca qualcosa: Altro → Ripristina dal file esportato, oppure Altro → Copie automatiche.
+6. In TestFlight la nuova build mostra la nuova scadenza (90 giorni dall'invio).
+7. La build nuova ha la stessa impronta (`release/impronta-ios.json`): gli aggiornamenti via internet continuano
+   ad arrivare. Se una build futura avesse un'impronta diversa, aggiornare il file dopo averla installata.
+
 ## Ritirare un aggiornamento difettoso
 
 Il recupero automatico di `expo-updates` (se l'app non parte torna alla versione precedente) è un
