@@ -1,0 +1,31 @@
+# Invia a TestFlight una build GIÀ COSTRUITA, senza ricostruirla.
+#
+# Parte SOLO quando cambia release/invio-testflight.json sul ramo principale.
+# Fa un solo passo: l'invio della build indicata qui sotto (build_id) ad App Store Connect / TestFlight.
+# Non costruisce niente e non pubblica aggiornamenti. Non pubblica mai sull'App Store.
+#
+# La build deve essere ancora disponibile su Expo (nel piano gratuito il file resta circa 30 giorni,
+# poi la build è «Expired» e non si può più inviare: serve il rinnovo, release/rinnovo-testflight.json).
+#
+# PRIMA DI INSTALLARE LA NUOVA BUILD DA TESTFLIGHT: nell'app, Altro → «Esporta tutto».
+
+name: Invia build a TestFlight
+
+on:
+  push:
+    branches: ['claude/dog-recipe-app-phase-1-fp4zxh']
+    paths: ['release/invio-testflight.json']
+
+concurrency:
+  cancel_in_progress: false
+  group: ${{ workflow.filename }}-${{ github.ref }}
+
+jobs:
+  invio_testflight:
+    name: Invio a TestFlight della build 0.5.0 (5), senza ricostruirla
+    type: submit
+    params:
+      # ID della build iOS «0.5.0 (5)» del 26/11/2026: è l'ultima parte dell'indirizzo della sua pagina su expo.dev
+      # (…/projects/nutrizione-pet/builds/<ID>).
+      build_id: DA_INSERIRE
+      profile: production

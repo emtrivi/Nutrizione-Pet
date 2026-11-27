@@ -28,4 +28,13 @@ describe('impronta della parte nativa', () => {
     expect(yml).toContain('channel: production');
     for (const forbidden of ['type: build', 'type: submit', 'type: get-build', 'needs:']) expect(yml).not.toContain(forbidden);
   });
+
+  it('il flusso «Invia build a TestFlight» fa solo l’invio, solo dal ramo principale, solo cambiando il suo file', () => {
+    const yml = readFileSync(join(root, '.eas', 'workflows', 'invio-testflight.yml'), 'utf8');
+    expect(yml).toContain("branches: ['claude/dog-recipe-app-phase-1-fp4zxh']");
+    expect(yml).toContain("paths: ['release/invio-testflight.json']");
+    expect(yml).toContain('type: submit');
+    expect(yml).toContain('Esporta tutto');
+    for (const forbidden of ['type: build', 'type: update', 'type: get-build']) expect(yml).not.toContain(forbidden);
+  });
 });
