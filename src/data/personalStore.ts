@@ -15,6 +15,10 @@ import {
   type Recipe,
   removeDogMeals,
   sanitizeMeals,
+  sanitizeDayPlans,
+  sanitizeFavorites,
+  toggleFavorite,
+  type DayPlan,
   sanitizePantry,
   type MealsData,
   sanitizeShopping,
@@ -89,6 +93,8 @@ function normalize(d: Record<string, unknown>): PersonalData {
     shopping: sanitizeShopping(d.shopping),
     pantry: sanitizePantry(d.pantry),
     meals: sanitizeMeals(d.meals),
+    favorites: sanitizeFavorites(d.favorites),
+    dayPlans: sanitizeDayPlans(d.dayPlans),
   };
 }
 
@@ -136,7 +142,18 @@ export function saveRecipe(data: PersonalData, recipe: Recipe): PersonalData {
 }
 
 export function deleteRecipe(data: PersonalData, id: string): PersonalData {
-  return { ...data, recipes: data.recipes.filter((r) => r.id !== id) };
+  // Le giornate tipo tengono il riferimento: mostreranno «ricetta mancante».
+  return { ...data, recipes: data.recipes.filter((r) => r.id !== id), favorites: data.favorites.filter((f) => f !== id) };
+}
+
+/** Stellina: aggiunge o toglie la ricetta dai preferiti. */
+export function withFavoriteToggled(data: PersonalData, recipeId: string): PersonalData {
+  return { ...data, favorites: toggleFavorite(data.favorites, recipeId) };
+}
+
+/** Giornate tipo: sostituisce l'elenco. */
+export function withDayPlans(data: PersonalData, dayPlans: DayPlan[]): PersonalData {
+  return { ...data, dayPlans };
 }
 
 export function withSettings(data: PersonalData, settings: Settings): PersonalData {

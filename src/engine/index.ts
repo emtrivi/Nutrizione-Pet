@@ -18,4 +18,5 @@ export * from './suggestions';
 export * from './shopping';
 export * from './pantry';
 export * from './meals';
+export * from './dayPlans';
 export * from './bundledData';

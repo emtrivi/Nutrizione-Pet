@@ -5,6 +5,7 @@ import { migrateData } from './migrations';
 import type { PriceBook } from './prices';
 import type { DiaryEntry } from './diary';
 import type { Recipe } from './recipes';
+import { sanitizeDayPlans, sanitizeFavorites, type DayPlan } from './dayPlans';
 import { sanitizeMeals, type MealsData } from './meals';
 import { sanitizePantry, type PantryData } from './pantry';
 import { DEFAULT_SHOPPING, sanitizeShopping, type ShoppingData } from './shopping';
@@ -80,6 +81,10 @@ export interface PersonalData {
   pantry: PantryData;
   /** Pasti (22/11/2026): numero e percentuali per cane. Manca nei dati e nei backup di prima (= 1 pasto). */
   meals: MealsData;
+  /** Ricette preferite, per id (28/11/2026). Manca nei dati e nei backup di prima (= nessuna). */
+  favorites: string[];
+  /** Giornate tipo (28/11/2026). Mancano nei dati e nei backup di prima (= nessuna). */
+  dayPlans: DayPlan[];
   lastBackupAt: string | null;
 }
 
@@ -109,6 +114,8 @@ export function emptyPersonalData(): PersonalData {
     shopping: { ...DEFAULT_SHOPPING, plans: [], extras: [] },
     pantry: { lots: [], items: {}, purchases: [], draft: null, sessions: [], history: [] },
     meals: {},
+    favorites: [],
+    dayPlans: [],
     lastBackupAt: null,
   };
 }
@@ -221,6 +228,9 @@ export function parseBackup(text: string, now: Date): RestoreResult {
       pantry: sanitizePantry(data.pantry),
       // Backup di prima dei pasti: 1 pasto per tutti i cani.
       meals: sanitizeMeals(data.meals),
+      // Backup di prima dei preferiti e delle giornate tipo: nessuno.
+      favorites: sanitizeFavorites(data.favorites),
+      dayPlans: sanitizeDayPlans(data.dayPlans),
       // Dopo un ripristino, l'ultimo backup è quello appena letto.
       lastBackupAt: typeof parsed.exportedAt === 'string' ? parsed.exportedAt : null,
     },

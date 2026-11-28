@@ -347,3 +347,20 @@ server di Expo (circa 30 giorni nel piano gratuito), quindi ha fatto la build 0.
 poi l'invio a TestFlight è fallito («Unable to find Apple ID for Bundle ID»). Ora `pubblica.yml` fa solo l'aggiornamento
 (sempre), build e TestFlight solo con `rinnovo-testflight.json`; entrambi solo dal ramo principale. L'impronta della
 build installata è in `release/impronta-ios.json` e un test la controlla prima di ogni pubblicazione.
+
+## 28/11/2026 — Ricette preferite e giornate tipo (0.10.0)
+
+**Preferiti** (`favorites`, elenco di id): stellina nella lista delle Ricette, nell'intestazione della ricetta salvata e
+nella vista in sola lettura. Nella scheda Cani, sotto i cani, «★ Preferiti» di tutti i cani (in ordine di cane e nome);
+si aprono in **sola lettura** (`/vista/[id]`: ingredienti, calorie della ricetta e obiettivo, peso, pasti; nessun campo
+né azione che cambi la ricetta; «Modifica ricetta» separato in fondo). Eliminando una ricetta sparisce dai preferiti.
+**Giornate tipo** (`dayPlans`): nome libero (proposto «Giornata A», B, C…) e per ogni cane una ricetta salvata di quel
+cane o nessuna; ogni scelta si salva subito; rinomina, duplica («(copia)»), elimina. Si legge sempre la versione attuale
+della ricetta; se la ricetta non c'è più compare «ricetta mancante» e quel cane non è contato.
+**Anteprima ingredienti** (`/anteprima`): giornate × quante volte (non si salva). Per ogni giornata gli ingredienti di
+un giorno di tutti i cani; poi il totale con «serve, in dispensa, ne manca», stima delle verdure cotte → crude e prezzo
+previsto (di tutto e di quello da comprare). Stesso calcolo della Spesa (`shoppingForecast`) con margine 0 (il margine
+è un'impostazione della Spesa). Nessun indicatore per scongelare. Non tocca diario, Spesa e Dispensa.
+**Dati**: due campi nuovi, in «Esporta tutto» e «Ripristina»; mancano nei dati e nei backup di prima → vuoti. Numero di
+struttura invariato (2), come per Spesa, Dispensa e Pasti: un eventuale ritiro dell'aggiornamento li ignora senza danni.
+Calcoli, «Crea ricetta» (solo la stellina nell'intestazione), diario, Dispensa, Spesa e cataloghi invariati.

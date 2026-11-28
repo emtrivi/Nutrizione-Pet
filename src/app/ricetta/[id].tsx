@@ -25,6 +25,7 @@ import { draftEnergy, draftFromRecipe, draftLines, draftToRecipe, newDraft, type
 import { Step1, Step2, Step3, StepBand } from '../../ui/recipe/Steps123';
 import { MealsCard } from '../../ui/recipe/MealsCard';
 import { Step4 } from '../../ui/recipe/Step4';
+import { FavoriteStar } from '../../ui/FavoriteStar';
 import { colors } from '../../ui/theme';
 
 const catalog = getCatalog();
@@ -203,7 +204,12 @@ export default function RicettaScreen() {
   const band = BANDS[step - 1] as (typeof BANDS)[number];
   return (
     <View style={styles.screen}>
-      <Stack.Screen options={{ title: saved ? saved.name : `Nuova ricetta per ${dog.name}` }} />
+      <Stack.Screen
+        options={{
+          title: saved ? saved.name : `Nuova ricetta per ${dog.name}`,
+          headerRight: saved ? () => <FavoriteStar recipeId={saved.id} name={saved.name} /> : undefined,
+        }}
+      />
       <ScrollView ref={scroll} contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled" automaticallyAdjustKeyboardInsets>
         <Disclaimer />
         <StepBand step={step} {...band} />
