@@ -1,5 +1,5 @@
 {
-  "versione": "0.9.1",
-  "data": "2026-11-27",
-  "note": "La scheda in basso «Spesa» diventa «Dispensa» e si apre sulle righe della dispensa; in cima il pulsante «Spesa e previsioni» porta alla pagina della spesa, da cui si torna in un tocco. Nuovo campo «Cerca» nella dispensa (maiuscole e accenti non contano, anche resti e partite sfuse) e prima i prodotti usati più di recente. Dati, calcoli, colori, diario, cataloghi e Spesa invariati."
+  "versione": "0.10.0",
+  "data": "2026-11-28",
+  "note": "Ricette preferite (stellina) con sezione «Preferiti» nella scheda Cani e vista in sola lettura; giornate tipo (una ricetta per cane) e anteprima degli ingredienti di più giornate con confronto con la dispensa e prezzi, separata da diario e Spesa. Preferiti e giornate in «Esporta tutto». Calcoli, Crea ricetta, diario, Dispensa, Spesa e cataloghi invariati."
 }
